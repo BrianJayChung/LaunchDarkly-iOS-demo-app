@@ -1,0 +1,133 @@
+//
+//  ViewController.swift
+//  LaunchDoggly
+//
+//  Created by Brian Chung on 5/9/19.
+//  Copyright © 2019 Bchung Dev. All rights reserved.
+//
+
+import UIKit
+import LaunchDarkly
+
+protocol ProjectSelectedDelegate {
+    func projectSelected(projectName: String?)
+}
+
+protocol EnvirSelectedDelegate{
+    func envirSelected(envirName: String?)
+}
+
+class ViewController: UIViewController, ProjectSelectedDelegate, EnvirSelectedDelegate{
+    
+    // MARK: LaunchDarkly fron-end key
+    // This is safe to expose as it can only fetch the flag evaluation outcome
+
+    let config = LDConfig.init(mobileKey: "mob-8e3e03d8-355e-432b-a000-e2a15a12d7e6")
+    let customizeNavBarTitle = NavBarTitleFontStyle()
+    //Set feature flag key here
+    //fileprivate let menuFlagKey = "show-widgets"
+    fileprivate let backgroundColorKey = "background-color"
+    
+    @IBOutlet weak var projectBarBtnItem: UIBarButtonItem!
+    @IBOutlet weak var envirBarBtnItem: UIBarButtonItem!
+    @IBOutlet weak var mainView: UIView!
+
+    var projectButtonText : String?
+    var envirButtonText : String?
+    
+    var topLeftMenuPageIsVisible = false
+    
+    
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        navBarItemFont()
+        LDClient.sharedInstance().delegate = self
+        checkBackgroundFeatureValue()
+        
+    }
+    
+    // Delegate functions to handle project/environment picked
+    func projectSelected(projectName: String?) {
+        
+        projectBarBtnItem.title = projectName
+        
+    }
+    
+    func envirSelected(envirName envir: String?) {
+        
+        envirBarBtnItem.title = envir
+        
+    }
+    
+    func navBarItemFont(){
+        
+        customizeNavBarTitle.fontSizeSetting(fontSize: 13, barBtnItem: envirBarBtnItem, state: .normal)
+        customizeNavBarTitle.fontSizeSetting(fontSize: 14, barBtnItem: envirBarBtnItem, state: .selected)
+        customizeNavBarTitle.fontSizeSetting(fontSize: 15, barBtnItem: projectBarBtnItem, state: .normal)
+        customizeNavBarTitle.fontSizeSetting(fontSize: 16, barBtnItem: projectBarBtnItem, state: .normal)
+        
+    }
+    
+    @IBAction func projectBtnPressed(_ sender: Any) {
+        performSegue(withIdentifier: "pushToProjects", sender: self)
+    }
+    
+    @IBAction func environmentBtnPressed(_ sender: Any) {
+        performSegue(withIdentifier: "pushToEnvironments", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        if segue.identifier == "pushToProjects" {
+            let nav = segue.destination as! ProjectTableView
+            nav.checkedProject = projectBarBtnItem.title!
+            nav.delegate = self
+        }
+        if segue.identifier == "pushToEnvironments" {
+            let envVC = segue.destination as! EnvironmentsTableView
+            envVC.selectedEnvir = envirBarBtnItem.title!
+            envVC.delegate = self
+        }
+    }
+    
+    lazy var navBarLaunchSettings: SettingsPageViewController = {
+        let navBarLaunchSettings = SettingsPageViewController()
+        navBarLaunchSettings.mainViewController = self
+        return navBarLaunchSettings
+    }()
+    
+    @IBAction func inBoxClick(_ sender: UIBarButtonItem) {
+        navBarLaunchSettings.showRightCorner()
+    }
+
+    func showControllerForSetting(setting: Setting){
+        let dummyController = UIViewController()
+        dummyController.navigationItem.title = setting.name
+        dummyController.view.backgroundColor = .white
+        navigationController?.navigationBar.tintColor = .red
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        navigationController?.pushViewController(dummyController, animated: true)
+
+    }
+    
+    // Function to set the background feature flag
+    fileprivate func checkBackgroundFeatureValue(){
+        let featureFlagValue = LDClient.sharedInstance().boolVariation(backgroundColorKey, fallback: false)
+        if featureFlagValue {
+            mainView.backgroundColor = UIColor(red: 0.054902, green: 0.0980392, blue: 0.196078, alpha: 1.0)
+        }
+        else {
+            mainView.backgroundColor = .brown
+        }
+    }
+}
+
+// LaunchDarkly SDK delegate
+extension ViewController: ClientDelegate {
+    func featureFlagDidUpdate(_ key: String) {
+        if key == backgroundColorKey {
+            checkBackgroundFeatureValue()
+        }
+    }
+}
+
