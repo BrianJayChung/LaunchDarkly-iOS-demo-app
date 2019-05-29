@@ -10,8 +10,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         setUpLDClient()
-        UITabBar.appearance().tintColor = .red
-        UINavigationBar.appearance().tintColor = .red
+        UITabBar.appearance().tintColor = .white
+        UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().isTranslucent = false
 //        UINavigationBar.appearance().barTintColor = UIColor(red: 0.054902, green: 0.0980392, blue: 0.196078, alpha: 1.0)
 //        UINavigationBar.appearance().shadowImage = UIImage()

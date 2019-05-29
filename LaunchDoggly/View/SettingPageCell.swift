@@ -60,7 +60,6 @@ class SettingCell: UICollectionViewCell {
         
         addSubview(iconImageView)
         addSubview(nameLabel)
-        
         addConstraintsWithFormat(format: "H:|-25-[v0(-5)]-35-[v1]|", views: iconImageView, nameLabel)
         addConstraintsWithFormat(format: "V:|-8-[v0]-8-|", views: nameLabel)
         
