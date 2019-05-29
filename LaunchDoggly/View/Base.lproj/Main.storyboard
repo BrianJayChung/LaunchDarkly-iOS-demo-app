@@ -23,12 +23,6 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cLP-0T-59U" userLabel="HomeView">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="dashboard" translatesAutoresizingMaskIntoConstraints="NO" id="Dsb-u1-QWC">
-                                        <rect key="frame" x="0.0" y="99" width="414" height="224"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                </subviews>
                                 <color key="backgroundColor" red="0.054901960784313725" green="0.098039215686274508" blue="0.19607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -462,7 +456,6 @@
         <image name="3dot" width="16" height="16"/>
         <image name="Architecture_Wide_Light" width="1600" height="533"/>
         <image name="LaunchDarkly_Horizontal_White" width="1000" height="250"/>
-        <image name="dashboard" width="2334" height="1056"/>
         <image name="flag" width="32" height="32"/>
         <image name="gaming-sdk-1" width="32" height="32"/>
         <image name="home" width="32" height="32"/>
