@@ -12,6 +12,8 @@ class EnvironmentsTableView: UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
     }
     
     let colorChange = UIColorFromRGB() // Custom calls to change colors from RGB format
@@ -31,9 +33,12 @@ class EnvironmentsTableView: UITableViewController{
         let cell = tableView.dequeueReusableCell(withIdentifier: "environmentCell", for: indexPath)
         cell.textLabel?.text = environments[indexPath.item]
         cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
+        
         if cell.textLabel?.text == selectedEnvir {
             cell.accessoryType = .checkmark
         }
+        
+        cell.tintColor = UIColor.red
         return cell
     }
 

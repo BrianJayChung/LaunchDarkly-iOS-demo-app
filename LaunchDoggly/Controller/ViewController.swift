@@ -17,8 +17,44 @@ protocol EnvirSelectedDelegate{
     func envirSelected(envirName: String?)
 }
 
-class ViewController: UIViewController, ProjectSelectedDelegate, EnvirSelectedDelegate{
+class ViewController: UIViewController, ProjectSelectedDelegate, EnvirSelectedDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    let cellHeight = 150
+    let colorChange = UIColorFromRGB()
+    
+    // Instantiate the flagcollection view cell 
+    let flagCells = FlagCollectionViewCell()
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+//    func searchBarText(){
+//        let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UITextField
+//
+//        textFieldInsideSearchBar?.textColor = .white
+//    }
+//
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FlagCell", for: indexPath)
+        
+        flagCells.FlagCellConfig(cell: cell)
+
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize(width: collectionView.frame.width, height: CGFloat(cellHeight))
+        
+    }
     // MARK: LaunchDarkly fron-end key
     // This is safe to expose as it can only fetch the flag evaluation outcome
 
@@ -40,18 +76,16 @@ class ViewController: UIViewController, ProjectSelectedDelegate, EnvirSelectedDe
     
     override func viewDidLoad() {
         
+        self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow") // hides the navbar shadow
+        self.hideKeyboardWhenTappedAround()
         super.viewDidLoad()
         navBarItemFont()
         LDClient.sharedInstance().delegate = self
-        checkBackgroundFeatureValue()
-        
     }
     
     // Delegate functions to handle project/environment picked
     func projectSelected(projectName: String?) {
-        
         projectBarBtnItem.title = projectName
-        
     }
     
     func envirSelected(envirName envir: String?) {
@@ -96,7 +130,9 @@ class ViewController: UIViewController, ProjectSelectedDelegate, EnvirSelectedDe
         return navBarLaunchSettings
     }()
     
+    
     @IBAction func inBoxClick(_ sender: UIBarButtonItem) {
+        view.endEditing(true)
         navBarLaunchSettings.showRightCorner()
     }
 
@@ -104,7 +140,7 @@ class ViewController: UIViewController, ProjectSelectedDelegate, EnvirSelectedDe
         let dummyController = UIViewController()
         dummyController.navigationItem.title = setting.name
         dummyController.view.backgroundColor = .white
-        navigationController?.navigationBar.tintColor = .red
+        navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         navigationController?.pushViewController(dummyController, animated: true)
 
@@ -130,4 +166,3 @@ extension ViewController: ClientDelegate {
         }
     }
 }
-

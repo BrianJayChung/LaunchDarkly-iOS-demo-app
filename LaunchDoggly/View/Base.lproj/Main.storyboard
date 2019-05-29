@@ -18,21 +18,55 @@
                         <viewControllerLayoutGuide type="bottom" id="bHU-qB-ZGs"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS" userLabel="MainView">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cLP-0T-59U" userLabel="HomeView">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
-                                <color key="backgroundColor" red="0.054901960784313725" green="0.098039215686274508" blue="0.19607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="qsz-yl-yLJ">
+                                <rect key="frame" x="0.0" y="60" width="414" height="665"/>
+                                <color key="backgroundColor" red="0.1215686275" green="0.1647058824" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="TPh-xq-srC">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FlagCell" id="G8A-O1-SSd">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="5Kt-eT-YjN"/>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="Bxn-Ab-JKI"/>
+                                </connections>
+                            </collectionView>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Feature flags" translatesAutoresizingMaskIntoConstraints="NO" id="45d-GM-kiu">
+                                <rect key="frame" x="0.0" y="8" width="414" height="45"/>
+                                <color key="barTintColor" red="0.1215686275" green="0.1647058824" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="searchField.textColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </searchBar>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.1215686275" green="0.1647058824" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="bHU-qB-ZGs" firstAttribute="top" secondItem="cLP-0T-59U" secondAttribute="bottom" id="485-wP-aCf"/>
-                            <constraint firstAttribute="trailing" secondItem="cLP-0T-59U" secondAttribute="trailing" id="UxH-o6-l1A"/>
-                            <constraint firstItem="cLP-0T-59U" firstAttribute="top" secondItem="5a7-TL-oxP" secondAttribute="bottom" id="iYB-8n-jCt"/>
-                            <constraint firstItem="cLP-0T-59U" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="lg4-4w-hxT"/>
+                            <constraint firstItem="45d-GM-kiu" firstAttribute="top" secondItem="5a7-TL-oxP" secondAttribute="bottom" constant="8" id="9jK-wz-sxi"/>
+                            <constraint firstAttribute="trailing" secondItem="qsz-yl-yLJ" secondAttribute="trailing" id="Ib6-cn-vKF"/>
+                            <constraint firstItem="qsz-yl-yLJ" firstAttribute="top" secondItem="45d-GM-kiu" secondAttribute="bottom" constant="7" id="N32-CO-UmY"/>
+                            <constraint firstItem="qsz-yl-yLJ" firstAttribute="top" secondItem="5a7-TL-oxP" secondAttribute="bottom" constant="60" id="dUn-1D-IvR"/>
+                            <constraint firstAttribute="trailing" secondItem="45d-GM-kiu" secondAttribute="trailing" id="fvP-w0-51s"/>
+                            <constraint firstItem="bHU-qB-ZGs" firstAttribute="top" secondItem="qsz-yl-yLJ" secondAttribute="bottom" id="nk4-25-3ib"/>
+                            <constraint firstItem="45d-GM-kiu" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="sBe-EN-f2k"/>
+                            <constraint firstItem="qsz-yl-yLJ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="tpR-Gu-th1"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="wxg-ya-2MO">
@@ -40,25 +74,27 @@
                             <barButtonItem title="Item" image="start-up (1)" id="fps-k3-DiW">
                                 <inset key="imageInsets" minX="-7" minY="1" maxX="0.0" maxY="0.0"/>
                                 <inset key="largeContentSizeImageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="4"/>
-                                <color key="tintColor" red="0.1215686275" green="0.1647058824" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </barButtonItem>
                             <barButtonItem tag="1" title="[select project]" id="qgn-dw-eTY" userLabel="Project">
                                 <inset key="largeContentSizeImageInsets" minX="0.0" minY="-4" maxX="0.0" maxY="0.0"/>
-                                <color key="tintColor" red="0.12156862745098039" green="0.16470588235294117" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <action selector="projectBtnPressed:" destination="vXZ-lx-hvc" id="bca-Uf-UFk"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="-&gt;" id="913-oJ-NWK"/>
+                            <barButtonItem title="&gt;" id="913-oJ-NWK">
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </barButtonItem>
                             <barButtonItem tag="2" title="[select environment]" id="bA2-aG-azM" userLabel="Environment">
-                                <color key="tintColor" red="0.396078431372549" green="0.42745098039215684" blue="0.49019607843137253" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <action selector="environmentBtnPressed:" destination="vXZ-lx-hvc" id="oFY-RT-4tX"/>
                                 </connections>
                             </barButtonItem>
                         </leftBarButtonItems>
                         <barButtonItem key="rightBarButtonItem" title="Settings" image="3dot" id="sRu-Fx-YIP">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="inBoxClick:" destination="vXZ-lx-hvc" id="14v-xm-hqL"/>
                             </connections>
@@ -66,8 +102,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="envirBarBtnItem" destination="bA2-aG-azM" id="8hB-GC-k1T"/>
-                        <outlet property="mainView" destination="cLP-0T-59U" id="cbC-gP-sML"/>
                         <outlet property="projectBarBtnItem" destination="qgn-dw-eTY" id="cfb-yw-yQj"/>
+                        <outlet property="searchBar" destination="45d-GM-kiu" id="F2S-9o-Xhk"/>
                         <outlet property="view" destination="kh9-bI-dsS" id="EZd-Nk-3mB"/>
                         <segue destination="SdP-Yo-SJw" kind="push" identifier="pushToProjects" id="qTt-Zg-wvx"/>
                         <segue destination="KCy-fe-idJ" kind="push" identifier="pushToEnvironments" id="0qg-0Q-FJ8"/>
@@ -75,14 +111,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-330.43478260869568" y="-2448.2142857142858"/>
+            <point key="canvasLocation" x="-339.13043478260875" y="-2377.2321428571427"/>
         </scene>
         <!--Projects-->
         <scene sceneID="IJR-UZ-ajc">
             <objects>
                 <tableViewController id="SdP-Yo-SJw" customClass="ProjectTableView" customModule="LaunchDoggly" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="cT3-lb-SOP">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
@@ -118,7 +154,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="environement" id="KCy-fe-idJ" customClass="EnvironmentsTableView" customModule="LaunchDoggly" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="jrj-nw-Ug6">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
@@ -291,7 +327,7 @@
                         <viewControllerLayoutGuide type="bottom" id="lLO-jP-AON"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="yC9-aN-7x4">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tVk-VY-oDK">
@@ -317,7 +353,7 @@
             </objects>
             <point key="canvasLocation" x="-1914" y="-1492"/>
         </scene>
-        <!--Feature Flags-->
+        <!--View Controller-->
         <scene sceneID="56a-b1-40m">
             <objects>
                 <viewController id="5OP-sq-g7R" sceneMemberID="viewController">
@@ -326,7 +362,7 @@
                         <viewControllerLayoutGuide type="bottom" id="INe-Eo-oAk"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="5Dw-Fh-d4M">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="search" translatesAutoresizingMaskIntoConstraints="NO" id="Vna-CX-p6D">
@@ -336,7 +372,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Feature Flags" image="flag" id="eD3-iC-U7b"/>
+                    <tabBarItem key="tabBarItem" systemItem="recents" id="eD3-iC-U7b"/>
                     <navigationItem key="navigationItem" id="BrQ-wM-AU0"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="xQV-U9-r6n" id="AaH-yy-qLp"/>
@@ -358,10 +394,12 @@
         <scene sceneID="Xmz-wE-DfT">
             <objects>
                 <tabBarController id="8YD-XR-rd4" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="KmV-c0-929">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="KmV-c0-929">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" red="0.1215686275" green="0.1647058824" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="sej-8a-cZd" kind="relationship" relationship="viewControllers" id="TYt-Mk-BWx"/>
@@ -373,19 +411,19 @@
             </objects>
             <point key="canvasLocation" x="-1914" y="-2447"/>
         </scene>
-        <!--Home-->
+        <!--Feature Flags-->
         <scene sceneID="bQb-Et-K4g">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sej-8a-cZd" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" image="home" id="wfX-pj-Zj4" userLabel="Home">
+                    <tabBarItem key="tabBarItem" title="Feature Flags" image="flag" id="wfX-pj-Zj4" userLabel="Home">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="xRV-Zc-FjT"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="gpJ-Q4-Lsd">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" translucent="NO" id="gpJ-Q4-Lsd">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" red="0.1215686275" green="0.1647058824" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                             <color key="textColor" red="0.12156862745098039" green="0.16470588235294117" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -399,7 +437,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6zC-LL-eg5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1148" y="-2447"/>
+            <point key="canvasLocation" x="-1170" y="-2377"/>
         </scene>
         <!--About Us View-->
         <scene sceneID="qM8-wH-rhE">
@@ -458,9 +496,8 @@
         <image name="LaunchDarkly_Horizontal_White" width="1000" height="250"/>
         <image name="flag" width="32" height="32"/>
         <image name="gaming-sdk-1" width="32" height="32"/>
-        <image name="home" width="32" height="32"/>
         <image name="search" width="25" height="25"/>
         <image name="start-up (1)" width="16" height="16"/>
     </resources>
-    <color key="tintColor" red="1" green="0.10832243799999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

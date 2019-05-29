@@ -55,7 +55,6 @@ class SettingsPageViewController: NSObject, UICollectionViewDataSource, UICollec
             window.addSubview(blackView)
             window.addSubview(collectionView)
             
-            
             let height: CGFloat = CGFloat(settings.count * cellHeight + 15)
             let y = window.frame.height - height
             
@@ -123,6 +122,5 @@ class SettingsPageViewController: NSObject, UICollectionViewDataSource, UICollec
         
         let setting = self.settings[indexPath.item]
         handleDismiss(setting: setting)
-        
     }
 }

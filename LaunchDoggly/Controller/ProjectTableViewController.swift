@@ -12,6 +12,8 @@ class ProjectTableView: UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
     }
     
     let colorChange = UIColorFromRGB() //Custom calls to change colors from RGB format
@@ -37,6 +39,7 @@ class ProjectTableView: UITableViewController{
             cell.accessoryType = .checkmark
             
         }
+        cell.tintColor = UIColor.red
         return cell
     }
     
