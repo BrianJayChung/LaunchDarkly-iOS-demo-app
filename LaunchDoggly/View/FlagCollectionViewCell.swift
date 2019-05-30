@@ -12,11 +12,11 @@ class FlagCollectionViewCell: UICollectionViewCell {
     
     func FlagCellConfig(cell: UICollectionViewCell){
         
-        let switchOnOff = UISwitch()
-        
-        switchOnOff.isOn = true
-        
-        switchOnOff.translatesAutoresizingMaskIntoConstraints = false
+//        let switchOnOff = UISwitch()
+//
+//        switchOnOff.isOn = true
+//
+//        switchOnOff.translatesAutoresizingMaskIntoConstraints = false
         
         let flagName = UITextView(frame: CGRect(x: 5, y: 5, width: 200, height: 30))
         
@@ -50,11 +50,12 @@ class FlagCollectionViewCell: UICollectionViewCell {
         cell.contentView.addSubview(flagActivity)
         cell.contentView.addSubview(flagName)
         cell.contentView.addSubview(flagDescription)
-        cell.addSubview(switchOnOff)
         
-        NSLayoutConstraint(item: switchOnOff, attribute: .trailing, relatedBy: .equal, toItem: cell, attribute: .trailing, multiplier: 1, constant: -10).isActive = true
-        
-        NSLayoutConstraint(item: switchOnOff, attribute: .centerY, relatedBy: .equal, toItem: cell, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
-        
+//        cell.addSubview(switchOnOff)
+//        
+//        NSLayoutConstraint(item: switchOnOff, attribute: .trailing, relatedBy: .equal, toItem: cell, attribute: .trailing, multiplier: 1, constant: -10).isActive = true
+//        
+//        NSLayoutConstraint(item: switchOnOff, attribute: .centerY, relatedBy: .equal, toItem: cell, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+//        
     }
 }

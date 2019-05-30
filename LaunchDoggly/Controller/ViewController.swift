@@ -19,20 +19,29 @@ protocol EnvirSelectedDelegate{
 
 class ViewController: UIViewController, ProjectSelectedDelegate, EnvirSelectedDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    
+    override func viewDidLoad() {
+        
+        self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow") // hides the navbar shadow
+        self.hideKeyboardWhenTappedAround()
+        super.viewDidLoad()
+        navBarItemFont()
+        LDClient.sharedInstance().delegate = self
+    }
+    
+    
     let cellHeight = 150
     let colorChange = UIColorFromRGB()
     
     // Instantiate the flagcollection view cell 
     let flagCells = FlagCollectionViewCell()
     
+    @IBOutlet weak var projectBarBtnItem: UIBarButtonItem!
+    @IBOutlet weak var envirBarBtnItem: UIBarButtonItem!
+    
+    @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     
-//    func searchBarText(){
-//        let textFieldInsideSearchBar = searchBar.value(forKey: "searchField") as? UITextField
-//
-//        textFieldInsideSearchBar?.textColor = .white
-//    }
-//
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10
     }
@@ -40,16 +49,31 @@ class ViewController: UIViewController, ProjectSelectedDelegate, EnvirSelectedDe
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 1
     }
+
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FlagCell", for: indexPath)
         
+        //TODO: Fix duplication of switches with using the below method
+        /*
+                let switchOnOff = UISwitch()
+                switchOnOff.tag = 100
+                switchOnOff.translatesAutoresizingMaskIntoConstraints = false
+                switchOnOff.setOn(true, animated: true)
+                cell.contentView.addSubview(switchOnOff)
+         
+                NSLayoutConstraint(item: switchOnOff, attribute: .trailing, relatedBy: .equal, toItem: cell, attribute: .trailing, multiplier: 1, constant: -10).isActive = true
+         
+                NSLayoutConstraint(item: switchOnOff, attribute: .centerY, relatedBy: .equal, toItem: cell, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+        */
+        
         flagCells.FlagCellConfig(cell: cell)
+
 
         return cell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         return CGSize(width: collectionView.frame.width, height: CGFloat(cellHeight))
@@ -64,24 +88,13 @@ class ViewController: UIViewController, ProjectSelectedDelegate, EnvirSelectedDe
     //fileprivate let menuFlagKey = "show-widgets"
     fileprivate let backgroundColorKey = "background-color"
     
-    @IBOutlet weak var projectBarBtnItem: UIBarButtonItem!
-    @IBOutlet weak var envirBarBtnItem: UIBarButtonItem!
-    @IBOutlet weak var mainView: UIView!
 
+    
     var projectButtonText : String?
     var envirButtonText : String?
     
     var topLeftMenuPageIsVisible = false
     
-    
-    override func viewDidLoad() {
-        
-        self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow") // hides the navbar shadow
-        self.hideKeyboardWhenTappedAround()
-        super.viewDidLoad()
-        navBarItemFont()
-        LDClient.sharedInstance().delegate = self
-    }
     
     // Delegate functions to handle project/environment picked
     func projectSelected(projectName: String?) {
