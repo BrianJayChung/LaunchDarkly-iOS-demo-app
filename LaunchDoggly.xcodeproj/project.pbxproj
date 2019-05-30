@@ -18,6 +18,7 @@
 		7B49BC712287328E00183BEA /* SettingsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B49BC702287328E00183BEA /* SettingsPageViewController.swift */; };
 		7B513B7E229E564C0047D9FC /* FlagCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B513B7D229E564C0047D9FC /* FlagCollectionViewController.swift */; };
 		7B513B80229F3DB40047D9FC /* FlagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B513B7F229F3DB40047D9FC /* FlagCollectionViewCell.swift */; };
+		7B513B8222A053BE0047D9FC /* FlagCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B513B8122A053BE0047D9FC /* FlagCells.swift */; };
 		7B5FE6472284CECF00C26878 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5FE6462284CECF00C26878 /* AppDelegate.swift */; };
 		7B5FE6492284CECF00C26878 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5FE6482284CECF00C26878 /* ViewController.swift */; };
 		7B5FE64C2284CECF00C26878 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B5FE64A2284CECF00C26878 /* Main.storyboard */; };
@@ -41,6 +42,7 @@
 		7B49BC702287328E00183BEA /* SettingsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageViewController.swift; sourceTree = "<group>"; };
 		7B513B7D229E564C0047D9FC /* FlagCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagCollectionViewController.swift; sourceTree = "<group>"; };
 		7B513B7F229F3DB40047D9FC /* FlagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagCollectionViewCell.swift; sourceTree = "<group>"; };
+		7B513B8122A053BE0047D9FC /* FlagCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagCells.swift; sourceTree = "<group>"; };
 		7B5FE6432284CECF00C26878 /* LaunchDoggly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LaunchDoggly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B5FE6462284CECF00C26878 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7B5FE6482284CECF00C26878 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				7B32EB302294DD3B00605948 /* SdkTableViewCell.swift */,
 				7B318DA9229A35B9009F297D /* TextStyles.swift */,
 				7B513B7F229F3DB40047D9FC /* FlagCollectionViewCell.swift */,
+				7B513B8122A053BE0047D9FC /* FlagCells.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 				7B5FE6472284CECF00C26878 /* AppDelegate.swift in Sources */,
 				7B318DAF229B1E0A009F297D /* EnvironmentsTableViewController.swift in Sources */,
 				7B32EB312294DD3B00605948 /* SdkTableViewCell.swift in Sources */,
+				7B513B8222A053BE0047D9FC /* FlagCells.swift in Sources */,
 				7B0BB78F228BE4710095E05A /* Extensions.swift in Sources */,
 				7B513B7E229E564C0047D9FC /* FlagCollectionViewController.swift in Sources */,
 				7B318DAA229A35B9009F297D /* TextStyles.swift in Sources */,

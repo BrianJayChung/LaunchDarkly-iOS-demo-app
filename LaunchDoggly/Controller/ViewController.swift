@@ -27,12 +27,14 @@ class ViewController: UIViewController, ProjectSelectedDelegate, EnvirSelectedDe
         super.viewDidLoad()
         navBarItemFont()
         LDClient.sharedInstance().delegate = self
+        collectionView.register(FlagCell.self, forCellWithReuseIdentifier: "Cell")
     }
     
     
     let cellHeight = 150
     let colorChange = UIColorFromRGB()
     
+    @IBOutlet weak var collectionView: UICollectionView!
     // Instantiate the flagcollection view cell 
     let flagCells = FlagCollectionViewCell()
     
@@ -53,7 +55,7 @@ class ViewController: UIViewController, ProjectSelectedDelegate, EnvirSelectedDe
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FlagCell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! FlagCell
         
         //TODO: Fix duplication of switches with using the below method
         /*
@@ -68,7 +70,7 @@ class ViewController: UIViewController, ProjectSelectedDelegate, EnvirSelectedDe
                 NSLayoutConstraint(item: switchOnOff, attribute: .centerY, relatedBy: .equal, toItem: cell, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
         */
         
-        flagCells.FlagCellConfig(cell: cell)
+//        flagCells.FlagCellConfig(cell: cell)
 
 
         return cell
