@@ -12,7 +12,7 @@
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="LaunchDoggly" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" id="vXZ-lx-hvc" customClass="ViewController" customModule="LaunchDoggly" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5a7-TL-oxP"/>
                         <viewControllerLayoutGuide type="bottom" id="bHU-qB-ZGs"/>
@@ -25,17 +25,17 @@
                                 <rect key="frame" x="0.0" y="60" width="414" height="665"/>
                                 <color key="backgroundColor" red="0.1215686275" green="0.1647058824" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="TPh-xq-srC">
-                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="itemSize" width="414" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FlagCell" id="G8A-O1-SSd">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -83,7 +83,7 @@
                                     <action selector="projectBtnPressed:" destination="vXZ-lx-hvc" id="bca-Uf-UFk"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="&gt;" id="913-oJ-NWK">
+                            <barButtonItem enabled="NO" title="&gt;" id="913-oJ-NWK">
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </barButtonItem>
                             <barButtonItem tag="2" title="[select environment]" id="bA2-aG-azM" userLabel="Environment">
@@ -96,12 +96,14 @@
                         <barButtonItem key="rightBarButtonItem" title="Settings" image="3dot" id="sRu-Fx-YIP">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <action selector="inBoxClick:" destination="vXZ-lx-hvc" id="14v-xm-hqL"/>
+                                <action selector="menuClicked:" destination="vXZ-lx-hvc" id="lmy-OU-pgI"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="collectionView" destination="qsz-yl-yLJ" id="GfY-wC-e0J"/>
                         <outlet property="envirBarBtnItem" destination="bA2-aG-azM" id="8hB-GC-k1T"/>
+                        <outlet property="mainView" destination="kh9-bI-dsS" id="oOK-Po-rX1"/>
                         <outlet property="projectBarBtnItem" destination="qgn-dw-eTY" id="cfb-yw-yQj"/>
                         <outlet property="searchBar" destination="45d-GM-kiu" id="F2S-9o-Xhk"/>
                         <outlet property="view" destination="kh9-bI-dsS" id="EZd-Nk-3mB"/>
@@ -316,7 +318,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rp5-o2-60U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2682.608695652174" y="-2447.5446428571427"/>
+            <point key="canvasLocation" x="-2683" y="-2377"/>
         </scene>
         <!--SDKs-->
         <scene sceneID="W8g-Cz-LOp">
@@ -388,7 +390,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-410.14492753623193" y="-1504.0178571428571"/>
+            <point key="canvasLocation" x="-1171" y="-1504"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Xmz-wE-DfT">
@@ -409,7 +411,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ahe-f2-Ezj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1914" y="-2447"/>
+            <point key="canvasLocation" x="-1914" y="-2377"/>
         </scene>
         <!--Feature Flags-->
         <scene sceneID="bQb-Et-K4g">
@@ -487,7 +489,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JBg-Jg-gjv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="404" y="-1504"/>
+            <point key="canvasLocation" x="-196" y="-1493"/>
         </scene>
     </scenes>
     <resources>

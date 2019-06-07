@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol EnvironmentsTableDelegate{
+    func envirSelected(envirName: String?)
+}
+
 class EnvironmentsTableView: UITableViewController{
     
     override func viewDidLoad() {
@@ -22,8 +26,8 @@ class EnvironmentsTableView: UITableViewController{
     
     var environments = ["production", "testing", "beta", "pre-production", "QA-server", "product-team", "demo environment", "Empty project", "xamarin-testing", "Some super very long environemnt name"]
     
-    var delegate : EnvirSelectedDelegate?
-    var selectedEnvir = ""
+    var delegate : EnvironmentsTableDelegate?
+    var selectedEnvir : String?
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return environments.count

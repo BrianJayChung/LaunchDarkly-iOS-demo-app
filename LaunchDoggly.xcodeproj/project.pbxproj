@@ -16,14 +16,11 @@
 		7B32EB2F2294D6C900605948 /* SdkTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B32EB2E2294D6C900605948 /* SdkTableView.swift */; };
 		7B32EB312294DD3B00605948 /* SdkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B32EB302294DD3B00605948 /* SdkTableViewCell.swift */; };
 		7B49BC712287328E00183BEA /* SettingsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B49BC702287328E00183BEA /* SettingsPageViewController.swift */; };
-		7B513B7E229E564C0047D9FC /* FlagCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B513B7D229E564C0047D9FC /* FlagCollectionViewController.swift */; };
-		7B513B80229F3DB40047D9FC /* FlagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B513B7F229F3DB40047D9FC /* FlagCollectionViewCell.swift */; };
+		7B513B8222A053BE0047D9FC /* FlagCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B513B8122A053BE0047D9FC /* FlagCells.swift */; };
 		7B5FE6472284CECF00C26878 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5FE6462284CECF00C26878 /* AppDelegate.swift */; };
 		7B5FE6492284CECF00C26878 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5FE6482284CECF00C26878 /* ViewController.swift */; };
 		7B5FE64C2284CECF00C26878 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B5FE64A2284CECF00C26878 /* Main.storyboard */; };
 		7B5FE6512284CED100C26878 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B5FE64F2284CED100C26878 /* LaunchScreen.storyboard */; };
-		7B5FE6622284D2F600C26878 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5FE6612284D2F600C26878 /* User.swift */; };
-		7B5FE6642284D32E00C26878 /* UserBank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5FE6632284D32E00C26878 /* UserBank.swift */; };
 		7BD98C74228A76C30056D748 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD98C73228A76C30056D748 /* LoginPageViewController.swift */; };
 		B4AEAE95DD6E8C1E471B8DB1 /* Pods_LaunchDoggly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B94D8C7F36AAB14B9B9BE5 /* Pods_LaunchDoggly.framework */; };
 /* End PBXBuildFile section */
@@ -39,8 +36,7 @@
 		7B32EB2E2294D6C900605948 /* SdkTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SdkTableView.swift; sourceTree = "<group>"; };
 		7B32EB302294DD3B00605948 /* SdkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SdkTableViewCell.swift; sourceTree = "<group>"; };
 		7B49BC702287328E00183BEA /* SettingsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageViewController.swift; sourceTree = "<group>"; };
-		7B513B7D229E564C0047D9FC /* FlagCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagCollectionViewController.swift; sourceTree = "<group>"; };
-		7B513B7F229F3DB40047D9FC /* FlagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagCollectionViewCell.swift; sourceTree = "<group>"; };
+		7B513B8122A053BE0047D9FC /* FlagCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagCells.swift; sourceTree = "<group>"; };
 		7B5FE6432284CECF00C26878 /* LaunchDoggly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LaunchDoggly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B5FE6462284CECF00C26878 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7B5FE6482284CECF00C26878 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -48,8 +44,6 @@
 		7B5FE6502284CED100C26878 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7B5FE6522284CED100C26878 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7B5FE65A2284CFFA00C26878 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		7B5FE6612284D2F600C26878 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		7B5FE6632284D32E00C26878 /* UserBank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBank.swift; sourceTree = "<group>"; };
 		7BD98C73228A76C30056D748 /* LoginPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
 		F5B94D8C7F36AAB14B9B9BE5 /* Pods_LaunchDoggly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LaunchDoggly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8990772677D4ABF5453A21F /* Pods-LaunchDoggly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LaunchDoggly.debug.xcconfig"; path = "Target Support Files/Pods-LaunchDoggly/Pods-LaunchDoggly.debug.xcconfig"; sourceTree = "<group>"; };
@@ -126,7 +120,7 @@
 				7B0BB78B228BD4C00095E05A /* SettingPageCell.swift */,
 				7B32EB302294DD3B00605948 /* SdkTableViewCell.swift */,
 				7B318DA9229A35B9009F297D /* TextStyles.swift */,
-				7B513B7F229F3DB40047D9FC /* FlagCollectionViewCell.swift */,
+				7B513B8122A053BE0047D9FC /* FlagCells.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -140,7 +134,6 @@
 				7B49BC702287328E00183BEA /* SettingsPageViewController.swift */,
 				7B318DAC229B1DA9009F297D /* ProjectTableViewController.swift */,
 				7B318DAE229B1E0A009F297D /* EnvironmentsTableViewController.swift */,
-				7B513B7D229E564C0047D9FC /* FlagCollectionViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -148,8 +141,6 @@
 		7B5FE6602284D28900C26878 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				7B5FE6612284D2F600C26878 /* User.swift */,
-				7B5FE6632284D32E00C26878 /* UserBank.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -299,17 +290,14 @@
 			files = (
 				7B49BC712287328E00183BEA /* SettingsPageViewController.swift in Sources */,
 				7B32EB2F2294D6C900605948 /* SdkTableView.swift in Sources */,
-				7B5FE6622284D2F600C26878 /* User.swift in Sources */,
 				7B5FE6492284CECF00C26878 /* ViewController.swift in Sources */,
 				7B5FE6472284CECF00C26878 /* AppDelegate.swift in Sources */,
 				7B318DAF229B1E0A009F297D /* EnvironmentsTableViewController.swift in Sources */,
 				7B32EB312294DD3B00605948 /* SdkTableViewCell.swift in Sources */,
+				7B513B8222A053BE0047D9FC /* FlagCells.swift in Sources */,
 				7B0BB78F228BE4710095E05A /* Extensions.swift in Sources */,
-				7B513B7E229E564C0047D9FC /* FlagCollectionViewController.swift in Sources */,
 				7B318DAA229A35B9009F297D /* TextStyles.swift in Sources */,
-				7B513B80229F3DB40047D9FC /* FlagCollectionViewCell.swift in Sources */,
 				7B318DAD229B1DA9009F297D /* ProjectTableViewController.swift in Sources */,
-				7B5FE6642284D32E00C26878 /* UserBank.swift in Sources */,
 				7B0BB78C228BD4C00095E05A /* SettingPageCell.swift in Sources */,
 				7BD98C74228A76C30056D748 /* LoginPageViewController.swift in Sources */,
 			);
