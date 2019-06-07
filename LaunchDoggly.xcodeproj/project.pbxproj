@@ -22,7 +22,7 @@
 		7B5FE64C2284CECF00C26878 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B5FE64A2284CECF00C26878 /* Main.storyboard */; };
 		7B5FE6512284CED100C26878 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B5FE64F2284CED100C26878 /* LaunchScreen.storyboard */; };
 		7BD98C74228A76C30056D748 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD98C73228A76C30056D748 /* LoginPageViewController.swift */; };
-		B4AEAE95DD6E8C1E471B8DB1 /* Pods_LaunchDoggly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B94D8C7F36AAB14B9B9BE5 /* Pods_LaunchDoggly.framework */; };
+		802A480E616FB20E4D8AB859 /* Pods_LaunchDoggly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5B94D8C7F36AAB14B9B9BE5 /* Pods_LaunchDoggly.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,7 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4AEAE95DD6E8C1E471B8DB1 /* Pods_LaunchDoggly.framework in Frameworks */,
+				802A480E616FB20E4D8AB859 /* Pods_LaunchDoggly.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
