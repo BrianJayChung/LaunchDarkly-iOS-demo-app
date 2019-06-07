@@ -9,12 +9,21 @@
 
 import UIKit
 
-class FlagCell: UICollectionViewCell {
+protocol FlagCellDelegate: class{
+    func switchOnFlag(_ controller: FlagCell)
+    func switchOffFlag(_ controller: FlagCell)
+}
+
+class FlagCell: UICollectionViewCell{
     
+    weak var delegate: FlagCellDelegate?
+  
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
     }
+    
+    let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
     
     let buttonSwitch: UISwitch = {
         let button = UISwitch()
@@ -22,7 +31,6 @@ class FlagCell: UICollectionViewCell {
         button.setOn(true, animated: true)
         return button
     }()
-    
     
     func setupViews(){
         
@@ -50,7 +58,7 @@ class FlagCell: UICollectionViewCell {
         flagName.backgroundColor = .white
         flagName.textColor = UIColor(red: 0.054902, green: 0.0980392, blue: 0.196078, alpha: 1.0)
         
-        flagDescription.text = "This feature flag is used to on the front-end checkout page."
+        flagDescription.text = "This feature flag is used to turn on the front-end checkout page."
         
         
         flagName.font = UIFont.boldSystemFont(ofSize: 18)
@@ -65,6 +73,17 @@ class FlagCell: UICollectionViewCell {
         self.contentView.addSubview(flagActivity)
         self.contentView.addSubview(flagName)
         self.contentView.addSubview(flagDescription)
+    }
+    
+    func listenBtnChange(){
+        buttonSwitch.addTarget(self, action: #selector(switchChanged), for: UIControl.Event.valueChanged)
+    }
+    
+    @objc func switchChanged(mySwitch: UISwitch) {
+        
+        let value = mySwitch.isOn
+        value ? delegate?.switchOnFlag(self): delegate?.switchOffFlag(self)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

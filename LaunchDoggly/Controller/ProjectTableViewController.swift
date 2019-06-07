@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ProjectTableDelegate {
+    func projectSelected(projectName: String?)
+}
+
 class ProjectTableView: UITableViewController{
     
     override func viewDidLoad() {
@@ -21,9 +25,8 @@ class ProjectTableView: UITableViewController{
     // hardcoded for now, this will be fetched from LD later
     var projects = ["Support-service", "Spree Commerece", "api", "Billing application", "Conference Demo", "demo environment", "Empty project", "xamarin-testing"]
     
-    var checkedProject = ""
-    
-    var delegate : ProjectSelectedDelegate?
+    var checkedProject : String?
+    var delegate : ProjectTableDelegate?
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return projects.count
