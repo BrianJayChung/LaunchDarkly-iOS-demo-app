@@ -12,6 +12,7 @@
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="ViewController" id="vXZ-lx-hvc" customClass="ViewController" customModule="LaunchDoggly" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5a7-TL-oxP"/>
@@ -22,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="qsz-yl-yLJ">
-                                <rect key="frame" x="0.0" y="60" width="414" height="665"/>
+                                <rect key="frame" x="0.0" y="60" width="414" height="621"/>
                                 <color key="backgroundColor" red="0.1215686275" green="0.1647058824" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="TPh-xq-srC">
                                     <size key="itemSize" width="414" height="50"/>
@@ -47,7 +48,7 @@
                                 </connections>
                             </collectionView>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Feature flags" translatesAutoresizingMaskIntoConstraints="NO" id="45d-GM-kiu">
-                                <rect key="frame" x="0.0" y="8" width="414" height="45"/>
+                                <rect key="frame" x="0.0" y="8" width="377" height="45"/>
                                 <color key="barTintColor" red="0.1215686275" green="0.1647058824" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <userDefinedRuntimeAttributes>
@@ -56,62 +57,79 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </searchBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NLr-Pt-EQt">
+                                <rect key="frame" x="383" y="21.5" width="16" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="97w-D2-tFr"/>
+                                    <constraint firstAttribute="width" constant="16" id="Hdc-UJ-Jf6"/>
+                                </constraints>
+                                <state key="normal" image="3dot"/>
+                                <connections>
+                                    <action selector="menuBtnPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="t2l-Bm-obP"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.1215686275" green="0.1647058824" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="NLr-Pt-EQt" firstAttribute="leading" secondItem="45d-GM-kiu" secondAttribute="trailing" constant="6" id="08G-VX-rLs"/>
                             <constraint firstItem="45d-GM-kiu" firstAttribute="top" secondItem="5a7-TL-oxP" secondAttribute="bottom" constant="8" id="9jK-wz-sxi"/>
                             <constraint firstAttribute="trailing" secondItem="qsz-yl-yLJ" secondAttribute="trailing" id="Ib6-cn-vKF"/>
                             <constraint firstItem="qsz-yl-yLJ" firstAttribute="top" secondItem="45d-GM-kiu" secondAttribute="bottom" constant="7" id="N32-CO-UmY"/>
+                            <constraint firstItem="NLr-Pt-EQt" firstAttribute="centerY" secondItem="45d-GM-kiu" secondAttribute="centerY" id="Yjc-v5-f14"/>
                             <constraint firstItem="qsz-yl-yLJ" firstAttribute="top" secondItem="5a7-TL-oxP" secondAttribute="bottom" constant="60" id="dUn-1D-IvR"/>
-                            <constraint firstAttribute="trailing" secondItem="45d-GM-kiu" secondAttribute="trailing" id="fvP-w0-51s"/>
+                            <constraint firstAttribute="trailing" secondItem="45d-GM-kiu" secondAttribute="trailing" constant="37" id="fvP-w0-51s"/>
                             <constraint firstItem="bHU-qB-ZGs" firstAttribute="top" secondItem="qsz-yl-yLJ" secondAttribute="bottom" id="nk4-25-3ib"/>
                             <constraint firstItem="45d-GM-kiu" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="sBe-EN-f2k"/>
                             <constraint firstItem="qsz-yl-yLJ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="tpR-Gu-th1"/>
                         </constraints>
                     </view>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="wxg-ya-2MO">
+                        <nil key="title"/>
                         <leftBarButtonItems>
-                            <barButtonItem title="Item" image="start-up (1)" id="fps-k3-DiW">
-                                <inset key="imageInsets" minX="-7" minY="1" maxX="0.0" maxY="0.0"/>
-                                <inset key="largeContentSizeImageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="4"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <barButtonItem id="sVj-XD-8WE">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="aYR-kA-dZQ">
+                                    <rect key="frame" x="20" y="6" width="92" height="32"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                    <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-5"/>
+                                    <state key="normal" title="Button">
+                                        <color key="titleColor" red="0.1150785866" green="0.95564226320000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="projectBtnPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="FoR-ts-3nF"/>
+                                    </connections>
+                                </button>
                             </barButtonItem>
-                            <barButtonItem tag="1" title="[select project]" id="qgn-dw-eTY" userLabel="Project">
-                                <inset key="largeContentSizeImageInsets" minX="0.0" minY="-4" maxX="0.0" maxY="0.0"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <action selector="projectBtnPressed:" destination="vXZ-lx-hvc" id="bca-Uf-UFk"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem enabled="NO" title="&gt;" id="913-oJ-NWK">
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </barButtonItem>
-                            <barButtonItem tag="2" title="[select environment]" id="bA2-aG-azM" userLabel="Environment">
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <action selector="environmentBtnPressed:" destination="vXZ-lx-hvc" id="oFY-RT-4tX"/>
-                                </connections>
+                            <barButtonItem id="ohU-dw-tx5">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ItK-Ba-fos">
+                                    <rect key="frame" x="120" y="7" width="92" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                    <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-5"/>
+                                    <state key="normal" title="Button">
+                                        <color key="titleColor" red="1" green="0.0" blue="0.84254951721727966" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="environmentBtnPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="14O-Nd-Zno"/>
+                                    </connections>
+                                </button>
                             </barButtonItem>
                         </leftBarButtonItems>
-                        <barButtonItem key="rightBarButtonItem" title="Settings" image="3dot" id="sRu-Fx-YIP">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <action selector="menuClicked:" destination="vXZ-lx-hvc" id="lmy-OU-pgI"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="qsz-yl-yLJ" id="GfY-wC-e0J"/>
-                        <outlet property="envirBarBtnItem" destination="bA2-aG-azM" id="8hB-GC-k1T"/>
+                        <outlet property="envirBarBtnItem" destination="ItK-Ba-fos" id="7jL-zf-YXe"/>
                         <outlet property="mainView" destination="kh9-bI-dsS" id="oOK-Po-rX1"/>
-                        <outlet property="projectBarBtnItem" destination="qgn-dw-eTY" id="cfb-yw-yQj"/>
+                        <outlet property="projectBarButton" destination="aYR-kA-dZQ" id="51X-dO-8fd"/>
                         <outlet property="searchBar" destination="45d-GM-kiu" id="F2S-9o-Xhk"/>
                         <outlet property="view" destination="kh9-bI-dsS" id="EZd-Nk-3mB"/>
                         <segue destination="SdP-Yo-SJw" kind="push" identifier="pushToProjects" id="qTt-Zg-wvx"/>
                         <segue destination="KCy-fe-idJ" kind="push" identifier="pushToEnvironments" id="0qg-0Q-FJ8"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-339.13043478260875" y="-2377.2321428571427"/>
         </scene>
@@ -145,7 +163,11 @@
                             <outlet property="delegate" destination="SdP-Yo-SJw" id="GWe-Us-9vq"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="idC-IG-yw6"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Projects" id="XXn-SH-0Lm"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fZ5-A7-17f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -499,7 +521,6 @@
         <image name="flag" width="32" height="32"/>
         <image name="gaming-sdk-1" width="32" height="32"/>
         <image name="search" width="25" height="25"/>
-        <image name="start-up (1)" width="16" height="16"/>
     </resources>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>
