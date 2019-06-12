@@ -17,6 +17,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         
+        
         self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow") // hides the navbar shadow
         self.hideKeyboardWhenTappedAround()
         
@@ -24,23 +25,24 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         checkBackgroundFeatureValue()
         //        navBarItemFont()
-        navigationItem.leftBarButtonItem?.imageInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+        navigationItem.leftBarButtonItem?.imageInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
         LDClient.sharedInstance().delegate = self
         collectionView.register(FlagCell.self, forCellWithReuseIdentifier: "Cell")
         
         projectBtnText = "Choose Project"
         envirBtnText = "Choose Environment"
-        
-        projectBarButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
-        projectBarButton.titleLabel?.numberOfLines = 3
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         projectBarButton.frame = CGRect(x: 0, y: 0, width: 100, height: 35)
         projectBarButton.setTitle(projectBtnText! + " \u{2304}", for: .normal)
+        
         envirBarBtnItem.setTitle(envirBtnText! + " \u{2304}", for: .normal)
+        
+        projectBarButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
+        
+        envirBarBtnItem.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
         
     }
     // MARK: LaunchDarkly fron-end key
@@ -78,10 +80,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         performSegue(withIdentifier: "pushToEnvironments", sender: self)
     }
     
-    @IBAction func menuClicked(_ sender: UIBarButtonItem) {
+    @IBAction func menuBtnPressed(_ sender: Any) {
         view.endEditing(true)
         navBarLaunchSettings.showRightCorner()
     }
+//    @IBAction func menuClicked(_ sender: UIBarButtonItem) {
+//        view.endEditing(true)
+//        navBarLaunchSettings.showRightCorner()
+//    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10

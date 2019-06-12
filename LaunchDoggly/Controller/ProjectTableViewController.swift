@@ -23,7 +23,7 @@ class ProjectTableView: UITableViewController{
     let colorChange = UIColorFromRGB() //Custom calls to change colors from RGB format
     
     // hardcoded for now, this will be fetched from LD later
-    var projects = ["Support-service", "Spree Commerece", "api", "Billing application", "Conference Demo", "demo environment", "Empty project", "xamarin-testing", "testingtestingtestingtestingtesting]
+    var projects = ["Support-service", "Spree Commerece", "api", "Billing application", "Conference Demo", "demo environment", "Empty project", "xamarin-testing", "testingtestingtestingtestingtesting"]
     
     var checkedProject : String?
     var delegate : ProjectTableDelegate?
