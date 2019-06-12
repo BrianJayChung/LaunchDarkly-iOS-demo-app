@@ -12,6 +12,7 @@
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="ViewController" id="vXZ-lx-hvc" customClass="ViewController" customModule="LaunchDoggly" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5a7-TL-oxP"/>
@@ -70,27 +71,32 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="wxg-ya-2MO">
+                        <nil key="title"/>
                         <leftBarButtonItems>
-                            <barButtonItem title="Item" image="start-up (1)" id="fps-k3-DiW">
-                                <inset key="imageInsets" minX="-7" minY="1" maxX="0.0" maxY="0.0"/>
-                                <inset key="largeContentSizeImageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="4"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <barButtonItem id="sVj-XD-8WE">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="aYR-kA-dZQ">
+                                    <rect key="frame" x="20" y="6" width="92" height="32"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="16"/>
+                                    <state key="normal" title="Button">
+                                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="titleShadowColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="projectBtnPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="FoR-ts-3nF"/>
+                                    </connections>
+                                </button>
                             </barButtonItem>
-                            <barButtonItem tag="1" title="[select project]" id="qgn-dw-eTY" userLabel="Project">
-                                <inset key="largeContentSizeImageInsets" minX="0.0" minY="-4" maxX="0.0" maxY="0.0"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <action selector="projectBtnPressed:" destination="vXZ-lx-hvc" id="bca-Uf-UFk"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem enabled="NO" title="&gt;" id="913-oJ-NWK">
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </barButtonItem>
-                            <barButtonItem tag="2" title="[select environment]" id="bA2-aG-azM" userLabel="Environment">
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <action selector="environmentBtnPressed:" destination="vXZ-lx-hvc" id="oFY-RT-4tX"/>
-                                </connections>
+                            <barButtonItem id="ohU-dw-tx5">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ItK-Ba-fos">
+                                    <rect key="frame" x="120" y="7" width="92" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
+                                    <state key="normal" title="Button"/>
+                                    <connections>
+                                        <action selector="environmentBtnPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="14O-Nd-Zno"/>
+                                    </connections>
+                                </button>
                             </barButtonItem>
                         </leftBarButtonItems>
                         <barButtonItem key="rightBarButtonItem" title="Settings" image="3dot" id="sRu-Fx-YIP">
@@ -102,16 +108,15 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="qsz-yl-yLJ" id="GfY-wC-e0J"/>
-                        <outlet property="envirBarBtnItem" destination="bA2-aG-azM" id="8hB-GC-k1T"/>
+                        <outlet property="envirBarBtnItem" destination="ItK-Ba-fos" id="7jL-zf-YXe"/>
                         <outlet property="mainView" destination="kh9-bI-dsS" id="oOK-Po-rX1"/>
-                        <outlet property="projectBarBtnItem" destination="qgn-dw-eTY" id="cfb-yw-yQj"/>
+                        <outlet property="projectBarButton" destination="aYR-kA-dZQ" id="51X-dO-8fd"/>
                         <outlet property="searchBar" destination="45d-GM-kiu" id="F2S-9o-Xhk"/>
                         <outlet property="view" destination="kh9-bI-dsS" id="EZd-Nk-3mB"/>
                         <segue destination="SdP-Yo-SJw" kind="push" identifier="pushToProjects" id="qTt-Zg-wvx"/>
                         <segue destination="KCy-fe-idJ" kind="push" identifier="pushToEnvironments" id="0qg-0Q-FJ8"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-339.13043478260875" y="-2377.2321428571427"/>
         </scene>
@@ -499,7 +504,6 @@
         <image name="flag" width="32" height="32"/>
         <image name="gaming-sdk-1" width="32" height="32"/>
         <image name="search" width="25" height="25"/>
-        <image name="start-up (1)" width="16" height="16"/>
     </resources>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>
