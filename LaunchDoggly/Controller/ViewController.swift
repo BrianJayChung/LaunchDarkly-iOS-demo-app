@@ -10,8 +10,26 @@ import LaunchDarkly
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    var projectBtnText = "Choose Project"
-    var envirBtnText = "Choose Environment"
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+
+        if (velocity.y >= 0) {
+            UIView.animate(withDuration: 0.5, delay:0, options: UIView.AnimationOptions(),animations: {
+                self.navigationController?.setNavigationBarHidden(true, animated: false)
+                self.tabBarController?.tabBar.isHidden = true
+                }, completion: nil)
+        } else {
+            UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions(), animations: { self.navigationController?.setNavigationBarHidden(false, animated: false)
+                self.tabBarController?.tabBar.isHidden = false
+        }, completion: nil)
+        }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    var projectBtnText = "Project"
+    var envirBtnText = "Environment"
     
     let cellHeight = 150 // Use for the collectionViewCell height
     let customizeNavBarTitle = NavBarTitleFontStyle()
@@ -32,11 +50,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    @IBOutlet weak var projectBarButton: UIButton!
-    @IBOutlet weak var envirBarBtnItem: UIButton!
+//    @IBOutlet weak var projectBarButton: UIButton!
+//    @IBOutlet weak var envirBarBtnItem: UIButton!
     
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
+    
+    
+    @IBOutlet weak var environmentBtn: UIButton!
+    @IBOutlet weak var projectButton: UIButton!
     
     @IBAction func projectBtnPressed(_ sender: Any) {
         performSegue(withIdentifier: "pushToProjects", sender: self)
@@ -52,12 +74,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         checkBackgroundFeatureValue()
         
-        self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow") // hides the navbar shadow
+        self.collectionView.decelerationRate = UIScrollView.DecelerationRate(rawValue: 0)
+//        self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow") // hides the navbar shadow
         self.hideKeyboardWhenTappedAround()
         
         LDClient.sharedInstance().delegate = self
@@ -68,13 +89,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewWillAppear(_ animated: Bool) {
         
         // MARK: Logic to handle proj and envir changes
-        projectBarButton.frame = CGRect(x: 0, y: 0, width: 50, height: 35)
         
-        projectBarButton.setTitle(projectBtnText + " \u{2304}", for: .normal)
-        envirBarBtnItem.setTitle(envirBtnText + " \u{2304}", for: .normal)
+        projectButton.setTitle(projectBtnText + " \u{2304}", for: .normal)
+        environmentBtn.setTitle(envirBtnText + " \u{2304}", for: .normal)
         
-        projectBarButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
-        envirBarBtnItem.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
+        projectButton.titleLabel?.numberOfLines = 3
+        environmentBtn.titleLabel?.numberOfLines = 3
+        
+        projectButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
+        environmentBtn.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
+        
+        projectButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        environmentBtn.titleLabel?.adjustsFontSizeToFitWidth = true
         
     }
 
@@ -124,7 +150,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     // MARK: collectionView delegates for constructing the flag cell page
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 20
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

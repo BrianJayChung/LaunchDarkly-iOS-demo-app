@@ -58,10 +58,10 @@ class ProjectTableView: UITableViewController{
         
         CATransaction.setCompletionBlock {
             
-            _ = self.navigationController?.popViewController(animated: true)
+//            _ = self.navigationController?.popViewController(animated: true) // used for "show"
+            _ = self.dismiss(animated: true, completion: nil) // used due to present modally
 
         }
-        
         
         for cellPath in tableView.indexPathsForVisibleRows!{
             
@@ -74,6 +74,7 @@ class ProjectTableView: UITableViewController{
         
         tableView.deselectRow(at: indexPath, animated: true)
         tableView.endUpdates()
+        
         CATransaction.commit()
     }
 }
