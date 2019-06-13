@@ -10,18 +10,27 @@ import LaunchDarkly
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    var lastContentOffset: CGFloat = 0
+    
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-
-        if (velocity.y >= 0) {
+        
+        print(velocity, scrollView.contentOffset.y, lastContentOffset)
+        
+        if (self.lastContentOffset < scrollView.contentOffset.y && (self.lastContentOffset / scrollView.contentOffset.y) < 0)  {
+            
             UIView.animate(withDuration: 0.5, delay:0, options: UIView.AnimationOptions(),animations: {
                 self.navigationController?.setNavigationBarHidden(true, animated: false)
                 self.tabBarController?.tabBar.isHidden = true
                 }, completion: nil)
-        } else {
+            
+        } else if (self.lastContentOffset > scrollView.contentOffset.y) {
             UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions(), animations: { self.navigationController?.setNavigationBarHidden(false, animated: false)
                 self.tabBarController?.tabBar.isHidden = false
-        }, completion: nil)
+            }, completion: nil)
         }
+        
+        self.lastContentOffset = scrollView.contentOffset.y
+        
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -77,6 +86,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         super.viewDidLoad()
         checkBackgroundFeatureValue()
         
+        self.collectionView.keyboardDismissMode = .onDrag
         self.collectionView.decelerationRate = UIScrollView.DecelerationRate(rawValue: 0)
 //        self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow") // hides the navbar shadow
         self.hideKeyboardWhenTappedAround()

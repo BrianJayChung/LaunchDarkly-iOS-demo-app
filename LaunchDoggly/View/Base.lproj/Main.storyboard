@@ -88,6 +88,11 @@
                                 <rect key="frame" x="0.0" y="146" width="414" height="56"/>
                                 <color key="barTintColor" red="0.1215686275" green="0.1647058824" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="searchField.textColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" red="0.1215686275" green="0.1647058824" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -124,7 +129,6 @@
                         <outlet property="mainView" destination="kh9-bI-dsS" id="oOK-Po-rX1"/>
                         <outlet property="projectButton" destination="GBt-tn-78f" id="vBu-0k-Tuk"/>
                         <outlet property="searchBar" destination="zBO-ye-Upq" id="dUG-4G-dCR"/>
-                        <outlet property="searchBarToHide" destination="zBO-ye-Upq" id="K4C-RV-gAF"/>
                         <outlet property="view" destination="kh9-bI-dsS" id="EZd-Nk-3mB"/>
                         <segue destination="SdP-Yo-SJw" kind="modal" identifier="pushToProjects" id="qTt-Zg-wvx"/>
                         <segue destination="KCy-fe-idJ" kind="modal" identifier="pushToEnvironments" id="0qg-0Q-FJ8"/>
