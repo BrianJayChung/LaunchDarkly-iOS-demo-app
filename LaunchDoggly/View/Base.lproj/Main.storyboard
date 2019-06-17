@@ -46,8 +46,8 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="Bxn-Ab-JKI"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GBt-tn-78f">
-                                <rect key="frame" x="20" y="93" width="174.5" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GBt-tn-78f">
+                                <rect key="frame" x="20" y="98" width="174.5" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="8cK-eh-m5e"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="170" id="LPy-7i-SCh"/>
@@ -60,8 +60,8 @@
                                     <action selector="projectBtnPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="NjP-yD-6Gx"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DUZ-4S-kBY">
-                                <rect key="frame" x="219.5" y="93" width="174.5" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DUZ-4S-kBY">
+                                <rect key="frame" x="219.5" y="98" width="174.5" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="eAF-mV-9BF"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="170" id="whZ-E1-rEZ"/>
@@ -85,7 +85,7 @@
                                 </state>
                             </button>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Feature flags" translatesAutoresizingMaskIntoConstraints="NO" id="zBO-ye-Upq">
-                                <rect key="frame" x="0.0" y="146" width="414" height="56"/>
+                                <rect key="frame" x="0.0" y="148" width="414" height="56"/>
                                 <color key="barTintColor" red="0.1215686275" green="0.1647058824" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <userDefinedRuntimeAttributes>
@@ -101,12 +101,12 @@
                             <constraint firstAttribute="trailingMargin" secondItem="DUZ-4S-kBY" secondAttribute="trailing" id="Rdm-an-AtL"/>
                             <constraint firstItem="zBO-ye-Upq" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="Uee-YB-idt"/>
                             <constraint firstItem="GBt-tn-78f" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="ZHr-DG-apP"/>
-                            <constraint firstItem="zBO-ye-Upq" firstAttribute="top" secondItem="GBt-tn-78f" secondAttribute="bottom" constant="3" id="acy-6C-Gel"/>
+                            <constraint firstItem="zBO-ye-Upq" firstAttribute="top" secondItem="GBt-tn-78f" secondAttribute="bottom" id="acy-6C-Gel"/>
                             <constraint firstItem="qsz-yl-yLJ" firstAttribute="top" secondItem="5a7-TL-oxP" secondAttribute="bottom" constant="110" id="dUn-1D-IvR"/>
                             <constraint firstItem="DUZ-4S-kBY" firstAttribute="leading" secondItem="CxP-9Z-9da" secondAttribute="trailing" constant="5" id="hBT-fn-17c"/>
-                            <constraint firstItem="GBt-tn-78f" firstAttribute="top" secondItem="5a7-TL-oxP" secondAttribute="bottom" constant="5" id="iVa-bk-c0C"/>
+                            <constraint firstItem="GBt-tn-78f" firstAttribute="top" secondItem="5a7-TL-oxP" secondAttribute="bottom" constant="10" id="iVa-bk-c0C"/>
                             <constraint firstItem="bHU-qB-ZGs" firstAttribute="top" secondItem="qsz-yl-yLJ" secondAttribute="bottom" constant="-129" id="nk4-25-3ib"/>
-                            <constraint firstItem="DUZ-4S-kBY" firstAttribute="top" secondItem="5a7-TL-oxP" secondAttribute="bottom" constant="5" id="o6r-Qx-yPx"/>
+                            <constraint firstItem="DUZ-4S-kBY" firstAttribute="top" secondItem="5a7-TL-oxP" secondAttribute="bottom" constant="10" id="o6r-Qx-yPx"/>
                             <constraint firstItem="CxP-9Z-9da" firstAttribute="top" secondItem="5a7-TL-oxP" secondAttribute="bottom" constant="21" id="orF-mb-kXF"/>
                             <constraint firstItem="qsz-yl-yLJ" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="tpR-Gu-th1"/>
                             <constraint firstAttribute="trailing" secondItem="zBO-ye-Upq" secondAttribute="trailing" id="uQX-PN-JAd"/>
@@ -130,7 +130,7 @@
                         <outlet property="projectButton" destination="GBt-tn-78f" id="vBu-0k-Tuk"/>
                         <outlet property="searchBar" destination="zBO-ye-Upq" id="dUG-4G-dCR"/>
                         <outlet property="view" destination="kh9-bI-dsS" id="EZd-Nk-3mB"/>
-                        <segue destination="SdP-Yo-SJw" kind="modal" identifier="pushToProjects" id="qTt-Zg-wvx"/>
+                        <segue destination="SdP-Yo-SJw" kind="push" identifier="pushToProjects" id="qTt-Zg-wvx"/>
                         <segue destination="KCy-fe-idJ" kind="modal" identifier="pushToEnvironments" id="0qg-0Q-FJ8"/>
                     </connections>
                 </viewController>
@@ -143,7 +143,7 @@
             <objects>
                 <tableViewController id="SdP-Yo-SJw" customClass="ProjectTableView" customModule="LaunchDoggly" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="cT3-lb-SOP">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
@@ -169,7 +169,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Projects" id="XXn-SH-0Lm"/>
+                    <navigationItem key="navigationItem" title="Projects" largeTitleDisplayMode="always" id="XXn-SH-0Lm"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fZ5-A7-17f" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -380,10 +380,10 @@
             </objects>
             <point key="canvasLocation" x="-1914" y="-1492"/>
         </scene>
-        <!--View Controller-->
+        <!--Audit Log View Controller-->
         <scene sceneID="56a-b1-40m">
             <objects>
-                <viewController id="5OP-sq-g7R" sceneMemberID="viewController">
+                <viewController id="5OP-sq-g7R" customClass="AuditLogViewController" customModule="LaunchDoggly" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vZc-n6-7aL"/>
                         <viewControllerLayoutGuide type="bottom" id="INe-Eo-oAk"/>
@@ -392,16 +392,81 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="search" translatesAutoresizingMaskIntoConstraints="NO" id="Vna-CX-p6D">
-                                <rect key="frame" x="11" y="52" width="53" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="API Response" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ZUv-cs-jbD">
+                                <rect key="frame" x="20" y="359" width="374" height="434"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="WSP-ww-WFv">
+                                <rect key="frame" x="53" y="52" width="331" height="293"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="331" id="LFi-aP-BVK"/>
+                                    <constraint firstAttribute="height" constant="293" id="OxX-51-vQC"/>
+                                </constraints>
+                                <mutableString key="text">import Alamofire
+import SwiftyJSON
+
+class LaunchDarklyApiModel {
+    
+    let apiKey: String!
+    let baseUrl: String!
+    
+    let headers = ["Authorization": "api-f5cfb140-5537-4c6f-806c-02e4d34a1d20"]
+    
+    init() {
+        self.apiKey = "api-f5cfb140-5537-4c6f-806c-02e4d34a1d20"
+        self.baseUrl = "https://app.launchdarkly.com/api/v2/"
+    }
+    
+    func getData(path: String, completionHandler: @escaping (Result&lt;[String: Any]&gt;) -&gt; Void) {
+        let url = baseUrl.appending(path)
+        print(url)
+        performRequest(url: url, headers: headers, completion: completionHandler)
+    }
+    
+    func performRequest(url: String, headers: [String:String], completion: @escaping (Result&lt;[String: Any]&gt;) -&gt; Void ) {
+        
+        Alamofire.request(url, method: .get, headers: headers).responseJSON {
+            
+            response in
+            
+            switch response.result {
+                
+            case .success(let value as [String: Any]):
+                completion(.success(value))
+                
+            case .failure(let error):
+                completion(.failure(error))
+                
+            default:
+                fatalError("received non-dict JSON response")
+            }
+        }
+    }
+}
+</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="WSP-ww-WFv" firstAttribute="leading" secondItem="5Dw-Fh-d4M" secondAttribute="leadingMargin" constant="33" id="0Ds-gu-6RF"/>
+                            <constraint firstItem="ZUv-cs-jbD" firstAttribute="top" secondItem="vZc-n6-7aL" secondAttribute="bottom" constant="315" id="gLu-mU-8XO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="WSP-ww-WFv" secondAttribute="trailing" constant="10" id="h6W-6l-qx3"/>
+                            <constraint firstItem="WSP-ww-WFv" firstAttribute="top" secondItem="vZc-n6-7aL" secondAttribute="bottom" constant="8" id="ieh-xl-KeE"/>
+                            <constraint firstItem="ZUv-cs-jbD" firstAttribute="top" secondItem="WSP-ww-WFv" secondAttribute="bottom" constant="14" id="mja-F2-1vq"/>
+                            <constraint firstItem="INe-Eo-oAk" firstAttribute="top" secondItem="ZUv-cs-jbD" secondAttribute="bottom" constant="20" id="q0B-Pm-vys"/>
+                            <constraint firstItem="ZUv-cs-jbD" firstAttribute="leading" secondItem="5Dw-Fh-d4M" secondAttribute="leadingMargin" id="qJS-kz-mWf"/>
+                            <constraint firstItem="ZUv-cs-jbD" firstAttribute="trailing" secondItem="5Dw-Fh-d4M" secondAttribute="trailingMargin" id="wVz-ii-lc3"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="recents" id="eD3-iC-U7b"/>
                     <navigationItem key="navigationItem" id="BrQ-wM-AU0"/>
                     <connections>
+                        <outlet property="responseText" destination="ZUv-cs-jbD" id="GgW-vx-VZE"/>
                         <outlet property="searchDisplayController" destination="xQV-U9-r6n" id="AaH-yy-qLp"/>
                     </connections>
                 </viewController>
@@ -415,7 +480,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-1171" y="-1504"/>
+            <point key="canvasLocation" x="-1171.0144927536232" y="-1504.0178571428571"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Xmz-wE-DfT">
@@ -446,7 +511,9 @@
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="xRV-Zc-FjT"/>
+                    <navigationItem key="navigationItem" id="xRV-Zc-FjT">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="09m-OA-D7U"/>
+                    </navigationItem>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" translucent="NO" id="gpJ-Q4-Lsd">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -524,7 +591,6 @@
         <image name="flag" width="32" height="32"/>
         <image name="gaming-sdk-1" width="32" height="32"/>
         <image name="right-arrow-angle" width="24" height="24"/>
-        <image name="search" width="25" height="25"/>
     </resources>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

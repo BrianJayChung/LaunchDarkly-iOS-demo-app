@@ -1,10 +1,18 @@
 import UIKit
 import LaunchDarkly
+import Alamofire
+import SwiftyJSON
+
+protocol ApiDelegate: class {
+    func apiDidFinish(response: DataResponse<Any>?)
+}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    
+    var delegate: ApiDelegate?
     
     private let mobileKey = "mob-8e3e03d8-355e-432b-a000-e2a15a12d7e6"
     
@@ -13,36 +21,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().tintColor = .white
         UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().isTranslucent = false
-//        UINavigationBar.appearance().barTintColor = UIColor(red: 0.054902, green: 0.0980392, blue: 0.196078, alpha: 1.0)
-//        UINavigationBar.appearance().shadowImage = UIImage()
-//        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-        // Override point for customization after application launch.
+        
         return true
     }
-    
+ 
     var restrictRotation:UIInterfaceOrientationMask = .portrait
     
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask
     {
         return self.restrictRotation
     }
-//    var orientationLock = UIInterfaceOrientationMask.all
-//    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-//        return self.orientationLock
-//    }
-//
-//    struct AppUtility {
-//        static func lockOrientation(_ orientation: UIInterfaceOrientationMask) {
-//            if let delegate = UIApplication.shared.delegate as? AppDelegate {
-//                delegate.orientationLock = orientation
-//            }
-//        }
-//
-//        static func lockOrientation(_ orientation: UIInterfaceOrientationMask, andRotateTo rotateOrientation:UIInterfaceOrientation) {
-//            self.lockOrientation(orientation)
-//            UIDevice.current.setValue(rotateOrientation.rawValue, forKey: "orientation")
-//        }
-//    }
+
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

@@ -7,35 +7,12 @@
 //
 import UIKit
 import LaunchDarkly
+import SwiftyJSON
+import Alamofire
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
+ 
     var lastContentOffset: CGFloat = 0
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        
-        print(velocity, scrollView.contentOffset.y, lastContentOffset)
-        
-        if (self.lastContentOffset < scrollView.contentOffset.y && (self.lastContentOffset / scrollView.contentOffset.y) < 0)  {
-            
-            UIView.animate(withDuration: 0.5, delay:0, options: UIView.AnimationOptions(),animations: {
-                self.navigationController?.setNavigationBarHidden(true, animated: false)
-                self.tabBarController?.tabBar.isHidden = true
-                }, completion: nil)
-            
-        } else if (self.lastContentOffset > scrollView.contentOffset.y) {
-            UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions(), animations: { self.navigationController?.setNavigationBarHidden(false, animated: false)
-                self.tabBarController?.tabBar.isHidden = false
-            }, completion: nil)
-        }
-        
-        self.lastContentOffset = scrollView.contentOffset.y
-        
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
     
     var projectBtnText = "Project"
     var envirBtnText = "Environment"
@@ -52,15 +29,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     // MARK: LaunchDarkly fron-end key
     // This is safe to expose as it can only fetch the flag evaluation outcome
     let config = LDConfig.init(mobileKey: "mob-8e3e03d8-355e-432b-a000-e2a15a12d7e6")
+    let LdApi = LaunchDarklyApiModel()
     
-    //Set feature flag key here
-    //fileprivate let menuFlagKey = "show-widgets"
     fileprivate let backgroundColorKey = "background-color"
     
     @IBOutlet weak var collectionView: UICollectionView!
-    
-//    @IBOutlet weak var projectBarButton: UIButton!
-//    @IBOutlet weak var envirBarBtnItem: UIButton!
     
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -82,18 +55,29 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         navBarLaunchSettings.showRightCorner()
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+//        navigationController?.tabBarController?.tabBar.isHidden = true
         checkBackgroundFeatureValue()
         
         self.collectionView.keyboardDismissMode = .onDrag
         self.collectionView.decelerationRate = UIScrollView.DecelerationRate(rawValue: 0)
-//        self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow") // hides the navbar shadow
+        self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow") // hides the navbar shadow
         self.hideKeyboardWhenTappedAround()
         
         LDClient.sharedInstance().delegate = self
+        
         collectionView.register(FlagCell.self, forCellWithReuseIdentifier: "Cell")
 
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: CGFloat(cellHeight), right: 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -117,6 +101,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         if segue.identifier == "pushToProjects" {
             let projVC = segue.destination as! ProjectTableView
+            let backItem = UIBarButtonItem()
+            backItem.title = "Home"
+            navigationItem.backBarButtonItem = backItem
             projVC.checkedProject = projectBtnText
             projVC.delegate = self
         }
@@ -127,6 +114,27 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+        let heightLimit = scrollView.contentSize.height - scrollView.bounds.size.height // this is used to determine the scrollview height to prevent botom bounce to hide tab bar
+        
+        if (self.lastContentOffset < scrollView.contentOffset.y) && (scrollView.contentOffset.y > 0) {
+            
+            UIView.animate(withDuration: 0.5, delay:0, options: UIView.AnimationOptions(),animations: {
+                self.navigationController?.setNavigationBarHidden(true, animated: false)
+                self.tabBarController?.tabBar.isHidden = true
+            }, completion: nil)
+            
+        } else if (self.lastContentOffset > scrollView.contentOffset.y) && (scrollView.contentOffset.y < heightLimit) {
+            UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions(), animations: { self.navigationController?.setNavigationBarHidden(false, animated: false)
+                self.tabBarController?.tabBar.isHidden = false
+            }, completion: nil)
+        }
+        
+        self.lastContentOffset = scrollView.contentOffset.y
+        
+    }
     // MARK: New UI page when clicked on one of the settings
     func showControllerForSetting(setting: Setting){
         
