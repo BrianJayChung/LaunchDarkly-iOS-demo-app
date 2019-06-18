@@ -11,7 +11,28 @@ import SwiftyJSON
 import Alamofire
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
- 
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    @IBOutlet weak var environmentBtn: UIButton!
+    @IBOutlet weak var projectButton: UIButton!
+    
+    @IBAction func projectBtnPressed(_ sender: Any) {
+        performSegue(withIdentifier: "pushToProjects", sender: self)
+    }
+    
+    @IBAction func environmentBtnPressed(_ sender: Any) {
+        performSegue(withIdentifier: "pushToEnvironments", sender: self)
+    }
+    
+    @IBAction func menuBtnPressed(_ sender: Any) {
+        view.endEditing(true)
+        navBarLaunchSettings.showRightCorner()
+    }
+    
     var lastContentOffset: CGFloat = 0
     
     var projectBtnText = "Project"
@@ -33,29 +54,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let config = LDConfig.init(mobileKey: "mob-8e3e03d8-355e-432b-a000-e2a15a12d7e6")
     let ldApi = LaunchDarklyApiModel()
     
-    fileprivate let backgroundColorKey = "background-color"
-    
-    @IBOutlet weak var collectionView: UICollectionView!
-    
-    @IBOutlet weak var mainView: UIView!
-    @IBOutlet weak var searchBar: UISearchBar!
-    
-    
-    @IBOutlet weak var environmentBtn: UIButton!
-    @IBOutlet weak var projectButton: UIButton!
-    
-    @IBAction func projectBtnPressed(_ sender: Any) {
-        performSegue(withIdentifier: "pushToProjects", sender: self)
-    }
-    
-    @IBAction func environmentBtnPressed(_ sender: Any) {
-        performSegue(withIdentifier: "pushToEnvironments", sender: self)
-    }
-    
-    @IBAction func menuBtnPressed(_ sender: Any) {
-        view.endEditing(true)
-        navBarLaunchSettings.showRightCorner()
-    }
+    let backgroundColorKey = "background-color"
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -63,8 +62,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let flag = FlagList()
-        flag.testText = "sdfsdfs"
 //        navigationController?.tabBarController?.tabBar.isHidden = true
         checkBackgroundFeatureValue()
         
@@ -120,41 +117,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        
-        let heightLimit = scrollView.contentSize.height - scrollView.bounds.size.height // this is used to determine the scrollview height to prevent botom bounce to hide tab bar
-        
-        if (self.lastContentOffset < scrollView.contentOffset.y) && (scrollView.contentOffset.y > 0) {
-            
-            UIView.animate(withDuration: 0.5, delay:0, options: UIView.AnimationOptions(),animations: {
-                self.navigationController?.setNavigationBarHidden(true, animated: false)
-                self.tabBarController?.tabBar.isHidden = true
-            }, completion: nil)
-            
-        } else if (self.lastContentOffset > scrollView.contentOffset.y) && (scrollView.contentOffset.y < heightLimit) {
-            UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions(), animations: { self.navigationController?.setNavigationBarHidden(false, animated: false)
-                self.tabBarController?.tabBar.isHidden = false
-            }, completion: nil)
-        }
-        
-        self.lastContentOffset = scrollView.contentOffset.y
-        
-    }
-    // MARK: New UI page when clicked on one of the settings
-    func showControllerForSetting(setting: Setting){
-        
-        let settingsPopupController = UIViewController()
-        settingsPopupController.navigationItem.title = setting.name
-        settingsPopupController.view.backgroundColor = .white
-        navigationController?.navigationBar.tintColor = .white
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        navigationController?.pushViewController(settingsPopupController, animated: true)
-        
-    }
-    
     // MARK: Function to set the background feature flag
-    fileprivate func checkBackgroundFeatureValue(){
+    func checkBackgroundFeatureValue(){
         let featureFlagValue = LDClient.sharedInstance().boolVariation(backgroundColorKey, fallback: false)
         if featureFlagValue {
             colorToggles(rgbColor: UIColorFromRGB(red: 0.121568, green: 0.164706, blue: 0.266667, alpha: 1)) // default LD dark blue
@@ -162,14 +126,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         else {
             colorToggles(rgbColor: UIColorFromRGB(red: 0, green: 0, blue: 1, alpha: 1)) // blue
         }
-    }
-    
-    func colorToggles(rgbColor: UIColorFromRGB){
-        navigationController?.navigationBar.barTintColor = rgbColor
-        tabBarController?.tabBar.barTintColor = rgbColor
-        searchBar?.backgroundColor = rgbColor
-        mainView?.backgroundColor = rgbColor
-        collectionView?.backgroundColor = rgbColor
     }
     
     // MARK: collectionView delegates for constructing the flag cell page
@@ -191,9 +147,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         return CGSize(width: collectionView.frame.width, height: CGFloat(cellHeight))
     }
+
+    //MARK: -> Network calls
     
     func apiCall() {
         ldApi.getData(path : "projects") { result in
@@ -204,9 +161,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             case .success(let value):
                 let json = JSON(value)
                 for (_, subJson) in json["items"] {
+                    
                     let projName = Flag()
                     projName.text = subJson["name"].string!
-                    
                     self.flagList.items.append(projName)
                 }
             }
@@ -215,32 +172,3 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
 }
 
-// LaunchDarkly SDK delegate
-extension ViewController: ClientDelegate {
-    func featureFlagDidUpdate(_ key: String) {
-        if key == backgroundColorKey {
-            checkBackgroundFeatureValue()
-        }
-    }
-}
-
-extension ViewController: FlagCellDelegate {
-    func switchOnFlag(_ controller: FlagCell){
-        colorToggles(rgbColor: UIColorFromRGB(red: 0.121568, green: 0.164706, blue: 0.266667, alpha: 1))
-    }
-    func switchOffFlag(_ controller: FlagCell){
-        colorToggles(rgbColor: UIColorFromRGB(red: 0, green: 0, blue: 1, alpha: 1))
-    }
-}
-
-extension ViewController: EnvironmentsTableDelegate {
-    func envirSelected(envirName: String?) {
-        envirBtnText = envirName!
-    }
-}
-
-extension ViewController: ProjectTableDelegate {
-    func projectSelected(projectName: String?) {
-        projectBtnText = projectName!
-    }
-}

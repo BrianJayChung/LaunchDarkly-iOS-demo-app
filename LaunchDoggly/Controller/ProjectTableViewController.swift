@@ -15,17 +15,16 @@ protocol ProjectTableDelegate {
 
 class ProjectTableView: UITableViewController {
     
-//    let flagList = FlagList()
     var checkedProject : String?
     var delegate : ProjectTableDelegate?
     var flagList: FlagList!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        
         navigationController?.navigationBar.titleTextAttributes = textAttributes
-        print(flagList.items.count)
-//        print(checkedProject)
     }
     
 //    override func viewDidAppear(_ animated: Bool) {
@@ -43,9 +42,7 @@ class ProjectTableView: UITableViewController {
     
 //    let ldApi = LaunchDarklyApiModel()
     let colorChange = UIColorFromRGB() //Custom calls to change colors from RGB format
-    
-    // hardcoded for now, this will be fetched from LD later
-//    var projects = [Flag]()
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return flagList.items.count
     }
@@ -53,16 +50,10 @@ class ProjectTableView: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "projectCell", for: indexPath)
-//            cell.textLabel?.text = projects[indexPath.item].text
             cell.textLabel?.text = flagList.items[indexPath.row].text
             cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
-//        let item = projects[indexPath.row]
-        let item = flagList.items[indexPath.row]
         
-//        if cell.textLabel!.text == checkedProject {
-//            print("truesdfsdfsfsdfsd")
-//            cell.accessoryType = .checkmark
-//        }
+        let item = flagList.items[indexPath.row]
         
         configureCheckmark(for: cell, with: item)
         cell.tintColor = UIColor.red
@@ -72,7 +63,7 @@ class ProjectTableView: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let cell = tableView.cellForRow(at: indexPath) {
-//            let item = projects[indexPath.item]
+            
             let item = flagList.items[indexPath.row]
             print(item.text)
             item.toggleChecked()
@@ -102,25 +93,6 @@ class ProjectTableView: UITableViewController {
         
         CATransaction.commit()
     }
-    
-//    func apiCall() {
-//        ldApi.getData(path : "projects") { result in
-//            switch result {
-//            case .failure(let error):
-//                print(error)
-//
-//            case .success(let value):
-//                let json = JSON(value)
-//                for (_, subJson) in json["items"] {
-//                    let projName = Flag()
-//                    projName.text = subJson["name"].string!
-//
-//                    self.flagList.items.append(projName)
-//                    self.tableView.reloadData()
-//                }
-//            }
-//        }
-//    }
     
     func configureCheckmark(for cell: UITableViewCell, with item: Flag) {
         
