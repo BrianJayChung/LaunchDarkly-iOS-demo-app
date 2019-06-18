@@ -17,6 +17,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var projectBtnText = "Project"
     var envirBtnText = "Environment"
     
+    let flagList = FlagList()
+    
     let cellHeight = 150 // Use for the collectionViewCell height
     let customizeNavBarTitle = NavBarTitleFontStyle()
     
@@ -29,7 +31,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     // MARK: LaunchDarkly fron-end key
     // This is safe to expose as it can only fetch the flag evaluation outcome
     let config = LDConfig.init(mobileKey: "mob-8e3e03d8-355e-432b-a000-e2a15a12d7e6")
-    let LdApi = LaunchDarklyApiModel()
+    let ldApi = LaunchDarklyApiModel()
     
     fileprivate let backgroundColorKey = "background-color"
     
@@ -61,6 +63,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let flag = FlagList()
+        flag.testText = "sdfsdfs"
 //        navigationController?.tabBarController?.tabBar.isHidden = true
         checkBackgroundFeatureValue()
         
@@ -96,6 +100,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         projectButton.titleLabel?.adjustsFontSizeToFitWidth = true
         environmentBtn.titleLabel?.adjustsFontSizeToFitWidth = true
         
+        apiCall()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
@@ -105,6 +110,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             backItem.title = "Home"
             navigationItem.backBarButtonItem = backItem
             projVC.checkedProject = projectBtnText
+            projVC.flagList = flagList
             projVC.delegate = self
         }
         if segue.identifier == "pushToEnvironments" {
@@ -187,6 +193,24 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         return CGSize(width: collectionView.frame.width, height: CGFloat(cellHeight))
+    }
+    
+    func apiCall() {
+        ldApi.getData(path : "projects") { result in
+            switch result {
+            case .failure(let error):
+                print(error)
+                
+            case .success(let value):
+                let json = JSON(value)
+                for (_, subJson) in json["items"] {
+                    let projName = Flag()
+                    projName.text = subJson["name"].string!
+                    
+                    self.flagList.items.append(projName)
+                }
+            }
+        }
     }
     
 }

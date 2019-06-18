@@ -18,6 +18,8 @@
 		7B49BC712287328E00183BEA /* SettingsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B49BC702287328E00183BEA /* SettingsPageViewController.swift */; };
 		7B4BE7C922B462400096D5F9 /* AuditLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4BE7C822B462400096D5F9 /* AuditLogViewController.swift */; };
 		7B4BE7CB22B803AB0096D5F9 /* LaunchDarklyDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4BE7CA22B803AB0096D5F9 /* LaunchDarklyDataModel.swift */; };
+		7B4BE7CD22B89EC70096D5F9 /* Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4BE7CC22B89EC70096D5F9 /* Flag.swift */; };
+		7B4BE7CF22B8A88E0096D5F9 /* FlagList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4BE7CE22B8A88E0096D5F9 /* FlagList.swift */; };
 		7B513B8222A053BE0047D9FC /* FlagCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B513B8122A053BE0047D9FC /* FlagCells.swift */; };
 		7B5FE6472284CECF00C26878 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5FE6462284CECF00C26878 /* AppDelegate.swift */; };
 		7B5FE6492284CECF00C26878 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5FE6482284CECF00C26878 /* ViewController.swift */; };
@@ -40,6 +42,8 @@
 		7B49BC702287328E00183BEA /* SettingsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageViewController.swift; sourceTree = "<group>"; };
 		7B4BE7C822B462400096D5F9 /* AuditLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditLogViewController.swift; sourceTree = "<group>"; };
 		7B4BE7CA22B803AB0096D5F9 /* LaunchDarklyDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LaunchDarklyDataModel.swift; path = LaunchDoggly/Controller/LaunchDarklyDataModel.swift; sourceTree = SOURCE_ROOT; };
+		7B4BE7CC22B89EC70096D5F9 /* Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Flag.swift; path = LaunchDoggly/Controller/Flag.swift; sourceTree = SOURCE_ROOT; };
+		7B4BE7CE22B8A88E0096D5F9 /* FlagList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FlagList.swift; path = LaunchDoggly/Controller/FlagList.swift; sourceTree = SOURCE_ROOT; };
 		7B513B8122A053BE0047D9FC /* FlagCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagCells.swift; sourceTree = "<group>"; };
 		7B5FE6432284CECF00C26878 /* LaunchDoggly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LaunchDoggly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B5FE6462284CECF00C26878 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -147,6 +151,8 @@
 			isa = PBXGroup;
 			children = (
 				7B4BE7CA22B803AB0096D5F9 /* LaunchDarklyDataModel.swift */,
+				7B4BE7CC22B89EC70096D5F9 /* Flag.swift */,
+				7B4BE7CE22B8A88E0096D5F9 /* FlagList.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -305,6 +311,7 @@
 				7B5FE6492284CECF00C26878 /* ViewController.swift in Sources */,
 				7B5FE6472284CECF00C26878 /* AppDelegate.swift in Sources */,
 				7B318DAF229B1E0A009F297D /* EnvironmentsTableViewController.swift in Sources */,
+				7B4BE7CD22B89EC70096D5F9 /* Flag.swift in Sources */,
 				7B32EB312294DD3B00605948 /* SdkTableViewCell.swift in Sources */,
 				7B513B8222A053BE0047D9FC /* FlagCells.swift in Sources */,
 				7B0BB78F228BE4710095E05A /* Extensions.swift in Sources */,
@@ -312,6 +319,7 @@
 				7B318DAD229B1DA9009F297D /* ProjectTableViewController.swift in Sources */,
 				7B0BB78C228BD4C00095E05A /* SettingPageCell.swift in Sources */,
 				7BD98C74228A76C30056D748 /* LoginPageViewController.swift in Sources */,
+				7B4BE7CF22B8A88E0096D5F9 /* FlagList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

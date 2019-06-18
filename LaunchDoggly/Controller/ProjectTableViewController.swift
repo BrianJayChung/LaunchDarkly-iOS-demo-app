@@ -13,53 +13,74 @@ protocol ProjectTableDelegate {
     func projectSelected(projectName: String?)
 }
 
-class ProjectTableView: UITableViewController{
+class ProjectTableView: UITableViewController {
+    
+//    let flagList = FlagList()
+    var checkedProject : String?
+    var delegate : ProjectTableDelegate?
+    var flagList: FlagList!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
-//        let backItem = UIBarButtonItem()
-//        backItem.title = "Back"
-//        navigationItem.backBarButtonItem = backItem
+        print(flagList.items.count)
+//        print(checkedProject)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        apiCall()
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        let flag1 = Flag()
+//        flag1.text = "tesdfsd"
+//        flagList.items.append(flag1)
+//        print(flagList.items[0].isChecked)
+//        apiCall()
     }
     
-    let ldApi = LaunchDarklyApiModel()
+//    let ldApi = LaunchDarklyApiModel()
     let colorChange = UIColorFromRGB() //Custom calls to change colors from RGB format
     
     // hardcoded for now, this will be fetched from LD later
-    var projects = [String]()
-    
-    var checkedProject : String?
-    var delegate : ProjectTableDelegate?
-    
+//    var projects = [Flag]()
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return projects.count
+        return flagList.items.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "projectCell", for: indexPath)
-            cell.textLabel?.text = projects[indexPath.item]
+//            cell.textLabel?.text = projects[indexPath.item].text
+            cell.textLabel?.text = flagList.items[indexPath.row].text
             cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
-        if cell.textLabel?.text == checkedProject {
-            
-            cell.accessoryType = .checkmark
-            
-        }
+//        let item = projects[indexPath.row]
+        let item = flagList.items[indexPath.row]
+        
+//        if cell.textLabel!.text == checkedProject {
+//            print("truesdfsdfsfsdfsd")
+//            cell.accessoryType = .checkmark
+//        }
+        
+        configureCheckmark(for: cell, with: item)
         cell.tintColor = UIColor.red
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        delegate?.projectSelected(projectName: projects[indexPath.item])
+        if let cell = tableView.cellForRow(at: indexPath) {
+//            let item = projects[indexPath.item]
+            let item = flagList.items[indexPath.row]
+            print(item.text)
+            item.toggleChecked()
+            print(item.isChecked)
+            configureCheckmark(for: cell, with: item)
+        }
+//        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        delegate?.projectSelected(projectName: flagList.items[indexPath.row].text)
         
         //CATransaction to set completion action, which is to return back to previous VC
         CATransaction.begin()
@@ -82,19 +103,31 @@ class ProjectTableView: UITableViewController{
         CATransaction.commit()
     }
     
-    func apiCall() {
-        ldApi.getData(path : "projects") { result in
-            switch result {
-            case .failure(let error):
-                print(error)
-                
-            case .success(let value):
-                let json = JSON(value)
-                for (_, subJson) in json["items"] {
-                    self.projects.append(subJson["name"].string!)
-                    self.tableView.reloadData()
-                }
-            }
+//    func apiCall() {
+//        ldApi.getData(path : "projects") { result in
+//            switch result {
+//            case .failure(let error):
+//                print(error)
+//
+//            case .success(let value):
+//                let json = JSON(value)
+//                for (_, subJson) in json["items"] {
+//                    let projName = Flag()
+//                    projName.text = subJson["name"].string!
+//
+//                    self.flagList.items.append(projName)
+//                    self.tableView.reloadData()
+//                }
+//            }
+//        }
+//    }
+    
+    func configureCheckmark(for cell: UITableViewCell, with item: Flag) {
+        
+        if item.isChecked {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
         }
     }
 }
