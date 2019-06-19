@@ -38,6 +38,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var projectBtnText = "Project"
     var envirBtnText = "Environment"
     
+    let api = ApiKeys() // initializes plist APIs
     let flagList = FlagList()
     
     let cellHeight = 150 // Use for the collectionViewCell height
@@ -52,6 +53,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     // MARK: LaunchDarkly fron-end key
     // This is safe to expose as it can only fetch the flag evaluation outcome
     let config = LDConfig.init(mobileKey: "mob-8e3e03d8-355e-432b-a000-e2a15a12d7e6")
+    
     let ldApi = LaunchDarklyApiModel()
     
     let backgroundColorKey = "background-color"
@@ -61,9 +63,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     override func viewDidLoad() {
+
         super.viewDidLoad()
 //        navigationController?.tabBarController?.tabBar.isHidden = true
         checkBackgroundFeatureValue()
+        
         
         self.collectionView.keyboardDismissMode = .onDrag
         self.collectionView.decelerationRate = UIScrollView.DecelerationRate(rawValue: 0)

@@ -11,7 +11,6 @@ protocol ApiDelegate: class {
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    
     var delegate: ApiDelegate?
     
     private let mobileKey = "mob-8e3e03d8-355e-432b-a000-e2a15a12d7e6"

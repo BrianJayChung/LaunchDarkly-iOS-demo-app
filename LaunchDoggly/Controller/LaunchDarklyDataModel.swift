@@ -11,17 +11,21 @@ import SwiftyJSON
 
 class LaunchDarklyApiModel {
     
-    let apiKey: String!
+    let sdkKey: String!
     let baseUrl: String!
     
-    let headers = ["Authorization": "api-f5cfb140-5537-4c6f-806c-02e4d34a1d20"]
+    let api = ApiKeys()
     
     init() {
-        self.apiKey = "api-f5cfb140-5537-4c6f-806c-02e4d34a1d20"
+        
+        self.sdkKey = api.ldApiKey()
         self.baseUrl = "https://app.launchdarkly.com/api/v2/"
+        
     }
     
     func getData(path: String, completionHandler: @escaping (Result<[String: Any]>) -> Void) {
+        let headers = ["Authorization": self.sdkKey] as! [String: String]
+        print(headers)
         let url = baseUrl.appending(path)
         
         performRequest(url: url, headers: headers, completion: completionHandler)
@@ -32,7 +36,7 @@ class LaunchDarklyApiModel {
         Alamofire.request(url, method: .get, headers: headers).responseJSON {
             
             response in
-            
+            print("Response status code: \(String(describing: response.response?.statusCode))")
             switch response.result {
                 
             case .success(let value as [String: Any]):
