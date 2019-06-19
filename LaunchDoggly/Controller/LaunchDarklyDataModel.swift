@@ -25,7 +25,7 @@ class LaunchDarklyApiModel {
     
     func getData(path: String, completionHandler: @escaping (Result<[String: Any]>) -> Void) {
         let headers = ["Authorization": self.sdkKey] as! [String: String]
-        print(headers)
+        
         let url = baseUrl.appending(path)
         
         performRequest(url: url, headers: headers, completion: completionHandler)
