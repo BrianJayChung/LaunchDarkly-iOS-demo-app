@@ -1,4 +1,9 @@
-# LaunchDoggly-iOS-demo-app
+# LaunchDoggly-iOS-app
+
+![login page](https://github.com/BrianJayChung/LaunchDoggly-iOS-app/blob/master/Appscreenshots/login-screen.png)
+
+![flags](https://github.com/BrianJayChung/LaunchDoggly-iOS-app/blob/master/Appscreenshots/flags-screen.png)
+
 ---
 LaunchDoggly is a feature management platform that serves over 100 billion feature flags daily to help teams build better software, faster. Get started using [LaunchDoggly](https://docs.LaunchDoggly.com/docs/getting-started)
 
@@ -21,6 +26,3 @@ LaunchDarkly api key
 
 - create plist called keys.plist and configure it as
 : sdk-key: "your-sdk-key"
-
-![login page](https://github.com/BrianJayChung/LaunchDoggly-iOS-app/blob/master/Appscreenshots/login-screen.png)
-![flags](https://github.com/BrianJayChung/LaunchDoggly-iOS-app/blob/master/Appscreenshots/flags-screen.png)
