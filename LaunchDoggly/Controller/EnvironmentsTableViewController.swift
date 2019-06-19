@@ -16,8 +16,8 @@ class EnvironmentsTableView: UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
-        navigationController?.navigationBar.titleTextAttributes = textAttributes
+//        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+//        navigationController?.navigationBar.titleTextAttributes = textAttributes
     }
     
     let colorChange = UIColorFromRGB() // Custom calls to change colors from RGB format
@@ -34,6 +34,7 @@ class EnvironmentsTableView: UITableViewController{
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "environmentCell", for: indexPath)
         cell.textLabel?.text = environments[indexPath.item]
         cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
@@ -57,7 +58,8 @@ class EnvironmentsTableView: UITableViewController{
         tableView.beginUpdates()
         
         CATransaction.setCompletionBlock {
-            _ = self.navigationController?.popViewController(animated: true)
+//            _ = self.navigationController?.popViewController(animated: true)
+            _ = self.dismiss(animated: true, completion: nil)
         }
         
         for cellPath in tableView.indexPathsForVisibleRows!{

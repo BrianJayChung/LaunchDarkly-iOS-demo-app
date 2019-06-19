@@ -1,22 +1,30 @@
 PODS:
+  - Alamofire (4.8.2)
   - DarklyEventSource (4.0.1)
   - LaunchDarkly (3.0.1):
     - LaunchDarkly/Core (= 3.0.1)
   - LaunchDarkly/Core (3.0.1):
     - DarklyEventSource (~> 4.0.1)
+  - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
+  - Alamofire
   - LaunchDarkly (= 3.0.1)
+  - SwiftyJSON
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Alamofire
     - DarklyEventSource
     - LaunchDarkly
+    - SwiftyJSON
 
 SPEC CHECKSUMS:
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   DarklyEventSource: d3a3482edd0451dc6d2b3844b8fc30e4ca73de30
   LaunchDarkly: 50de08974f0da7ba30ab98e430da6dc1cd003987
+  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 4ca413dac637e5a05f98f3e740b0605cf15dc32a
+PODFILE CHECKSUM: dd7d838ed704b131ad0e7e521a199c06fdb84855
 
 COCOAPODS: 1.6.1
