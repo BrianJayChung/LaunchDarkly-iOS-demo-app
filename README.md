@@ -22,4 +22,5 @@ LaunchDarkly api key
 - create plist called keys.plist and configure it as
 : sdk-key: "your-sdk-key"
 
-
+![login page](https://github.com/BrianJayChung/LaunchDoggly-iOS-app/blob/master/Appscreenshots/login-screen.png)
+![flags](https://github.com/BrianJayChung/LaunchDoggly-iOS-app/blob/master/Appscreenshots/flags-screen.png)
