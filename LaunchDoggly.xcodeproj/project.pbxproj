@@ -15,6 +15,8 @@
 		7B32EB2D2293CC8300605948 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B32EB2C2293CC8300605948 /* Images.xcassets */; };
 		7B32EB2F2294D6C900605948 /* SdkTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B32EB2E2294D6C900605948 /* SdkTableView.swift */; };
 		7B32EB312294DD3B00605948 /* SdkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B32EB302294DD3B00605948 /* SdkTableViewCell.swift */; };
+		7B46C1B122BAB35500117DFD /* keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7B46C1B022BAB35500117DFD /* keys.plist */; };
+		7B46C1B422BAB8CC00117DFD /* ApiKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B46C1B322BAB8CC00117DFD /* ApiKeys.swift */; };
 		7B49BC712287328E00183BEA /* SettingsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B49BC702287328E00183BEA /* SettingsPageViewController.swift */; };
 		7B4BE7C922B462400096D5F9 /* AuditLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4BE7C822B462400096D5F9 /* AuditLogViewController.swift */; };
 		7B4BE7CB22B803AB0096D5F9 /* LaunchDarklyDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4BE7CA22B803AB0096D5F9 /* LaunchDarklyDataModel.swift */; };
@@ -40,6 +42,8 @@
 		7B32EB2C2293CC8300605948 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = LaunchDoggly/Images.xcassets; sourceTree = "<group>"; };
 		7B32EB2E2294D6C900605948 /* SdkTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SdkTableView.swift; sourceTree = "<group>"; };
 		7B32EB302294DD3B00605948 /* SdkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SdkTableViewCell.swift; sourceTree = "<group>"; };
+		7B46C1B022BAB35500117DFD /* keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = keys.plist; sourceTree = "<group>"; };
+		7B46C1B322BAB8CC00117DFD /* ApiKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeys.swift; sourceTree = "<group>"; };
 		7B49BC702287328E00183BEA /* SettingsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageViewController.swift; sourceTree = "<group>"; };
 		7B4BE7C822B462400096D5F9 /* AuditLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditLogViewController.swift; sourceTree = "<group>"; };
 		7B4BE7CA22B803AB0096D5F9 /* LaunchDarklyDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LaunchDarklyDataModel.swift; path = LaunchDoggly/Controller/LaunchDarklyDataModel.swift; sourceTree = SOURCE_ROOT; };
@@ -89,6 +93,14 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		7B46C1B222BAB8B100117DFD /* utility */ = {
+			isa = PBXGroup;
+			children = (
+				7B46C1B322BAB8CC00117DFD /* ApiKeys.swift */,
+			);
+			path = utility;
+			sourceTree = "<group>";
+		};
 		7B5FE63A2284CECF00C26878 = {
 			isa = PBXGroup;
 			children = (
@@ -113,11 +125,13 @@
 			isa = PBXGroup;
 			children = (
 				7B5FE6462284CECF00C26878 /* AppDelegate.swift */,
+				7B46C1B222BAB8B100117DFD /* utility */,
 				7B0BB78D228BE43E0095E05A /* Helpers */,
 				7B5FE6602284D28900C26878 /* Model */,
 				7B5FE65F2284D27C00C26878 /* Controller */,
 				7B5FE65E2284D12900C26878 /* View */,
 				7B5FE6522284CED100C26878 /* Info.plist */,
+				7B46C1B022BAB35500117DFD /* keys.plist */,
 				7B5FE6652284D4C500C26878 /* Supporting Files */,
 			);
 			path = LaunchDoggly;
@@ -241,6 +255,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B46C1B122BAB35500117DFD /* keys.plist in Resources */,
 				7B32EB2D2293CC8300605948 /* Images.xcassets in Resources */,
 				7B5FE6512284CED100C26878 /* LaunchScreen.storyboard in Resources */,
 				7B5FE64C2284CECF00C26878 /* Main.storyboard in Resources */,
@@ -309,6 +324,7 @@
 			files = (
 				7B49BC712287328E00183BEA /* SettingsPageViewController.swift in Sources */,
 				7B4BE7C922B462400096D5F9 /* AuditLogViewController.swift in Sources */,
+				7B46C1B422BAB8CC00117DFD /* ApiKeys.swift in Sources */,
 				7B32EB2F2294D6C900605948 /* SdkTableView.swift in Sources */,
 				7B4BE7CB22B803AB0096D5F9 /* LaunchDarklyDataModel.swift in Sources */,
 				7B5FE6492284CECF00C26878 /* ViewController.swift in Sources */,
