@@ -18,7 +18,7 @@ class LaunchDarklyApiModel {
     
     init() {
         
-        self.sdkKey = api.ldApiKey()
+        self.sdkKey = api.ldApiKey() // previously exposed, new token generated
         self.baseUrl = "https://app.launchdarkly.com/api/v2/"
         
     }
