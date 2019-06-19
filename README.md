@@ -15,10 +15,11 @@ LaunchDoggly is a feature management platform that serves over 100 billion featu
 6. Run your application through XCode.
 7. Update the feature flags from your LaunchDoggly dashboard and the feature flag label in the view controller should update with the current value of the feature flag.
 
-##### Setup
+##### Requirements
  #####
- create plist called keys.plist and configure it as
+LaunchDarkly api key
 
- sdk-key: "your-sdk-key"
+- create plist called keys.plist and configure it as
+: sdk-key: "your-sdk-key"
 
 
