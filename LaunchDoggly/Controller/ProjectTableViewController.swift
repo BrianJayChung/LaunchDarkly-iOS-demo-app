@@ -18,6 +18,7 @@ class ProjectTableView: UITableViewController {
     var checkedProject : String?
     var delegate : ProjectTableDelegate?
     var flagList: FlagList!
+    var selectedFlag = Flag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +54,13 @@ class ProjectTableView: UITableViewController {
             cell.textLabel?.text = flagList.items[indexPath.row].text
             cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
         
+        
         let item = flagList.items[indexPath.row]
+        
+        if item.isChecked {
+            print(selectedFlag)
+            selectedFlag = item
+        }
         
         configureCheckmark(for: cell, with: item)
         cell.tintColor = UIColor.red
@@ -65,9 +72,13 @@ class ProjectTableView: UITableViewController {
         if let cell = tableView.cellForRow(at: indexPath) {
             
             let item = flagList.items[indexPath.row]
-            print(item.text)
-            item.toggleChecked()
-            print(item.isChecked)
+            
+            //MARK: -> the below logic will handle duplication of checkmarks as well as checkmark being checked off when selected on an item with existing checkmark
+            
+            if item != selectedFlag { // if the current flag is not the previously selected flag, do the below
+                item.toggleChecked() // if item is blank, this will make isChecked = true
+                selectedFlag.toggleChecked() // this changes the isChecked property for previously selected flag
+            }
             configureCheckmark(for: cell, with: item)
         }
 //        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
@@ -82,12 +93,13 @@ class ProjectTableView: UITableViewController {
 //            _ = self.dismiss(animated: true, completion: nil) // used due to present modally
         }
         
-        for cellPath in tableView.indexPathsForVisibleRows!{
-            if cellPath == indexPath{
+        for cellPath in tableView.indexPathsForVisibleRows!{ // logic to deselect every row but the one with the checkmark
+            if cellPath == indexPath {
                 continue
             }
             tableView.cellForRow(at: cellPath)?.accessoryType = .none
         }
+       
         tableView.deselectRow(at: indexPath, animated: true)
         tableView.endUpdates()
         

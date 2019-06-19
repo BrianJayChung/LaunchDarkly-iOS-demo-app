@@ -23,7 +23,7 @@ class LaunchDarklyApiModel {
     
     func getData(path: String, completionHandler: @escaping (Result<[String: Any]>) -> Void) {
         let url = baseUrl.appending(path)
-        print(url)
+        
         performRequest(url: url, headers: headers, completion: completionHandler)
     }
     

@@ -10,6 +10,7 @@ import UIKit
 
 class FlagList: NSObject, Codable {
     var items = [Flag]()
+    var selectedFlag: Flag!
     var testText = "test"
     
     override init(){
