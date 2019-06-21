@@ -24,11 +24,12 @@ class LaunchDarklyApiModel {
     }
     
     func getData(path: String, completionHandler: @escaping (Result<[String: Any]>) -> Void) {
-        let headers = ["Authorization": self.sdkKey] as! [String: String]
         
+        let headers = ["Authorization": self.sdkKey] as! [String: String]
         let url = baseUrl.appending(path)
         
         performRequest(url: url, headers: headers, completion: completionHandler)
+        
     }
     
     func performRequest(url: String, headers: [String:String], completion: @escaping (Result<[String: Any]>) -> Void ) {
@@ -50,4 +51,5 @@ class LaunchDarklyApiModel {
             }
         }
     }
+    
 }

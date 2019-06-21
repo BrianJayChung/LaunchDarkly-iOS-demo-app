@@ -35,11 +35,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var lastContentOffset: CGFloat = 0
     
-    var projectBtnText = "Project"
-    var envirBtnText = "Environment"
+    var launchDarklyData = LaunchDarklyData()
     
-    let api = ApiKeys() // initializes plist APIs
-    let flagList = FlagList()
+    var envirTitle: String!
+    
+//    let api = ApiKeys() // initializes plist APIs
+    let launchDarklyDataList = LaunchDarklyDataList()
     
     let cellHeight = 150 // Use for the collectionViewCell height
     let customizeNavBarTitle = NavBarTitleFontStyle()
@@ -52,14 +53,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     // MARK: LaunchDarkly fron-end key
     // This is safe to expose as it can only fetch the flag evaluation outcome
+    
     let config = LDConfig.init(mobileKey: "mob-8e3e03d8-355e-432b-a000-e2a15a12d7e6")
-    
-    let ldApi = LaunchDarklyApiModel()
-    
     let backgroundColorKey = "background-color"
     
+    let launchDarklyApi = LaunchDarklyApiModel()
+    
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
+        
         return .lightContent
+        
     }
     
     override func viewDidLoad() {
@@ -67,7 +71,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         super.viewDidLoad()
 //        navigationController?.tabBarController?.tabBar.isHidden = true
         checkBackgroundFeatureValue()
-        
+        resetEnvirTitle()
         
         self.collectionView.keyboardDismissMode = .onDrag
         self.collectionView.decelerationRate = UIScrollView.DecelerationRate(rawValue: 0)
@@ -89,8 +93,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         // MARK: Logic to handle proj and envir changes
         
-        projectButton.setTitle(projectBtnText + " \u{2304}", for: .normal)
-        environmentBtn.setTitle(envirBtnText + " \u{2304}", for: .normal)
+        projectButton.setTitle(launchDarklyData.projectTitle + " \u{2304}", for: .normal)
         
         projectButton.titleLabel?.numberOfLines = 3
         environmentBtn.titleLabel?.numberOfLines = 3
@@ -103,20 +106,29 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         apiCall()
     }
-
+    
+    func setEnvirTitle(){
+        environmentBtn.setTitle(envirTitle + " \u{2304}", for: .normal)
+    }
+    
+    func resetEnvirTitle(){
+        environmentBtn.setTitle("[ environment ]" + " \u{2304}", for: .normal)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         if segue.identifier == "pushToProjects" {
             let projVC = segue.destination as! ProjectTableView
             let backItem = UIBarButtonItem()
             backItem.title = "Home"
             navigationItem.backBarButtonItem = backItem
-            projVC.checkedProject = projectBtnText
-            projVC.flagList = flagList
+            projVC.checkedProject = launchDarklyData.projectTitle
+            projVC.launchDarklyDataList = launchDarklyDataList
             projVC.delegate = self
         }
         if segue.identifier == "pushToEnvironments" {
             let envVC = segue.destination as! EnvironmentsTableView
-            envVC.selectedEnvir = envirBtnText
+            envVC.selectedEnvir = envirTitle
+            envVC.launchDarklyData = launchDarklyData
             envVC.delegate = self
         }
     }
@@ -157,7 +169,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     //MARK: -> Network calls
     
     func apiCall() {
-        ldApi.getData(path : "projects") { result in
+        launchDarklyApi.getData(path : "projects") { result in
             switch result {
             case .failure(let error):
                 print(error)
@@ -166,12 +178,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 let json = JSON(value)
                 for (_, subJson) in json["items"] {
                     
-                    let projName = Flag()
-                    projName.text = subJson["name"].string!
-                    self.flagList.items.append(projName)
+                    let projectRow = LaunchDarklyData()
+                    
+                    projectRow.projectTitle = subJson["name"].string!
+                    projectRow.projectKey = subJson["key"].string!
+                    for (_, env) in subJson["environments"] {
+                        
+                        projectRow.environmentsList.append(env["name"].string!)
+                        
+                    }
+                    self.launchDarklyDataList.listOfLaunchDarklyData.append(projectRow)
+//                    print(projectRow.environmentsList)
                 }
             }
         }
+    
     }
     
 }

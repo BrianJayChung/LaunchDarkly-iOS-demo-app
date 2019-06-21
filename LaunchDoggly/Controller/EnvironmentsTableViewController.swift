@@ -9,7 +9,7 @@
 import UIKit
 
 protocol EnvironmentsTableDelegate{
-    func envirSelected(envirName: String?)
+    func environmentsTableDelegate(envirName: String)
 }
 
 class EnvironmentsTableView: UITableViewController{
@@ -21,22 +21,19 @@ class EnvironmentsTableView: UITableViewController{
     }
     
     let colorChange = UIColorFromRGB() // Custom calls to change colors from RGB format
-
-    // hardcoded for now, this will be fetched from LD later
-    
-    var environments = ["production", "testing", "beta", "pre-production", "QA-server", "product-team", "demo environment", "Empty project", "xamarin-testing", "Some super very long environemnt name"]
     
     var delegate : EnvironmentsTableDelegate?
     var selectedEnvir : String?
+    var launchDarklyData: LaunchDarklyData!
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return environments.count
+        return launchDarklyData.environmentsList.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "environmentCell", for: indexPath)
-        cell.textLabel?.text = environments[indexPath.item]
+        cell.textLabel?.text = launchDarklyData.environmentsList[indexPath.item]
         cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
         
         if cell.textLabel?.text == selectedEnvir {
@@ -50,7 +47,7 @@ class EnvironmentsTableView: UITableViewController{
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        delegate?.envirSelected(envirName: environments[indexPath.item] )
+        delegate?.environmentsTableDelegate(envirName: launchDarklyData.environmentsList[indexPath.item] )
         
         //CATransaction to set completion action, which is to return back to previous VC
         

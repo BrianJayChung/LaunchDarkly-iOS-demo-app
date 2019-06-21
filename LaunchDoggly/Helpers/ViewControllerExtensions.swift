@@ -19,14 +19,16 @@ extension ViewController: FlagCellDelegate {
 }
 
 extension ViewController: EnvironmentsTableDelegate {
-    func envirSelected(envirName: String?) {
-        envirBtnText = envirName!
+    func environmentsTableDelegate(envirName: String) {
+        envirTitle = envirName
+        setEnvirTitle()
     }
 }
 
 extension ViewController: ProjectTableDelegate {
-    func projectSelected(projectName: String?) {
-        projectBtnText = projectName!
+    func projectTableDelegate(launchDarklyDataItem: LaunchDarklyData) {
+        launchDarklyData = launchDarklyDataItem
+        resetEnvirTitle()
     }
 }
 
