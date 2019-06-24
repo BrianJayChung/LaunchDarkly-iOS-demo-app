@@ -16,7 +16,9 @@ protocol ProjectTableDelegate {
 class ProjectTableView: UITableViewController {
     
     var checkedProject : String?
+    
     var delegate : ProjectTableDelegate?
+    
     var launchDarklyDataList: LaunchDarklyDataList!
     var selectedProject = LaunchDarklyData()
     
@@ -44,9 +46,10 @@ class ProjectTableView: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "projectCell", for: indexPath)
+        
         cell.textLabel?.text = launchDarklyDataList.listOfLaunchDarklyData[indexPath.row].projectTitle
         cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
-        
+        cell.tintColor = UIColor.red
         
         let item = launchDarklyDataList.listOfLaunchDarklyData[indexPath.row]
         
@@ -55,8 +58,9 @@ class ProjectTableView: UITableViewController {
         }
         
         configureCheckmark(for: cell, with: item)
-        cell.tintColor = UIColor.red
+        
         return cell
+        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -65,14 +69,19 @@ class ProjectTableView: UITableViewController {
             
             let item = launchDarklyDataList.listOfLaunchDarklyData[indexPath.row]
             
-            delegate?.projectTableDelegate(launchDarklyDataItem: item, projectKey: item.projectKey!)
+            delegate?.projectTableDelegate(launchDarklyDataItem: item, projectKey: item.projectKey!) // When a project is selected pass the selected LD object to viewcontroller and the project key
+            
             //MARK: -> the below logic will handle duplication of checkmarks as well as checkmark being checked off when selected on an item with existing checkmark
             
             if item != selectedProject { // if the current flag is not the previously selected flag, do the below
+                
                 item.toggleProjectChecked() // if item is blank, this will make isChecked = true
                 selectedProject.toggleProjectChecked() // this changes the isChecked property for previously selected flag
+                
             }
+            
             configureCheckmark(for: cell, with: item)
+            
         }
         
         //CATransaction to set completion action, which is to return back to previous VC
@@ -97,16 +106,20 @@ class ProjectTableView: UITableViewController {
         
         tableView.deselectRow(at: indexPath, animated: true)
         tableView.endUpdates()
-        
         CATransaction.commit()
+        
     }
     
     func configureCheckmark(for cell: UITableViewCell, with item: LaunchDarklyData) {
         
         if item.projectIsChecked {
+            
             cell.accessoryType = .checkmark
+            
         } else {
+            
             cell.accessoryType = .none
+            
         }
     }
 }

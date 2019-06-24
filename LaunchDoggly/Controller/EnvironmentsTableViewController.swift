@@ -15,9 +15,9 @@ protocol EnvironmentsTableDelegate{
 class EnvironmentsTableView: UITableViewController{
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-//        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
-//        navigationController?.navigationBar.titleTextAttributes = textAttributes
+        
     }
     
     let colorChange = UIColorFromRGB() // Custom calls to change colors from RGB format
@@ -27,7 +27,9 @@ class EnvironmentsTableView: UITableViewController{
     var launchDarklyData: LaunchDarklyData!
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return launchDarklyData.environmentsList.count
+        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -37,56 +39,58 @@ class EnvironmentsTableView: UITableViewController{
         let item = launchDarklyData.environmentsList[indexPath.item]
         
         if item.environmentIsChecked {
-            selectedEnvir = item
+            selectedEnvir = item // Track currently selected item
         }
         
-        print(launchDarklyData.environmentsList.count)
-        configureCheckmark(for: cell, with: launchDarklyData.environmentsList[indexPath.item])
+        configureCheckmark(for: cell, with: item) // This is to determine whether a cell should be chekced
         
-        cell.textLabel?.text = launchDarklyData.environmentsList[indexPath.item].envirName
+        cell.textLabel?.text = item.envirName
         cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
-        
-//        if cell.textLabel?.text == selectedEnvir {
-//            cell.accessoryType = .checkmark
-//        }
-        
         cell.tintColor = UIColor.red
+        
         return cell
+        
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-//        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         
         if let cell = tableView.cellForRow(at: indexPath) {
             
             let item = launchDarklyData.environmentsList[indexPath.item]
             
-            
             if item != selectedEnvir {
+                
                 item.toggleEnvironmentChecked()
                 selectedEnvir.toggleEnvironmentChecked()
+                
             }
+            
             configureCheckmark(for: cell, with: item)
+            
+            delegate?.environmentsTableDelegate(envirName: item.envirName!, envirKey: item.envirKey!) // Calls the environmentsTable delegate when an envir is selected, this passes the envirName and key to viewcontroller to make the API call
+            
         }
 
-        delegate?.environmentsTableDelegate(envirName: launchDarklyData.environmentsList[indexPath.item].envirName!, envirKey: launchDarklyData.environmentsList[indexPath.item].envirKey!)
         
-        //CATransaction to set completion action, which is to return back to previous VC
-        
+        // CATransaction to set completion action, which is to return back to previous VC
         CATransaction.begin()
         tableView.beginUpdates()
         
         CATransaction.setCompletionBlock {
-//            _ = self.navigationController?.popViewController(animated: true)
+            
+            // _ = self.navigationController?.popViewController(animated: true)
             _ = self.dismiss(animated: true, completion: nil)
+            
         }
-        
-        for cellPath in tableView.indexPathsForVisibleRows!{
+
+        for cellPath in tableView.indexPathsForVisibleRows! { // Logic to not un-toggle a row that is already chcked, otherwise untoggle it
+            
             if cellPath == indexPath{
                 continue
             }
+            
             tableView.cellForRow(at: cellPath)?.accessoryType = .none
+            
         }
         
         tableView.deselectRow(at: indexPath, animated: true)

@@ -22,11 +22,13 @@ class LoginPageViewController: UIViewController {
     @IBOutlet weak var passwordField: UITextField!
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         loginButton.layer.cornerRadius = 0.50 * loginButton.bounds.size.height
         loginButton.backgroundColor = ColorChange.UIColorFromRGB(rgbValue: 8691109)
         passwordField.isSecureTextEntry = true
+        
     }
     
     //TO DO: Add user authentication

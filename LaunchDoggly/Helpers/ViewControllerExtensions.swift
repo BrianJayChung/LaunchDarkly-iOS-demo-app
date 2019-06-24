@@ -49,7 +49,6 @@ extension ViewController {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
         // this is used to determine the scrollview height to prevent botom bounce to hide tab bar
-        
         let heightLimit = scrollView.contentSize.height - scrollView.bounds.size.height
         
         if (self.lastContentOffset < scrollView.contentOffset.y) && (scrollView.contentOffset.y > 0) && (scrollView.contentSize.height > scrollView.bounds.size.height){

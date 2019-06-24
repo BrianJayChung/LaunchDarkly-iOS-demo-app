@@ -15,12 +15,14 @@ class SdkTableViewCell: UITableViewCell {
     var mainImage : UIImage?
     
     var messageView : UITextView = {
+        
         var textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.isScrollEnabled = false
         textView.isEditable = false
         textView.textAlignment = .center
         return textView
+        
     }()
     
     var mainImageView : UIImageView = {

@@ -17,9 +17,10 @@ class LaunchDarklyData: NSObject, Codable {
     
     var projectTitle = "[ Project ]"
     var projectKey: String?
-    var flagState: Bool?
+    
     var envirKeys = [String]()
     var environmentsList = [LaunchDarklyData]()
+    
     var flagsList = [JSON]()
     
     var envirName: String?
