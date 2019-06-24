@@ -37,7 +37,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var lastContentOffset: CGFloat = 0
     
-    var launchDarklyData = LaunchDarklyData()
+    var launchDarklyDataFromProjTV = LaunchDarklyData()
     var flagResponseData = LaunchDarklyData()
     
     var envirTitle: String!
@@ -104,7 +104,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         // MARK: Logic to handle proj and envir changes
         FetchFlags()
-        projectButton.setTitle(launchDarklyData.projectTitle + " \u{2304}", for: .normal)
+        projectButton.setTitle(launchDarklyDataFromProjTV.projectTitle + " \u{2304}", for: .normal)
         
         projectButton.titleLabel?.numberOfLines = 3
         environmentBtn.titleLabel?.numberOfLines = 3
@@ -124,14 +124,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             let backItem = UIBarButtonItem()
             backItem.title = "Home"
             navigationItem.backBarButtonItem = backItem
-            projVC.checkedProject = launchDarklyData.projectTitle
+            projVC.checkedProject = launchDarklyDataFromProjTV.projectTitle
             projVC.launchDarklyDataList = launchDarklyDataList
             projVC.delegate = self
         }
         if segue.identifier == "pushToEnvironments" {
             let envVC = segue.destination as! EnvironmentsTableView
-            envVC.selectedEnvir = envirTitle
-            envVC.launchDarklyData = launchDarklyData
+            envVC.selectedEnvir.envirName = envirTitle
+            envVC.launchDarklyData = launchDarklyDataFromProjTV
             envVC.delegate = self
         }
     }
@@ -208,12 +208,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     
                     let projectRow = LaunchDarklyData()
                     
+                    
                     projectRow.projectTitle = subJson["name"].string!
                     projectRow.projectKey = subJson["key"].string!
                     for (_, env) in subJson["environments"] {
+                        let envirRow = LaunchDarklyData()
                         
-                        projectRow.environmentsList.append(env["name"].string!)
-                        projectRow.envirKeys.append(env["key"].string!)
+                        envirRow.envirName = env["name"].string!
+                        envirRow.envirKey = env["key"].string!
+//                        projectRow.environmentsList.append(env["name"].string!)
+//                        projectRow.envirKeys.append(env["key"].string!)
+                        
+                        projectRow.environmentsList.append(envirRow)
                     }
                     self.launchDarklyDataList.listOfLaunchDarklyData.append(projectRow)
                 }

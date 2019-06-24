@@ -12,20 +12,29 @@ import SwiftyJSON
 
 class LaunchDarklyData: NSObject, Codable {
     
-    var isChecked = false
+    var projectIsChecked = false
+    var environmentIsChecked = false
     
     var projectTitle = "[ Project ]"
     var projectKey: String?
     var flagState: Bool?
     var envirKeys = [String]()
-    var environmentsList = [String]()
+    var environmentsList = [LaunchDarklyData]()
     var flagsList = [JSON]()
+    
+    var envirName: String?
+    var envirKey: String?
     
     override init(){
         super.init()
     }
-    func toggleChecked(){
-        isChecked = !isChecked
+    
+    func toggleProjectChecked(){
+        projectIsChecked = !projectIsChecked
+    }
+    
+    func toggleEnvironmentChecked(){
+        environmentIsChecked = !environmentIsChecked
     }
 }
 

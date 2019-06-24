@@ -28,7 +28,7 @@ extension ViewController: EnvironmentsTableDelegate {
 
 extension ViewController: ProjectTableDelegate {
     func projectTableDelegate(launchDarklyDataItem: LaunchDarklyData, projectKey: String) {
-        launchDarklyData = launchDarklyDataItem
+        launchDarklyDataFromProjTV = launchDarklyDataItem
         projKey = projectKey
         resetEnvirTitle()
     }

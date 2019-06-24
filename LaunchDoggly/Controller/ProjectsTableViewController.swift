@@ -50,7 +50,7 @@ class ProjectTableView: UITableViewController {
         
         let item = launchDarklyDataList.listOfLaunchDarklyData[indexPath.row]
         
-        if item.isChecked {
+        if item.projectIsChecked {
             selectedProject = item
         }
         
@@ -69,28 +69,30 @@ class ProjectTableView: UITableViewController {
             //MARK: -> the below logic will handle duplication of checkmarks as well as checkmark being checked off when selected on an item with existing checkmark
             
             if item != selectedProject { // if the current flag is not the previously selected flag, do the below
-                item.toggleChecked() // if item is blank, this will make isChecked = true
-                selectedProject.toggleChecked() // this changes the isChecked property for previously selected flag
+                item.toggleProjectChecked() // if item is blank, this will make isChecked = true
+                selectedProject.toggleProjectChecked() // this changes the isChecked property for previously selected flag
             }
             configureCheckmark(for: cell, with: item)
         }
-        //        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-//        delegate?.projectTableDelegate(launchDarklyDataItem: launchDarklyDataList.listOfLaunchDarklyData[indexPath.row], projectKey: item.projectKey)
         
         //CATransaction to set completion action, which is to return back to previous VC
         CATransaction.begin()
         tableView.beginUpdates()
         
         CATransaction.setCompletionBlock {
+            
             _ = self.navigationController?.popViewController(animated: true) // used for "show"
             //            _ = self.dismiss(animated: true, completion: nil) // used due to present modally
         }
         
         for cellPath in tableView.indexPathsForVisibleRows!{ // logic to deselect every row but the one with the checkmark
+            
             if cellPath == indexPath {
                 continue
             }
+            
             tableView.cellForRow(at: cellPath)?.accessoryType = .none
+            
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -101,7 +103,7 @@ class ProjectTableView: UITableViewController {
     
     func configureCheckmark(for cell: UITableViewCell, with item: LaunchDarklyData) {
         
-        if item.isChecked {
+        if item.projectIsChecked {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none
