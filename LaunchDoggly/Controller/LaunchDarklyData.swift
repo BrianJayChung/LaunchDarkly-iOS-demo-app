@@ -16,9 +16,10 @@ class LaunchDarklyData: NSObject, Codable {
     
     var projectTitle = "[ Project ]"
     var projectKey: String?
-    
-//    var jsonResponse: JSON?
+    var flagState: Bool?
+    var envirKeys = [String]()
     var environmentsList = [String]()
+    var flagsList = [JSON]()
     
     override init(){
         super.init()

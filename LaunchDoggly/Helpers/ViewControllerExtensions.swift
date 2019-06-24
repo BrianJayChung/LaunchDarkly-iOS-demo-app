@@ -19,15 +19,17 @@ extension ViewController: FlagCellDelegate {
 }
 
 extension ViewController: EnvironmentsTableDelegate {
-    func environmentsTableDelegate(envirName: String) {
+    func environmentsTableDelegate(envirName: String, envirKey: String) {
+        environmentKey = envirKey
         envirTitle = envirName
         setEnvirTitle()
     }
 }
 
 extension ViewController: ProjectTableDelegate {
-    func projectTableDelegate(launchDarklyDataItem: LaunchDarklyData) {
+    func projectTableDelegate(launchDarklyDataItem: LaunchDarklyData, projectKey: String) {
         launchDarklyData = launchDarklyDataItem
+        projKey = projectKey
         resetEnvirTitle()
     }
 }
@@ -46,9 +48,11 @@ extension ViewController {
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
-        let heightLimit = scrollView.contentSize.height - scrollView.bounds.size.height // this is used to determine the scrollview height to prevent botom bounce to hide tab bar
+        // this is used to determine the scrollview height to prevent botom bounce to hide tab bar
         
-        if (self.lastContentOffset < scrollView.contentOffset.y) && (scrollView.contentOffset.y > 0) {
+        let heightLimit = scrollView.contentSize.height - scrollView.bounds.size.height
+        
+        if (self.lastContentOffset < scrollView.contentOffset.y) && (scrollView.contentOffset.y > 0) && (scrollView.contentSize.height > scrollView.bounds.size.height){
             
             UIView.animate(withDuration: 0.5, delay:0, options: UIView.AnimationOptions(),animations: {
                 self.navigationController?.setNavigationBarHidden(true, animated: false)

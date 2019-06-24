@@ -10,7 +10,7 @@ import UIKit
 import SwiftyJSON
 
 protocol ProjectTableDelegate {
-    func projectTableDelegate(launchDarklyDataItem: LaunchDarklyData)
+    func projectTableDelegate(launchDarklyDataItem: LaunchDarklyData, projectKey: String)
 }
 
 class ProjectTableView: UITableViewController {
@@ -65,6 +65,7 @@ class ProjectTableView: UITableViewController {
             
             let item = launchDarklyDataList.listOfLaunchDarklyData[indexPath.row]
             
+            delegate?.projectTableDelegate(launchDarklyDataItem: item, projectKey: item.projectKey!)
             //MARK: -> the below logic will handle duplication of checkmarks as well as checkmark being checked off when selected on an item with existing checkmark
             
             if item != selectedProject { // if the current flag is not the previously selected flag, do the below
@@ -74,7 +75,7 @@ class ProjectTableView: UITableViewController {
             configureCheckmark(for: cell, with: item)
         }
         //        tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        delegate?.projectTableDelegate(launchDarklyDataItem: launchDarklyDataList.listOfLaunchDarklyData[indexPath.row])
+//        delegate?.projectTableDelegate(launchDarklyDataItem: launchDarklyDataList.listOfLaunchDarklyData[indexPath.row], projectKey: item.projectKey)
         
         //CATransaction to set completion action, which is to return back to previous VC
         CATransaction.begin()

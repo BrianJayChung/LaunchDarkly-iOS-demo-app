@@ -25,20 +25,45 @@
                                 <rect key="frame" x="0.0" y="198" width="414" height="749"/>
                                 <color key="backgroundColor" red="0.1215686275" green="0.1647058824" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="TPh-xq-srC">
-                                    <size key="itemSize" width="414" height="50"/>
+                                    <size key="itemSize" width="414" height="178"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FlagCell" id="G8A-O1-SSd">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SbFlagCell" id="dkP-5t-qoF" customClass="FlagCell" customModule="LaunchDoggly" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="178"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="178"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="my laabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C5i-gy-Sjv">
+                                                    <rect key="frame" x="15" y="64" width="250" height="53"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mie-Nt-CeF">
+                                                    <rect key="frame" x="322" y="74" width="49" height="31"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <connections>
+                                                        <action selector="buttonSwitch:" destination="dkP-5t-qoF" eventType="valueChanged" id="qcb-fH-0QV"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="C5i-gy-Sjv" firstAttribute="leading" secondItem="dkP-5t-qoF" secondAttribute="leading" constant="15" id="Q9q-EG-Mpq"/>
+                                            <constraint firstItem="C5i-gy-Sjv" firstAttribute="top" secondItem="dkP-5t-qoF" secondAttribute="top" constant="64" id="VKj-pc-3Kw"/>
+                                            <constraint firstAttribute="trailing" secondItem="C5i-gy-Sjv" secondAttribute="trailing" constant="149" id="WMM-hc-TgQ"/>
+                                            <constraint firstAttribute="bottom" secondItem="C5i-gy-Sjv" secondAttribute="bottom" constant="61" id="u1C-Sw-acj"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="buttnSwitchOutlet" destination="mie-Nt-CeF" id="LjB-sM-GEl"/>
+                                            <outlet property="labelText" destination="C5i-gy-Sjv" id="Mr0-zg-8zy"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
@@ -405,7 +430,7 @@
                                     <constraint firstAttribute="width" constant="331" id="LFi-aP-BVK"/>
                                     <constraint firstAttribute="height" constant="293" id="OxX-51-vQC"/>
                                 </constraints>
-                                <mutableString key="text">import Alamofire
+                                <string key="text">import Alamofire
 import SwiftyJSON
 
 class LaunchDarklyApiModel {
@@ -446,7 +471,7 @@ class LaunchDarklyApiModel {
         }
     }
 }
-</mutableString>
+</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -531,7 +556,7 @@ class LaunchDarklyApiModel {
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6zC-LL-eg5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1170" y="-2377"/>
+            <point key="canvasLocation" x="-1149" y="-2377"/>
         </scene>
         <!--About Us View-->
         <scene sceneID="qM8-wH-rhE">

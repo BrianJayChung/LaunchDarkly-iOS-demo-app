@@ -14,6 +14,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var titleText: UITextField!
+    
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -36,8 +38,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var lastContentOffset: CGFloat = 0
     
     var launchDarklyData = LaunchDarklyData()
+    var flagResponseData = LaunchDarklyData()
     
     var envirTitle: String!
+    var environmentKey: String!
+    var projKey: String!
+    var flagJson: JSON?
     
 //    let api = ApiKeys() // initializes plist APIs
     let launchDarklyDataList = LaunchDarklyDataList()
@@ -56,9 +62,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     let config = LDConfig.init(mobileKey: "mob-8e3e03d8-355e-432b-a000-e2a15a12d7e6")
     let backgroundColorKey = "background-color"
-    
     let launchDarklyApi = LaunchDarklyApiModel()
-    
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         
@@ -73,6 +77,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         checkBackgroundFeatureValue()
         resetEnvirTitle()
         
+        self.collectionView.alwaysBounceVertical = true
         self.collectionView.keyboardDismissMode = .onDrag
         self.collectionView.decelerationRate = UIScrollView.DecelerationRate(rawValue: 0)
         self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow") // hides the navbar shadow
@@ -80,19 +85,25 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         LDClient.sharedInstance().delegate = self
         
-        collectionView.register(FlagCell.self, forCellWithReuseIdentifier: "Cell")
-
+//        collectionView.register(FlagCell.self, forCellWithReuseIdentifier: "Cell")
+//        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "SbFlagCell")
+        
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        collectionView.reloadData()
+//    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: CGFloat(cellHeight), right: 0)
+        collectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: CGFloat(cellHeight - 40), right: 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         // MARK: Logic to handle proj and envir changes
-        
+        FetchFlags()
         projectButton.setTitle(launchDarklyData.projectTitle + " \u{2304}", for: .normal)
         
         projectButton.titleLabel?.numberOfLines = 3
@@ -106,15 +117,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         apiCall()
     }
-    
-    func setEnvirTitle(){
-        environmentBtn.setTitle(envirTitle + " \u{2304}", for: .normal)
-    }
-    
-    func resetEnvirTitle(){
-        environmentBtn.setTitle("[ environment ]" + " \u{2304}", for: .normal)
-    }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         if segue.identifier == "pushToProjects" {
             let projVC = segue.destination as! ProjectTableView
@@ -146,7 +149,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     // MARK: collectionView delegates for constructing the flag cell page
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return flagResponseData.flagsList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -155,20 +158,45 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! FlagCell
+        var flagText = ""
+        let environmentKey = self.environmentKey as String
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! FlagCell
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SbFlagCell", for: indexPath) as! FlagCell
+        
+        if flagResponseData.flagsList.count > 0 {
+            flagText = flagResponseData.flagsList[indexPath.row]["name"].string!
+            cell.buttnSwitchOutlet.isOn = flagResponseData.flagsList[indexPath.row]["environments"][environmentKey]["on"].bool!
+//            cell.buttnSwitchOutlet.isOn = flagResponseData.flagsList[indexPath.row]["on"].bool!
+        }
+        
+        cell.labelText.text = flagText
+//        cell.setupViews(flagCellText: flagText)
         cell.delegate = self
-        cell.buttonSwitch.tag = indexPath.row // will use this to target each row
-        cell.listenBtnChange()
+        cell.buttnSwitchOutlet.tag = indexPath.row
+        
+//        cell.buttonSwitch.tag = indexPath.row // will use this to target each row
+//        cell.listenBtnChange()
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: CGFloat(cellHeight))
     }
-
-    //MARK: -> Network calls
     
+    func setEnvirTitle(){
+        environmentBtn.setTitle(envirTitle + " \u{2304}", for: .normal)
+    }
+    
+    func resetEnvirTitle(){
+        environmentBtn.setTitle("[ environment ]" + " \u{2304}", for: .normal)
+        environmentKey = nil
+        self.collectionView.reloadData()
+    }
+    
+    //MARK: -> Network calls
     func apiCall() {
+        flagResponseData.flagsList = [JSON]()
         launchDarklyApi.getData(path : "projects") { result in
             switch result {
             case .failure(let error):
@@ -185,14 +213,33 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     for (_, env) in subJson["environments"] {
                         
                         projectRow.environmentsList.append(env["name"].string!)
-                        
+                        projectRow.envirKeys.append(env["key"].string!)
                     }
                     self.launchDarklyDataList.listOfLaunchDarklyData.append(projectRow)
-//                    print(projectRow.environmentsList)
                 }
             }
         }
+    }
     
+    func FetchFlags(){
+        if (projKey != nil) && (environmentKey != nil){
+            launchDarklyApi.getData(path : "flags/\(projKey!)?env=\(environmentKey!)") { result in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                    
+                case .success(let value):
+                    let json = JSON(value)
+                    //                    self.flagJson = json
+                    print("success fetching flags")
+                    for (_, subJson) in json["items"] {
+                        self.flagResponseData.flagsList.append(subJson)
+                        self.collectionView.reloadData()
+                    }
+                }
+            }
+        }
+        // do this when both project and environment objects are available. otherwise return an empty array
     }
     
 }

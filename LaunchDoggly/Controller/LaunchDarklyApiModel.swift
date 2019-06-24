@@ -13,7 +13,6 @@ class LaunchDarklyApiModel {
     
     let sdkKey: String!
     let baseUrl: String!
-    
     let api = ApiKeys()
     
     init() {

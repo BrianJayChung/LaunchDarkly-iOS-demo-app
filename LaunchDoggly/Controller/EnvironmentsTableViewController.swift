@@ -9,7 +9,7 @@
 import UIKit
 
 protocol EnvironmentsTableDelegate{
-    func environmentsTableDelegate(envirName: String)
+    func environmentsTableDelegate(envirName: String, envirKey: String)
 }
 
 class EnvironmentsTableView: UITableViewController{
@@ -47,7 +47,8 @@ class EnvironmentsTableView: UITableViewController{
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        delegate?.environmentsTableDelegate(envirName: launchDarklyData.environmentsList[indexPath.item] )
+        
+        delegate?.environmentsTableDelegate(envirName: launchDarklyData.environmentsList[indexPath.item], envirKey: launchDarklyData.envirKeys[indexPath.item])
         
         //CATransaction to set completion action, which is to return back to previous VC
         
