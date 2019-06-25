@@ -17,17 +17,36 @@ class ProjectTableView: UITableViewController {
     
     var checkedProject : String?
     
+    var activityIndicator = UIActivityIndicatorView()
+    
     var delegate : ProjectTableDelegate?
     
     var launchDarklyDataList: LaunchDarklyDataList!
+    
     var selectedProject = LaunchDarklyData()
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
+        loadingView()
         
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
+      
+
+    }
+    
+    func loadingView() {
         
+        activityIndicator.bounds = self.view.bounds
+        activityIndicator.center = self.view.center
+        
+        activityIndicator.style = .gray
+        
+        self.view.addSubview(activityIndicator)
+        
+        activityIndicator.startAnimating()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,6 +77,10 @@ class ProjectTableView: UITableViewController {
         }
         
         configureCheckmark(for: cell, with: item)
+        
+        self.activityIndicator.isHidden = true
+        self.activityIndicator.stopAnimating()
+        self.view.willRemoveSubview(activityIndicator)
         
         return cell
         

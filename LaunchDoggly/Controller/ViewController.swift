@@ -13,12 +13,14 @@ import Alamofire
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var collectionView: UICollectionView!
-    
+        
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     
     @IBOutlet weak var environmentBtn: UIButton!
     @IBOutlet weak var projectButton: UIButton!
+    
+//    @IBOutlet var loadingView: UIView!
     
     @IBAction func projectBtnPressed(_ sender: Any) {
         performSegue(withIdentifier: "pushToProjects", sender: self)
@@ -33,6 +35,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         navBarLaunchSettings.showRightCorner()
     }
     
+    
     var lastContentOffset: CGFloat = 0
     
     var launchDarklyDataFromProjTV = LaunchDarklyData() // Data object for the projectDelegate
@@ -43,6 +46,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var projKey: String!
     var flagJson: JSON?
     
+    @IBOutlet var loadingView: UIView!
     
     // MARK: LaunchDarkly fron-end key
     // This is safe to expose as it can only fetch the flag evaluation outcome
@@ -73,6 +77,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
         super.viewDidLoad()
         
+        showLoadingView()
         checkBackgroundFeatureValue() // required for LD
         resetEnvirTitle() // Reset the environment title to default
         
@@ -87,6 +92,23 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
     }
     
+    func showLoadingView() {
+        
+        loadingView.bounds = UIScreen.main.bounds
+      
+        loadingView.backgroundColor = .red
+        loadingView.center = view.center
+        loadingView.alpha = 1
+        let currentWindow: UIWindow? = UIApplication.shared.keyWindow
+        currentWindow?.addSubview(loadingView)
+//        view.addSubview(loadingView)
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.loadingView.alpha = 0
+        }) { (success) in
+            
+        }
+    }
     override func viewDidLayoutSubviews() {
         
         super.viewDidLayoutSubviews()

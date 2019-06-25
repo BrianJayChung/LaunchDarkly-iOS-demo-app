@@ -20,3 +20,16 @@ extension UIView {
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutConstraint.FormatOptions(rawValue: 0), metrics: nil, views: viewsDictionary))
     }
 }
+
+extension UIViewController {
+    func showSpinner(onView: UIView) {
+        
+        let spinnerView = UIView.init(frame: onView.bounds)
+        
+        spinnerView.backgroundColor = UIColor.init(red: 0.3, green: 0.3, blue: 0.3, alpha: 0.5)
+        
+        onView.addSubview(spinnerView)
+        
+        
+    }
+}

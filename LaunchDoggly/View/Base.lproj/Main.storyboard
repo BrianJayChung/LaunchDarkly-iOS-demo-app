@@ -181,6 +181,7 @@
                     <connections>
                         <outlet property="collectionView" destination="qsz-yl-yLJ" id="GfY-wC-e0J"/>
                         <outlet property="environmentBtn" destination="DUZ-4S-kBY" id="zqy-ae-2yN"/>
+                        <outlet property="loadingView" destination="zEy-1R-lef" id="t0b-7r-CnD"/>
                         <outlet property="mainView" destination="kh9-bI-dsS" id="oOK-Po-rX1"/>
                         <outlet property="projectButton" destination="GBt-tn-78f" id="vBu-0k-Tuk"/>
                         <outlet property="searchBar" destination="zBO-ye-Upq" id="dUG-4G-dCR"/>
@@ -190,6 +191,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="zEy-1R-lef">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="276"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="-339.13043478260875" y="-2377.2321428571427"/>
         </scene>
@@ -333,7 +339,7 @@
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="8YD-XR-rd4" kind="modal" id="n0y-2r-4sD"/>
+                                    <action selector="loginButtonClicked:" destination="zll-mz-IBQ" eventType="touchUpInside" id="Lau-Oq-FEh"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New to LaunchDarkly? Sign up" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vVY-uO-XMe">
@@ -371,9 +377,17 @@
                                     <attributedString key="attributedTitle"/>
                                 </state>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="iPa-w8-G4K">
+                                <rect key="frame" x="197" y="588" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="Z2r-zf-OQN"/>
+                                    <constraint firstAttribute="height" constant="20" id="rgh-A4-DcC"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.12156862745098039" green="0.16470588235294117" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
+                            <constraint firstItem="iPa-w8-G4K" firstAttribute="centerY" secondItem="c6J-mg-AIp" secondAttribute="centerY" constant="150" id="1FN-Em-VD9"/>
                             <constraint firstItem="bBg-DL-lfo" firstAttribute="top" secondItem="eWz-qt-6aN" secondAttribute="bottom" constant="30" id="2lW-Gc-XNG"/>
                             <constraint firstItem="LTz-gD-PyY" firstAttribute="top" secondItem="bBg-DL-lfo" secondAttribute="bottom" constant="29" id="7fW-Io-feY"/>
                             <constraint firstItem="vVY-uO-XMe" firstAttribute="top" secondItem="LTz-gD-PyY" secondAttribute="bottom" constant="29" id="IT6-w7-Myt"/>
@@ -385,20 +399,23 @@
                             <constraint firstItem="eWz-qt-6aN" firstAttribute="centerX" secondItem="c6J-mg-AIp" secondAttribute="centerX" id="bXq-bK-gAY"/>
                             <constraint firstItem="LTz-gD-PyY" firstAttribute="centerX" secondItem="c6J-mg-AIp" secondAttribute="centerX" id="eR3-wV-7XS"/>
                             <constraint firstItem="LTz-gD-PyY" firstAttribute="centerY" secondItem="c6J-mg-AIp" secondAttribute="centerY" constant="-13.5" id="gkH-ND-wMP"/>
+                            <constraint firstItem="iPa-w8-G4K" firstAttribute="centerX" secondItem="c6J-mg-AIp" secondAttribute="centerX" id="irX-Uh-dqO"/>
                             <constraint firstItem="wkq-Ov-qeR" firstAttribute="leading" secondItem="vVY-uO-XMe" secondAttribute="trailing" constant="-1" id="w8x-dO-FFj"/>
                             <constraint firstItem="wkq-Ov-qeR" firstAttribute="top" secondItem="LTz-gD-PyY" secondAttribute="bottom" constant="29" id="ylL-tz-2Zy"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="emailField" destination="eWz-qt-6aN" id="EMv-RX-of3"/>
+                        <outlet property="loadingIndicator" destination="iPa-w8-G4K" id="pKn-68-GkS"/>
                         <outlet property="loginButton" destination="LTz-gD-PyY" id="NHe-ZK-w2G"/>
                         <outlet property="passwordField" destination="bBg-DL-lfo" id="Z7y-ha-Zhs"/>
                         <outlet property="signupLabel" destination="vVY-uO-XMe" id="OQl-GB-53X"/>
+                        <segue destination="8YD-XR-rd4" kind="modal" identifier="login" id="pat-Ae-GIz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rp5-o2-60U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2683" y="-2377"/>
+            <point key="canvasLocation" x="-2768" y="-2377"/>
         </scene>
         <!--SDKs-->
         <scene sceneID="W8g-Cz-LOp">
