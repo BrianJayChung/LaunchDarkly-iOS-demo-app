@@ -42,7 +42,7 @@ class LoginPageViewController: UIViewController {
     @IBAction func loginButtonClicked(_ sender: Any) {
         self.showSpinner(onView: self.view, offSet: 250)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.performSegue(withIdentifier: "login", sender: self)
         }
     }

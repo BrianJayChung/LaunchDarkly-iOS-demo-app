@@ -16,9 +16,21 @@ protocol ProjectTableDelegate {
 class ProjectTableView: UITableViewController {
     
     override func viewDidLoad() {
+        blueScreen.bounds = self.view.bounds
+        blueScreen.center = self.view.center
+        blueScreen.alpha = 0.4
+        
+        self.view.addSubview(blueScreen)
+        
+        UIView.animate(withDuration: 0.4, delay: 0, options: [], animations: {
+            self.blueScreen.alpha = 0
+        }) { (success) in
+            self.blueScreen.removeFromSuperview()
+        }
+        
         super.viewDidLoad()
         
-//        self.showSpinner(onView: self.view)
+//        self.showSpinner(onView: self.view, offSet: 0)
         
         noConnectionView()
         
@@ -27,6 +39,10 @@ class ProjectTableView: UITableViewController {
     }
     
     let colorChange = UIColorFromRGB() //Custom calls to change colors from RGB format
+    
+    @IBOutlet weak var blueScreen: UIView!
+    
+    @IBOutlet weak var loadingViewScreen: UIView!
     
     var checkedProject : String?
     var activityIndicator = UIActivityIndicatorView()
@@ -58,21 +74,6 @@ class ProjectTableView: UITableViewController {
         self.navigationController?.view.addSubview(effectView)
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//
-////        if !Connectivity.isConnectedToInternet() {
-////
-////            self.navigationController?.view.addSubview(effectView)
-////
-////        }
-//
-//        super.viewWillAppear(animated)
-//
-//    }
-    
-    //    let ldApi = LaunchDarklyApiModel()
-   
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             return launchDarklyDataList.listOfLaunchDarklyData.count
     }
@@ -90,10 +91,7 @@ class ProjectTableView: UITableViewController {
             if item.projectIsChecked {
                 selectedProject = item
             }
-            
             configureCheckmark(for: cell, with: item)
-            
-//            self.removeSpinner()
         }
             return cell
     }

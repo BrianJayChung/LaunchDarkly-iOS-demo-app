@@ -20,10 +20,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var environmentBtn: UIButton!
     @IBOutlet weak var projectButton: UIButton!
     
-//    var activityIndicator = UIActivityIndicatorView()
-    
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    //    @IBOutlet var loadingView: UIView!
     
     @IBAction func projectBtnPressed(_ sender: Any) {
         performSegue(withIdentifier: "pushToProjects", sender: self)
@@ -48,7 +45,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var projKey: String!
     var flagJson: JSON?
     
-    @IBOutlet var loadingView: UIView!
     // MARK: LaunchDarkly fron-end key
     // This is safe to expose as it can only fetch the flag evaluation outcome
     let config = LDConfig.init(mobileKey: "mob-8e3e03d8-355e-432b-a000-e2a15a12d7e6")
@@ -57,13 +53,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     let launchDarklyApi = LaunchDarklyApiModel()
     
-    let launchDarklyDataList = LaunchDarklyDataList() // let api = ApiKeys() initializes plist APIs
+    // let api = ApiKeys() initializes plist APIs
+    let launchDarklyDataList = LaunchDarklyDataList()
     
-    let cellHeight = 150 // Use for the collectionViewCell height
+    // Use for the collectionViewCell height
+    let cellHeight = 150
     let customizeNavBarTitle = NavBarTitleFontStyle()
     
     lazy var navBarLaunchSettings: SettingsPageViewController = {
         let navBarLaunchSettings = SettingsPageViewController()
+        
         navBarLaunchSettings.mainViewController = self
         return navBarLaunchSettings
     }()
@@ -74,14 +73,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
         
-//        if !Connectivity.isConnectedToInternet() {
-//            self.showSpinner(onView: self.view, offSet: 0)
-//        }
         checkBackgroundFeatureValue() // required for LD
-        
         resetEnvirTitle() // Reset the environment title to default
         
         self.collectionView.alwaysBounceVertical = true
@@ -92,17 +85,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         LDClient.sharedInstance().delegate = self
     }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+
         collectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: CGFloat(cellHeight - 40), right: 0) // This is needed to add paddings on top and bottom of the collectionView
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        activityIndicator.layer.zPosition += 1
-        // API call to get flags after proj/envir are selected
+        activityIndicator.isHidden = true
         FetchFlags()
+        
         // MARK: Logic to handle proj and envir changes
         projectButton.setTitle(launchDarklyDataFromProjTV.projectTitle + " \u{2304}", for: .normal)
         
@@ -118,22 +112,25 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         apiCall()
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//
-//    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+//        activityIndicator.isHidden = true
+//        activityIndicator.layer.zPosition += 1
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "pushToProjects" {
             let projVC = segue.destination as! ProjectTableView
+
             let backItem = UIBarButtonItem()
             
             backItem.title = "Home"
             navigationItem.backBarButtonItem = backItem
             
             projVC.checkedProject = launchDarklyDataFromProjTV.projectTitle
-            projVC.launchDarklyDataList = launchDarklyDataList // Setting the LD data list object in the project tableview controller
-            
+            // Setting the LD data list object in the project tableview controller
+            projVC.launchDarklyDataList = launchDarklyDataList
             projVC.delegate = self
         }
         
@@ -141,7 +138,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             let envVC = segue.destination as! EnvironmentsTableView
             
             envVC.selectedEnvir.envirName = envirTitle
-            envVC.launchDarklyData = launchDarklyDataFromProjTV // After a project is selected, the data is passed into the launchDarklyDataFromProjTV object. This sets the environments LD data object to the selected prob object
+            // After a project is selected, the data is passed into the launchDarklyDataFromProjTV object. This sets the environments LD data object to the selected prob object
+            envVC.launchDarklyData = launchDarklyDataFromProjTV
             envVC.delegate = self
         }
     }
@@ -169,7 +167,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var flagText = ""
         var descriptionText = ""
-        
         let environmentKey = self.environmentKey as String
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FlagCell", for: indexPath) as! FlagCell
         
@@ -178,12 +175,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             flagText = item["name"].string!
             descriptionText = item["description"].string!
-            
-            cell.buttnSwitchOutlet.isOn = item["environments"][environmentKey]["on"].bool! // Set the button state based on flag is on or off from API response
-//            activityIndicator.stopAnimating()
-//            activityIndicator.isHidden = true
+            // Set the button state based on flag is on or off from API response
+            cell.buttnSwitchOutlet.isOn = item["environments"][environmentKey]["on"].bool!
         }
-        
         // Set flag text/description for each cell
         cell.flagName.text = flagText
         cell.descriptionText.text = descriptionText
@@ -246,12 +240,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func FetchFlags() {
         
         if (projKey != nil) && (environmentKey != nil) {
+            self.activityIndicator.startAnimating()
+            self.activityIndicator.isHidden = false
+            self.activityIndicator.layer.zPosition += 1
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+            }
             
             launchDarklyApi.getData(path :
             "flags/\(projKey!)?env=\(environmentKey!)") { result in
-                
+        
                 switch result {
-                    
                 case .failure(let error):
                     print(error, "no internet connection")
                     
@@ -260,8 +261,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     let json = JSON(value)
                     
                     print("success fetching flags")
-//                    self.activityIndicator.isHidden = false
-//                    self.activityIndicator.startAnimating()
                     for (_, subJson) in json["items"] {
                         
                         self.flagResponseData.flagsList.append(subJson)

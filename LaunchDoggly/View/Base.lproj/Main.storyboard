@@ -21,7 +21,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="qsz-yl-yLJ">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="black" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="qsz-yl-yLJ">
                                 <rect key="frame" x="0.0" y="198" width="414" height="749"/>
                                 <color key="backgroundColor" red="0.1215686275" green="0.1647058824" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="TPh-xq-srC">
@@ -30,10 +30,10 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
-                                <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" id="V6Y-vl-dtq">
+                                <activityIndicatorView key="backgroundView" hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" id="V6Y-vl-dtq">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="749"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="color" red="0.91974407786751267" green="0.068744830314128785" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="color" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </activityIndicatorView>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FlagCell" id="dkP-5t-qoF" customClass="FlagCell" customModule="LaunchDoggly" customModuleProvider="target">
@@ -184,10 +184,9 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="activityIndicator" destination="V6Y-vl-dtq" id="lxK-B3-x5l"/>
+                        <outlet property="activityIndicator" destination="V6Y-vl-dtq" id="rq0-KC-7Xw"/>
                         <outlet property="collectionView" destination="qsz-yl-yLJ" id="GfY-wC-e0J"/>
                         <outlet property="environmentBtn" destination="DUZ-4S-kBY" id="zqy-ae-2yN"/>
-                        <outlet property="loadingView" destination="zEy-1R-lef" id="t0b-7r-CnD"/>
                         <outlet property="mainView" destination="kh9-bI-dsS" id="oOK-Po-rX1"/>
                         <outlet property="projectButton" destination="GBt-tn-78f" id="vBu-0k-Tuk"/>
                         <outlet property="searchBar" destination="zBO-ye-Upq" id="dUG-4G-dCR"/>
@@ -197,11 +196,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
-                <view contentMode="scaleToFill" id="zEy-1R-lef">
-                    <rect key="frame" x="0.0" y="0.0" width="240" height="276"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </view>
             </objects>
             <point key="canvasLocation" x="-339.13043478260875" y="-2377.2321428571427"/>
         </scene>
@@ -238,10 +232,30 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Projects" largeTitleDisplayMode="always" id="XXn-SH-0Lm"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="blueScreen" destination="WtM-EF-x3z" id="3N7-hh-IjC"/>
+                        <outlet property="loadingViewScreen" destination="cT3-lb-SOP" id="YRu-ix-NSQ"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fZ5-A7-17f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view alpha="0.29999999999999999" contentMode="scaleToFill" id="WtM-EF-x3z">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="263"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="sP1-zX-thO">
+                            <rect key="frame" x="101.5" y="113" width="37" height="37"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </activityIndicatorView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="sP1-zX-thO" firstAttribute="centerY" secondItem="WtM-EF-x3z" secondAttribute="centerY" id="8Gc-s3-Hnx"/>
+                        <constraint firstItem="sP1-zX-thO" firstAttribute="centerX" secondItem="WtM-EF-x3z" secondAttribute="centerX" id="H4d-rE-e8H"/>
+                    </constraints>
+                </view>
             </objects>
-            <point key="canvasLocation" x="438" y="-2880"/>
+            <point key="canvasLocation" x="437.68115942028987" y="-2880.1339285714284"/>
         </scene>
         <!--Environments Table View-->
         <scene sceneID="ntz-AU-Y0L">
@@ -383,7 +397,7 @@
                                     <attributedString key="attributedTitle"/>
                                 </state>
                             </button>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="iPa-w8-G4K">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="iPa-w8-G4K">
                                 <rect key="frame" x="197" y="588" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="Z2r-zf-OQN"/>
