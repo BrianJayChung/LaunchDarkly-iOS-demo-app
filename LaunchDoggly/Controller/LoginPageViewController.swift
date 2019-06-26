@@ -24,7 +24,6 @@ class LoginPageViewController: UIViewController {
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         
@@ -33,7 +32,6 @@ class LoginPageViewController: UIViewController {
         passwordField.isSecureTextEntry = true
         
         fillEmailPass()
-        
     }
     
     func fillEmailPass() {
@@ -41,22 +39,11 @@ class LoginPageViewController: UIViewController {
         passwordField.text = "1234567890"
     }
     
-    func loginLoading() {
-        
-        
-        
-    }
-    
     @IBAction func loginButtonClicked(_ sender: Any) {
+        self.showSpinner(onView: self.view, offSet: 250)
         
-        loginLoading()
-        
-        self.showSpinner(onView: self.view)
-
         DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
-            
             self.performSegue(withIdentifier: "login", sender: self)
-            
         }
     }
     //TO DO: Add user authentication
@@ -65,6 +52,7 @@ class LoginPageViewController: UIViewController {
 extension UIViewController {
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action:    #selector(UIViewController.dismissKeyboard))
+        
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }

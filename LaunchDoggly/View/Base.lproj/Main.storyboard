@@ -30,6 +30,11 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
+                                <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" id="V6Y-vl-dtq">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="749"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="color" red="0.91974407786751267" green="0.068744830314128785" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </activityIndicatorView>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FlagCell" id="dkP-5t-qoF" customClass="FlagCell" customModule="LaunchDoggly" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="178"/>
@@ -179,6 +184,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="V6Y-vl-dtq" id="lxK-B3-x5l"/>
                         <outlet property="collectionView" destination="qsz-yl-yLJ" id="GfY-wC-e0J"/>
                         <outlet property="environmentBtn" destination="DUZ-4S-kBY" id="zqy-ae-2yN"/>
                         <outlet property="loadingView" destination="zEy-1R-lef" id="t0b-7r-CnD"/>
