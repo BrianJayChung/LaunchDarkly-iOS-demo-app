@@ -13,12 +13,14 @@ import Alamofire
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var collectionView: UICollectionView!
-    
+        
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     
     @IBOutlet weak var environmentBtn: UIButton!
     @IBOutlet weak var projectButton: UIButton!
+    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     @IBAction func projectBtnPressed(_ sender: Any) {
         performSegue(withIdentifier: "pushToProjects", sender: self)
@@ -35,62 +37,68 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var lastContentOffset: CGFloat = 0
     
-    var projectBtnText = "Project"
-    var envirBtnText = "Environment"
+    var launchDarklyDataFromProjTV = LaunchDarklyData() // Data object for the projectDelegate
+    var flagResponseData = LaunchDarklyData() // Data object for the flagResponse from fetchFlags
     
-    let api = ApiKeys() // initializes plist APIs
-    let flagList = FlagList()
-    
-    let cellHeight = 150 // Use for the collectionViewCell height
-    let customizeNavBarTitle = NavBarTitleFontStyle()
-    
-    lazy var navBarLaunchSettings: SettingsPageViewController = {
-        let navBarLaunchSettings = SettingsPageViewController()
-        navBarLaunchSettings.mainViewController = self
-        return navBarLaunchSettings
-    }()
+    var envirTitle: String!
+    var environmentKey: String!
+    var projKey: String!
+    var flagJson: JSON?
     
     // MARK: LaunchDarkly fron-end key
     // This is safe to expose as it can only fetch the flag evaluation outcome
     let config = LDConfig.init(mobileKey: "mob-8e3e03d8-355e-432b-a000-e2a15a12d7e6")
     
-    let ldApi = LaunchDarklyApiModel()
+    let backgroundColorKey = "background-color" // Feature flag key for LaunchDarkly use
     
-    let backgroundColorKey = "background-color"
+    let launchDarklyApi = LaunchDarklyApiModel()
+    
+    // let api = ApiKeys() initializes plist APIs
+    let launchDarklyDataList = LaunchDarklyDataList()
+    
+    // Use for the collectionViewCell height
+    let cellHeight = 150
+    let customizeNavBarTitle = NavBarTitleFontStyle()
+    
+    lazy var navBarLaunchSettings: SettingsPageViewController = {
+        let navBarLaunchSettings = SettingsPageViewController()
+        
+        navBarLaunchSettings.mainViewController = self
+        return navBarLaunchSettings
+    }()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
     override func viewDidLoad() {
-
         super.viewDidLoad()
-//        navigationController?.tabBarController?.tabBar.isHidden = true
-        checkBackgroundFeatureValue()
         
+        checkBackgroundFeatureValue() // required for LD
+        resetEnvirTitle() // Reset the environment title to default
         
+        self.collectionView.alwaysBounceVertical = true
         self.collectionView.keyboardDismissMode = .onDrag
         self.collectionView.decelerationRate = UIScrollView.DecelerationRate(rawValue: 0)
         self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow") // hides the navbar shadow
         self.hideKeyboardWhenTappedAround()
         
         LDClient.sharedInstance().delegate = self
-        
-        collectionView.register(FlagCell.self, forCellWithReuseIdentifier: "Cell")
-
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: CGFloat(cellHeight), right: 0)
+
+        collectionView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: CGFloat(cellHeight - 40), right: 0) // This is needed to add paddings on top and bottom of the collectionView
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        activityIndicator.isHidden = true
+        FetchFlags()
         
         // MARK: Logic to handle proj and envir changes
-        
-        projectButton.setTitle(projectBtnText + " \u{2304}", for: .normal)
-        environmentBtn.setTitle(envirBtnText + " \u{2304}", for: .normal)
+        projectButton.setTitle(launchDarklyDataFromProjTV.projectTitle + " \u{2304}", for: .normal)
         
         projectButton.titleLabel?.numberOfLines = 3
         environmentBtn.titleLabel?.numberOfLines = 3
@@ -103,38 +111,53 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         apiCall()
     }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+//        activityIndicator.isHidden = true
+//        activityIndicator.layer.zPosition += 1
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "pushToProjects" {
             let projVC = segue.destination as! ProjectTableView
+
             let backItem = UIBarButtonItem()
+            
             backItem.title = "Home"
             navigationItem.backBarButtonItem = backItem
-            projVC.checkedProject = projectBtnText
-            projVC.flagList = flagList
+            
+            projVC.checkedProject = launchDarklyDataFromProjTV.projectTitle
+            // Setting the LD data list object in the project tableview controller
+            projVC.launchDarklyDataList = launchDarklyDataList
             projVC.delegate = self
         }
+        
         if segue.identifier == "pushToEnvironments" {
             let envVC = segue.destination as! EnvironmentsTableView
-            envVC.selectedEnvir = envirBtnText
+            
+            envVC.selectedEnvir.envirName = envirTitle
+            // After a project is selected, the data is passed into the launchDarklyDataFromProjTV object. This sets the environments LD data object to the selected prob object
+            envVC.launchDarklyData = launchDarklyDataFromProjTV
             envVC.delegate = self
         }
     }
     
     // MARK: Function to set the background feature flag
-    func checkBackgroundFeatureValue(){
+    func checkBackgroundFeatureValue() {
         let featureFlagValue = LDClient.sharedInstance().boolVariation(backgroundColorKey, fallback: false)
+        
         if featureFlagValue {
             colorToggles(rgbColor: UIColorFromRGB(red: 0.121568, green: 0.164706, blue: 0.266667, alpha: 1)) // default LD dark blue
-        }
-        else {
+        } else {
             colorToggles(rgbColor: UIColorFromRGB(red: 0, green: 0, blue: 1, alpha: 1)) // blue
         }
     }
     
     // MARK: collectionView delegates for constructing the flag cell page
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return flagResponseData.flagsList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -142,37 +165,111 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        var flagText = ""
+        var descriptionText = ""
+        let environmentKey = self.environmentKey as String
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FlagCell", for: indexPath) as! FlagCell
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! FlagCell
+        if flagResponseData.flagsList.count > 0 {
+            let item = flagResponseData.flagsList[indexPath.row]
+            
+            flagText = item["name"].string!
+            descriptionText = item["description"].string!
+            // Set the button state based on flag is on or off from API response
+            cell.buttnSwitchOutlet.isOn = item["environments"][environmentKey]["on"].bool!
+        }
+        // Set flag text/description for each cell
+        cell.flagName.text = flagText
+        cell.descriptionText.text = descriptionText
         cell.delegate = self
-        cell.buttonSwitch.tag = indexPath.row // will use this to target each row
-        cell.listenBtnChange()
+        
+        // Cell.buttnSwitchOutlet.tag = indexPath.row // later use target by tag
         return cell
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         return CGSize(width: collectionView.frame.width, height: CGFloat(cellHeight))
+        
     }
-
-    //MARK: -> Network calls
     
+    func setEnvirTitle(){
+        environmentBtn.setTitle(envirTitle + " \u{2304}", for: .normal)
+    }
+    
+    func resetEnvirTitle(){
+        environmentBtn.setTitle("[ environment ]" + " \u{2304}", for: .normal)
+        environmentKey = nil
+        
+        self.collectionView.reloadData()
+    }
+    
+    //MARK: -> Network calls
     func apiCall() {
-        ldApi.getData(path : "projects") { result in
+        flagResponseData.flagsList = [JSON]()
+        launchDarklyApi.getData(path : "projects") { result in
             switch result {
             case .failure(let error):
-                print(error)
-                
+                print(error, "no internet")
             case .success(let value):
                 let json = JSON(value)
+                
                 for (_, subJson) in json["items"] {
+                    let projectRow = LaunchDarklyData() // create the top-level LD object
                     
-                    let projName = Flag()
-                    projName.text = subJson["name"].string!
-                    self.flagList.items.append(projName)
+                    projectRow.projectTitle = subJson["name"].string! // set the proj title
+                    projectRow.projectKey = subJson["key"].string! // set the pro jkey
+                    
+                    for (_, env) in subJson["environments"] {
+                        // Each project has multiple environments
+                        let envirRow = LaunchDarklyData() // create 2nd level LD object for the environments
+                        
+                        envirRow.envirName = env["name"].string! // set the attribute name
+                        envirRow.envirKey = env["key"].string! // set the attribute key
+                        
+                        projectRow.environmentsList.append(envirRow) // store the object into the top-level LD object which has an array to hold these
+                    }
+                    self.launchDarklyDataList.listOfLaunchDarklyData.append(projectRow) // Append the projectRow object into the LD data list object
                 }
             }
         }
     }
     
+    // This function gets triggered when both proj/envir are selected
+    func FetchFlags() {
+        
+        if (projKey != nil) && (environmentKey != nil) {
+            self.activityIndicator.startAnimating()
+            self.activityIndicator.isHidden = false
+            self.activityIndicator.layer.zPosition += 1
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+            }
+            
+            launchDarklyApi.getData(path :
+            "flags/\(projKey!)?env=\(environmentKey!)") { result in
+        
+                switch result {
+                case .failure(let error):
+                    print(error, "no internet connection")
+                    
+                case .success(let value):
+                    
+                    let json = JSON(value)
+                    
+                    print("success fetching flags")
+                    for (_, subJson) in json["items"] {
+                        
+                        self.flagResponseData.flagsList.append(subJson)
+                        self.collectionView.reloadData() // reload the collection view after api is fetched
+                        
+                    }
+                }
+            }
+        }
+    }
 }
 

@@ -18,7 +18,6 @@ import Alamofire
 class AuditLogViewController: UIViewController, ApiDelegate{
     
     func apiDidFinish(response: DataResponse<Any>?) {
-        print("did finish action")
         responseText.text = response?.description
     }
     
@@ -46,17 +45,5 @@ class AuditLogViewController: UIViewController, ApiDelegate{
     }
     
     @IBOutlet weak var responseText: UITextView!
-    
-//    func getData(url: String, headers: [String:String]) {
-//        Alamofire.request(url, method: .get, headers: headers).responseJSON {
-//            response in
-//            if response.result.isSuccess {
-//                self.responseText.text = response.description
-//            } else {
-//                print(response)
-//            }
-//        }
-//    }
-
 
 }

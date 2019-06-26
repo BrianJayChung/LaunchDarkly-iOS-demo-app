@@ -13,7 +13,6 @@ class LaunchDarklyApiModel {
     
     let sdkKey: String!
     let baseUrl: String!
-    
     let api = ApiKeys()
     
     init() {
@@ -24,11 +23,12 @@ class LaunchDarklyApiModel {
     }
     
     func getData(path: String, completionHandler: @escaping (Result<[String: Any]>) -> Void) {
-        let headers = ["Authorization": self.sdkKey] as! [String: String]
         
+        let headers = ["Authorization": self.sdkKey] as! [String: String]
         let url = baseUrl.appending(path)
         
         performRequest(url: url, headers: headers, completion: completionHandler)
+        
     }
     
     func performRequest(url: String, headers: [String:String], completion: @escaping (Result<[String: Any]>) -> Void ) {
@@ -50,4 +50,15 @@ class LaunchDarklyApiModel {
             }
         }
     }
+    
+}
+
+class Connectivity {
+    
+    class func isConnectedToInternet() -> Bool {
+        
+        return NetworkReachabilityManager()?.isReachable ?? false
+        
+    }
+    
 }

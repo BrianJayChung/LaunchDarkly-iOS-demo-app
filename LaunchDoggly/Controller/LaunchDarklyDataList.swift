@@ -8,10 +8,9 @@
 
 import UIKit
 
-class FlagList: NSObject, Codable {
-    var items = [Flag]()
-    var selectedFlag: Flag!
-    var testText = "test"
+class LaunchDarklyDataList: NSObject, Codable {
+    
+    var listOfLaunchDarklyData = [LaunchDarklyData]()
     
     override init(){
         super.init()
