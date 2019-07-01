@@ -15,62 +15,50 @@ protocol EnvironmentsTableDelegate{
 class EnvironmentsTableView: UITableViewController{
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
     }
     
-    let colorChange = UIColorFromRGB() // Custom calls to change colors from RGB format
+    // Custom calls to change colors from RGB format
+    let colorChange = UIColorFromRGB()
     
     var delegate : EnvironmentsTableDelegate?
     var selectedEnvir = LaunchDarklyData()
     var launchDarklyData: LaunchDarklyData!
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return launchDarklyData.environmentsList.count
-        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "environmentCell", for: indexPath)
-        
         let item = launchDarklyData.environmentsList[indexPath.item]
         
         if item.environmentIsChecked {
-            selectedEnvir = item // Track currently selected item
+        // Track currently selected item
+            selectedEnvir = item
         }
-        
-        configureCheckmark(for: cell, with: item) // This is to determine whether a cell should be chekced
-        
+        // This is to determine whether a cell should be chekced
+        configureCheckmark(for: cell, with: item)
         cell.textLabel?.text = item.envirName
         cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
         cell.tintColor = UIColor.red
         
         return cell
-        
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         if let cell = tableView.cellForRow(at: indexPath) {
-            
             let item = launchDarklyData.environmentsList[indexPath.item]
             
             if item != selectedEnvir {
-                
                 item.toggleEnvironmentChecked()
                 selectedEnvir.toggleEnvironmentChecked()
-                
             }
-            
             configureCheckmark(for: cell, with: item)
             
-            delegate?.environmentsTableDelegate(envirName: item.envirName!, envirKey: item.envirKey!) // Calls the environmentsTable delegate when an envir is selected, this passes the envirName and key to viewcontroller to make the API call
-            
+            // Calls the environmentsTable delegate when an envir is selected, this passes the envirName and key to viewcontroller to make the API call
+            delegate?.environmentsTableDelegate(envirName: item.envirName!, envirKey: item.envirKey!)
         }
-
         
         // CATransaction to set completion action, which is to return back to previous VC
         CATransaction.begin()

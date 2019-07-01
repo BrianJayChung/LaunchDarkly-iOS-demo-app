@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setUpLDClient()
         UITabBar.appearance().tintColor = .white
         UINavigationBar.appearance().tintColor = .white
-        UINavigationBar.appearance().isTranslucent = false
+//        UINavigationBar.appearance().isTranslucent = false
         
         return true
     }

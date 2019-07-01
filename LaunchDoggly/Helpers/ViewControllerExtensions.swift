@@ -38,36 +38,40 @@ extension ViewController {
     func colorToggles(rgbColor: UIColorFromRGB){
         navigationController?.navigationBar.barTintColor = rgbColor
         tabBarController?.tabBar.barTintColor = rgbColor
-        searchBar?.backgroundColor = rgbColor
+//        searchBar?.backgroundColor = rgbColor
         mainView?.backgroundColor = rgbColor
         collectionView?.backgroundColor = rgbColor
     }
 }
 
-extension ViewController {
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        
-        // this is used to determine the scrollview height to prevent botom bounce to hide tab bar
-        let heightLimit = scrollView.contentSize.height - scrollView.bounds.size.height
-        
-        if (self.lastContentOffset < scrollView.contentOffset.y) && (scrollView.contentOffset.y > 0) && (scrollView.contentSize.height > scrollView.bounds.size.height){
-            
-            UIView.animate(withDuration: 0.5, delay:0, options: UIView.AnimationOptions(),animations: {
-                self.navigationController?.setNavigationBarHidden(true, animated: false)
-                self.tabBarController?.tabBar.isHidden = true
-            }, completion: nil)
-            
-        } else if (self.lastContentOffset > scrollView.contentOffset.y) && (scrollView.contentOffset.y < heightLimit) {
-            UIView.animate(withDuration: 0.5, delay: 0, options: UIView.AnimationOptions(), animations: { self.navigationController?.setNavigationBarHidden(false, animated: false)
-                self.tabBarController?.tabBar.isHidden = false
-            }, completion: nil)
-        }
-        
-        self.lastContentOffset = scrollView.contentOffset.y
-        
-    }
-}
+//extension ViewController {
+//    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+//        
+//        // this is used to determine the scrollview height to prevent botom bounce to hide tab bar
+//        let heightLimit = scrollView.contentSize.height - scrollView.bounds.size.height
+//        
+//        if (self.lastContentOffset < scrollView.contentOffset.y) && (scrollView.contentOffset.y > 0) && (scrollView.contentSize.height > scrollView.bounds.size.height){
+//            hideNavTab()
+//        } else if (self.lastContentOffset > scrollView.contentOffset.y) && (scrollView.contentOffset.y < heightLimit) {
+//            unHideNavTab()
+//        }
+//        
+//        self.lastContentOffset = scrollView.contentOffset.y
+//    }
+//    
+//    func hideNavTab() {
+//        UIView.animate(withDuration: 0.5, delay:0, options: UIView.AnimationOptions(),animations: {
+//            self.navigationController?.setNavigationBarHidden(true, animated: false)
+//            self.tabBarController?.tabBar.isHidden = true
+//        }, completion: nil)
+//    }
+//    
+//    func unHideNavTab() {
+//        UIView.animate(withDuration: 0.0, delay: 0, options: UIView.AnimationOptions(), animations: { self.navigationController?.setNavigationBarHidden(false, animated: false)
+//            self.tabBarController?.tabBar.isHidden = false
+//        }, completion: nil)
+//    }
+//}
 
 extension ViewController {
     // MARK: New UI page when clicked on one of the settings
