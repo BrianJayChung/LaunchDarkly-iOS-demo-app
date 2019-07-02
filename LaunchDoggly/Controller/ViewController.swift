@@ -18,6 +18,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var environmentBtn: UIButton!
     @IBOutlet weak var projectButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var collectionHeightConstraint: NSLayoutConstraint!
     
     @IBAction func projectBtnPressed(_ sender: Any) {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -45,6 +46,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     // let api = ApiKeys() initializes plist APIs
     var launchDarklyDataList = LaunchDarklyDataList()
+    
+    var filteredProjects = [JSON]()
     
     var envirTitle: String!
     var environmentKey: String!
@@ -80,10 +83,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.searchController = searchController
-//        searchController.searchBar.delegate = self
-//        searchController.searchResultsUpdater = (self as! UISearchResultsUpdating)
+        searchController.searchBar.delegate = self
+        searchController.searchResultsUpdater = (self as! UISearchResultsUpdating)
         searchController.hidesNavigationBarDuringPresentation = false
-        searchController.obscuresBackgroundDuringPresentation = true
+        searchController.obscuresBackgroundDuringPresentation = false
         
         // required for LD to change background color
 //        checkBackgroundFeatureValue()
@@ -179,6 +182,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     // MARK: collectionView delegates for constructing the flag cell page
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if isFiltering() {
+            return filteredProjects.count
+        }
+        
         return flagResponseData.flagsList.count
     }
     
@@ -193,10 +200,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         var flagKey = ""
         var descriptionText = ""
         let environmentKey = self.environmentKey as String
+        let item: JSON
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FlagCell", for: indexPath) as! FlagCell
         
         if flagResponseData.flagsList.count > 0 {
-            let item = flagResponseData.flagsList[indexPath.row]
+            if isFiltering() {
+                item = filteredProjects[indexPath.row]
+            } else {
+                item = flagResponseData.flagsList[indexPath.row]
+            }
+            
             flagText = item["name"].string!
             descriptionText = item["description"].string!
             flagKey = item["key"].string!
@@ -264,6 +277,40 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.collectionView.reloadData()
     }
     
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        print("triggering")
+        projectButton.isHidden = true
+        environmentBtn.isHidden = true
+        collectionHeightConstraint.constant = 68
+        
+        UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
+            self.collectionHeightConstraint.constant = 0
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        collectionHeightConstraint.constant = 68
+        projectButton.isHidden = false
+        environmentBtn.isHidden = false
+    }
+    
+    func searchBarIsEmpty() -> Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func isFiltering() -> Bool {
+        return searchController.isActive && !searchBarIsEmpty()
+    }
+    
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        filteredProjects = flagResponseData.flagsList.filter({( ldData : JSON) -> Bool in
+            return ldData["name"].string!.lowercased().contains(searchText.lowercased())
+        })
+        
+        collectionView.reloadData()
+    }
+    
     //MARK: -> Network calls
     func apiCall() {
         flagResponseData.flagsList = [JSON]()
@@ -324,5 +371,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 }
             }
         }
+    }
+}
+
+extension ViewController: UISearchResultsUpdating {
+    // MARK: - UISearchResultsUpdating Delegate
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
     }
 }

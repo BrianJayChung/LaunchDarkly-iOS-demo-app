@@ -47,7 +47,7 @@
                                                     <rect key="frame" x="9" y="103" width="263" height="65"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="65" id="Ej6-wa-Ij6"/>
-                                                        <constraint firstAttribute="width" constant="263" id="gLz-ab-1OI"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="263" id="gLz-ab-1OI"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -66,7 +66,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dGF-78-jKi">
                                                     <rect key="frame" x="9" y="9" width="207" height="53"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="207" id="MK1-LM-1Kv"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="207" id="MK1-LM-1Kv"/>
                                                         <constraint firstAttribute="height" constant="53" id="iuU-ya-hHN"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
@@ -75,10 +75,10 @@
                                                     <size key="shadowOffset" width="0.0" height="0.0"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="key" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dbC-zO-kJG">
-                                                    <rect key="frame" x="373" y="29.000000000000004" width="21" height="15.666666666666668"/>
+                                                    <rect key="frame" x="268" y="29" width="126" height="16"/>
                                                     <color key="backgroundColor" white="0.66666666666666663" alpha="0.35485338184931509" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="150" id="7uI-9d-drZ"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="7uI-9d-drZ"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -102,10 +102,13 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="bottomMargin" secondItem="g5v-oF-PGE" secondAttribute="bottom" constant="23" id="0tO-0m-sIU"/>
+                                            <constraint firstAttribute="trailing" secondItem="7MY-ID-1YT" secondAttribute="trailing" constant="142" id="0zu-uv-YXu"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="g5v-oF-PGE" secondAttribute="trailing" constant="25" id="4pO-HO-ZcC"/>
                                             <constraint firstItem="dGF-78-jKi" firstAttribute="top" secondItem="dkP-5t-qoF" secondAttribute="top" constant="9" id="7eY-a8-b8m"/>
                                             <constraint firstItem="dbC-zO-kJG" firstAttribute="top" secondItem="dkP-5t-qoF" secondAttribute="top" constant="29" id="8uC-CL-clb"/>
+                                            <constraint firstAttribute="trailing" secondItem="dGF-78-jKi" secondAttribute="trailing" constant="198" id="FN4-rA-CsH"/>
                                             <constraint firstItem="X1o-tb-2e8" firstAttribute="top" secondItem="dbC-zO-kJG" secondAttribute="bottom" constant="18.670000000000002" id="HiF-gG-xRD"/>
+                                            <constraint firstItem="dbC-zO-kJG" firstAttribute="leading" secondItem="dkP-5t-qoF" secondAttribute="leading" priority="750" constant="268" id="JWH-tl-vKy"/>
                                             <constraint firstItem="7MY-ID-1YT" firstAttribute="leading" secondItem="dkP-5t-qoF" secondAttribute="leadingMargin" constant="1" id="SUc-kO-a4V"/>
                                             <constraint firstAttribute="bottomMargin" secondItem="7MY-ID-1YT" secondAttribute="bottom" constant="2" id="XS9-8I-s1Z"/>
                                             <constraint firstAttribute="trailing" secondItem="dbC-zO-kJG" secondAttribute="trailing" constant="20" id="eFJ-2B-8vl"/>
@@ -194,6 +197,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="activityIndicator" destination="V6Y-vl-dtq" id="rq0-KC-7Xw"/>
+                        <outlet property="collectionHeightConstraint" destination="dUn-1D-IvR" id="neu-cx-EEw"/>
                         <outlet property="collectionView" destination="qsz-yl-yLJ" id="GfY-wC-e0J"/>
                         <outlet property="environmentBtn" destination="DUZ-4S-kBY" id="zqy-ae-2yN"/>
                         <outlet property="mainView" destination="kh9-bI-dsS" id="oOK-Po-rX1"/>
