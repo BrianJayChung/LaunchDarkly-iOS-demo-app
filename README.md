@@ -14,12 +14,12 @@ LaunchDoggly is a feature management platform that serves over 100 billion featu
 2. Run 'pod install' to get the latest iOS client integrated.
 3. Open `LaunchDoggly.xcworkspace` in XCode
 4. Copy the mobile key from your account settings page and set `mobileKey` in `AppDelegate.swift`.
-5. Copy the feature flag key from your LaunchDoggly dashboard and set `featureFlagKey` in `ViewController.swift`
+5. Copy the feature flag key from your LaunchDoggly dashboard and set `featureFlagKey` in `ViewController.swift` (By default it's using "show-widgets")
 
 6. Run your application through XCode.
 7. Update the feature flags from your LaunchDoggly dashboard and the feature flag label in the view controller should update with the current value of the feature flag.
 
-##### Requirements
+##### Requirements for retrieving projects/flags data from LaunchDarkly
  #####
 LaunchDarkly api key
 

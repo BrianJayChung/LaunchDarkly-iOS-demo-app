@@ -4,7 +4,7 @@ use_frameworks!
 
 target 'LaunchDoggly' do
 
-pod 'LaunchDarkly', '3.0.1'
+pod 'LaunchDarkly', '4.4.1'
 pod 'Alamofire'
 pod 'SwiftyJSON'
 

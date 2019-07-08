@@ -35,7 +35,7 @@ extension UIViewController {
         
         ai.startAnimating()
         ai.center = spinnerView.center
-        
+    
         DispatchQueue.main.async {
             spinnerView.addSubview(ai)
             onView.addSubview(spinnerView)
@@ -46,7 +46,6 @@ extension UIViewController {
     
     func removeSpinner() {
         DispatchQueue.main.async {
-            print("remove here")
             vSpinner?.removeFromSuperview()
             vSpinner = nil
         }
