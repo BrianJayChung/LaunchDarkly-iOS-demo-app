@@ -18,7 +18,7 @@ class Setting: NSObject {
     }
 }
 
-class SettingsPageViewController: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class SettingsPopupViewController: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     let blackView = UIView()
     var mainViewController : ViewController?
@@ -74,52 +74,39 @@ class SettingsPageViewController: NSObject, UICollectionViewDataSource, UICollec
     @objc func handleDismiss(setting: Setting){
         
         UIView.animate(withDuration: 0.5, animations: {
-            
             self.blackView.alpha = 0
-            if let window = UIApplication.shared.keyWindow {
-                
-                self.collectionView.frame = CGRect(x: 0, y: window.frame.height, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
-                
-            }
             
+            if let window = UIApplication.shared.keyWindow {
+                self.collectionView.frame = CGRect(x: 0, y: window.frame.height, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
+            }
         }) { (Completed: Bool) in
             if type(of: setting) == Setting.self && setting.name != "Cancel" {
-                
                 self.mainViewController?.showControllerForSetting(setting: setting)
-                
             }
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return 5
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath as IndexPath) as! SettingCell
         let cellSetting = settings[indexPath.item]
         cell.setting = cellSetting
-        return cell
         
+        return cell
         }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
         return CGSize(width: collectionView.frame.width, height: CGFloat(cellHeight))
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        
         return 0
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         let setting = self.settings[indexPath.item]
         handleDismiss(setting: setting)
     }

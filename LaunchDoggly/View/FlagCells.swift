@@ -21,10 +21,15 @@ class FlagCell: UICollectionViewCell{
   
     override func awakeFromNib() {
         super.awakeFromNib()
+        setup()
     }
     
+    func setup() {
+        self.layer.cornerRadius = 6.0
+        self.layer.shadowRadius = 2.0
+        self.layer.shadowColor = UIColor.lightGray.cgColor
+    }
     
-  
     @IBOutlet weak var tagTextView: UITextView!
     @IBOutlet weak var flagKey: UILabel!
     @IBOutlet weak var flagName: UILabel!
