@@ -21,6 +21,7 @@ struct ApiKeys {
     
     func plistContruct(name: String) -> NSDictionary {
         if let path = Bundle.main.path(forResource: name, ofType: "plist") {
+            print(path)
             nsDictionary = NSDictionary(contentsOfFile: path)
         }
         return nsDictionary!

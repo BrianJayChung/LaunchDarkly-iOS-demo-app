@@ -271,24 +271,6 @@
             </objects>
             <point key="canvasLocation" x="437.68115942028987" y="-2880.1339285714284"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="iOg-26-Qdv">
-            <objects>
-                <viewController id="1oG-dP-sSX" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="KVJ-4F-2xg"/>
-                        <viewControllerLayoutGuide type="bottom" id="gTO-w6-ASf"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="5xS-P4-nEg">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="psy-ea-tNl" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1291" y="-2545"/>
-        </scene>
         <!--Environments Table View-->
         <scene sceneID="ntz-AU-Y0L">
             <objects>
@@ -317,6 +299,74 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rbc-ga-qyi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="438" y="-2192"/>
+        </scene>
+        <!--Settings Controller-->
+        <scene sceneID="O3k-B6-Axd">
+            <objects>
+                <tableViewController storyboardIdentifier="SettingsPage" id="XJj-0O-ZKb" customClass="SettingsController" customModule="LaunchDoggly" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="geS-56-U8S">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <textView key="tableFooterView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="get API key" textAlignment="center" id="5Nk-j4-suE">
+                            <rect key="frame" x="0.0" y="117.33333333333334" width="414" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="textColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="0.962890625" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <sections>
+                            <tableViewSection headerTitle="My API KEY" id="wlH-gl-OIx">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="pfy-Jb-PI6">
+                                        <rect key="frame" x="0.0" y="55.333333333333343" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pfy-Jb-PI6" id="0Bh-6X-UEN">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="API KEY" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="p6B-GM-LSa">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.666666666666664"/>
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="43.670000000000002" id="H0c-1X-HUx"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="414" id="Pwh-zt-odV"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                    <connections>
+                                                        <action selector="saveOnEnd:" destination="XJj-0O-ZKb" eventType="editingDidEndOnExit" id="DCb-aE-EAG"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="p6B-GM-LSa" firstAttribute="top" secondItem="0Bh-6X-UEN" secondAttribute="top" id="Nx0-ft-GXI"/>
+                                                <constraint firstAttribute="trailing" secondItem="p6B-GM-LSa" secondAttribute="trailing" id="Prt-FX-BFQ"/>
+                                                <constraint firstItem="p6B-GM-LSa" firstAttribute="top" secondItem="0Bh-6X-UEN" secondAttribute="top" id="XB0-cQ-uPu"/>
+                                                <constraint firstAttribute="bottom" secondItem="p6B-GM-LSa" secondAttribute="bottom" id="lyH-Cp-ejl"/>
+                                                <constraint firstAttribute="trailing" secondItem="p6B-GM-LSa" secondAttribute="trailing" id="ogU-xe-8lH"/>
+                                                <constraint firstItem="p6B-GM-LSa" firstAttribute="leading" secondItem="0Bh-6X-UEN" secondAttribute="leading" id="qGS-Nb-A0D"/>
+                                                <constraint firstAttribute="bottom" secondItem="p6B-GM-LSa" secondAttribute="bottom" id="s7b-hR-Yi9"/>
+                                                <constraint firstItem="p6B-GM-LSa" firstAttribute="leading" secondItem="0Bh-6X-UEN" secondAttribute="leading" id="ya3-7r-SFk"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="XJj-0O-ZKb" id="N6u-4M-Lac"/>
+                            <outlet property="delegate" destination="XJj-0O-ZKb" id="1DB-EU-g2w"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="apiKey" destination="p6B-GM-LSa" id="TRk-mp-57K"/>
+                        <outlet property="getApiKeyLink" destination="5Nk-j4-suE" id="dXf-kB-txL"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L6W-uX-Gkx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1344.9275362318842" y="-2474.3303571428569"/>
         </scene>
         <!--Login Page View Controller-->
         <scene sceneID="7KV-cw-2MA">

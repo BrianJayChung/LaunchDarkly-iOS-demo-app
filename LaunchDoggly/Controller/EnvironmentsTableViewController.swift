@@ -12,7 +12,7 @@ protocol EnvironmentsTableDelegate{
     func environmentsTableDelegate(envirName: String, envirKey: String)
 }
 
-class EnvironmentsTableView: UITableViewController{
+class EnvironmentsTableView: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()

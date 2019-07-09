@@ -84,11 +84,12 @@ extension ViewController {
 
 // MARK: New UI page when clicked on one of the settings
 extension ViewController {
-    func showControllerForSetting(setting: Setting){
-        let settingsPopupController = SettingsController()
+    func showControllerForSetting(setting: Setting) {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let settingsPopupController = storyBoard.instantiateViewController(withIdentifier: "SettingsPage") as! SettingsController
+        
         settingsPopupController.navigationItem.title = setting.name
         navigationController?.pushViewController(settingsPopupController, animated: true)
-        
     }
 }
 

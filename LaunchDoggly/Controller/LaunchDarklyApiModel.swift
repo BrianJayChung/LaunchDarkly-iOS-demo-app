@@ -11,24 +11,24 @@ import SwiftyJSON
 
 class LaunchDarklyApiModel {
     
-    let sdkKey: String!
+    let apiKey: String!
     let baseUrl: String!
     let api = ApiKeys()
+    let settingsController = SettingsController()
     
     init() {
+        self.apiKey = settingsController.loadApiKey()["sdk-key"]
+        print(apiKey)
         
-        self.sdkKey = api.ldApiKey() // previously exposed, new token generated
+//        self.apiKey = api.ldApiKey() // previously exposed, new token generated
         self.baseUrl = "https://app.launchdarkly.com/api/v2/"
-        
     }
     
     func getData(path: String, completionHandler: @escaping (Result<[String: Any]>) -> Void) {
-        
-        let headers = ["Authorization": self.sdkKey] as! [String: String]
+        let headers = ["Authorization": self.apiKey] as! [String: String]
         let url = baseUrl.appending(path)
         
         performRequest(url: url, headers: headers, completion: completionHandler)
-        
     }
     
     func performRequest(url: String, headers: [String:String], completion: @escaping (Result<[String: Any]>) -> Void ) {
