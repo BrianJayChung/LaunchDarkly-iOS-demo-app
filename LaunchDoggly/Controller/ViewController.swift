@@ -53,7 +53,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     /// Feature flag key for LaunchDarkly use
     let backgroundColorKey = "background-color"
-    let launchDarklyApi = LaunchDarklyApiModel()
+//    let launchDarklyApi = LaunchDarklyApiModel()
     
     /// Use for the collectionViewCell height
     let cellHeight = 180

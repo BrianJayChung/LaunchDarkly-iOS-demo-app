@@ -12,7 +12,7 @@ class SettingsController: UITableViewController {
     
     let api = ApiKeys()
     let url = URL(string: "https://app.launchdarkly.com/settings/tokens")!
-    var apiKeyString = [String: String]()
+//    var apiKeyString = [String: String]()
 
     @IBOutlet weak var apiKey: UITextField!
     @IBOutlet weak var getApiKeyLink: UITextView!
@@ -40,15 +40,21 @@ class SettingsController: UITableViewController {
         
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        loadApiKey()
-        apiKey.text? = apiKeyString["sdk-key"]!
+        let apiKeyString = loadApiKey()
+        
+        if let apiKeyString = apiKeyString["sdk-key"] {
+            apiKey.text? = apiKeyString
+        } else {
+            apiKey.text? = "your api key here"
+        }
+//        apiKey.text? = apiKeyString["sdk-key"]!
         print("Documents folder is \(documentsDirectory())")
         print("Data file path is \(dataFilePath())")
     }
     
     func documentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-
+        
         return paths[0]
     }
     
@@ -57,20 +63,42 @@ class SettingsController: UITableViewController {
     }
     
     func saveChecklistItems() {
+        let fileManager = FileManager.default
+        let path = dataFilePath()
+//        print(fileManager.fileExists(atPath: path.path))
         let testData = ["sdk-key": apiKey.text]
         let encoder = PropertyListEncoder()
         
-        do {
-            let data = try encoder.encode(testData)
-            try data.write(to: dataFilePath(),
-                           options: Data.WritingOptions.atomic)
-        } catch {
-            print("Error encoding item\(error.localizedDescription)")
+        if !fileManager.fileExists(atPath: path.path) {
+            do {
+                let data = try encoder.encode(testData)
+                try data.write(to: dataFilePath(),
+                               options: Data.WritingOptions.atomic)
+            } catch {
+                print("Error encoding item\(error.localizedDescription)")
+            }
+        } else {
+            do {
+                if let data = try? Data(contentsOf: path) {
+                    let decoder = PropertyListDecoder()
+                    do {
+                        var existData = try decoder.decode([String: String].self, from: data)
+                        existData["sdk-key"] = "the new key being set is here"
+                        let newData = try encoder.encode(existData)
+                        try newData.write(to: dataFilePath(),
+                                       options: Data.WritingOptions.atomic)
+                    } catch {
+                        print("Error decoding list array: \(error.localizedDescription)")
+                    }
+                }
+            }
         }
     }
     
     func loadApiKey() -> [String: String] {
         let path = dataFilePath()
+        
+        var apiKeyString = [String: String]()
         
         if let data = try? Data(contentsOf: path) {
             let decoder = PropertyListDecoder()

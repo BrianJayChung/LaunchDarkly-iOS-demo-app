@@ -105,6 +105,7 @@ extension ViewController: ClientDelegate {
 //MARK: -> Network calls
 extension ViewController {
     func launchDarklyApiCall() {
+        let launchDarklyApi = LaunchDarklyApiModel()
        /// This needs to get called to clear out the collection view, to empty view on project reselect, as well as avoiding non-existent key to be called
 //        flagResponseData.flagsList = [JSON]()
         launchDarklyApi.getData(path : "projects") { result in
@@ -139,6 +140,7 @@ extension ViewController {
 extension ViewController {
     // This function gets triggered when both proj/envir are selected
     func launchDarklyfetchFlags() {
+        let launchDarklyApi = LaunchDarklyApiModel()
         if (projKey != nil) && (environmentKey != nil) {
             self.activityIndicator.startAnimating()
             self.activityIndicator.isHidden = false

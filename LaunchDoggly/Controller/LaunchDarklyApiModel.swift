@@ -18,14 +18,20 @@ class LaunchDarklyApiModel {
     
     init() {
         self.apiKey = settingsController.loadApiKey()["sdk-key"]
-        print(apiKey)
+        
         
 //        self.apiKey = api.ldApiKey() // previously exposed, new token generated
         self.baseUrl = "https://app.launchdarkly.com/api/v2/"
     }
     
     func getData(path: String, completionHandler: @escaping (Result<[String: Any]>) -> Void) {
-        let headers = ["Authorization": self.apiKey] as! [String: String]
+        
+        var headers = ["Authorization": "123"] as [String: String]
+        
+        if let apiKey = self.apiKey {
+            headers = ["Authorization": apiKey] as [String: String]
+        }
+        
         let url = baseUrl.appending(path)
         
         performRequest(url: url, headers: headers, completion: completionHandler)
