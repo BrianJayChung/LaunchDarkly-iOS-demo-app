@@ -12,56 +12,94 @@ protocol EnvironmentsTableDelegate{
     func environmentsTableDelegate(envirName: String, envirKey: String)
 }
 
-class EnvironmentsTableView: UITableViewController {
+class EnvironmentsTableView: UITableViewController, UISearchBarDelegate {
     
+    // Custom calls to change colors from RGB format
+    let colorChange = UIColorFromRGB()
     let searchController = UISearchController(searchResultsController: nil)
+    let navBarSettings = ProjEnvNavBarView()
+    
+    var delegate : EnvironmentsTableDelegate?
+    var selectedEnvir = LaunchDarklyData()
+    var launchDarklyData: LaunchDarklyData!
+    var filteredProjects = [LaunchDarklyData]()
+    var launchDarklyDataList: LaunchDarklyDataList!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.obscuresBackgroundDuringPresentation = true
-        navigationItem.searchController = searchController
         
-//        self.definesPresentationContext = true
+        navBarSettings.navigationSettings(searchController: searchController, navigationItem: navigationItem)
+        /// Setting search bar delegates
+        searchController.searchBar.delegate = self
+        searchController.searchResultsUpdater = self
+        self.definesPresentationContext = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
-        self.navigationItem.searchController?.removeFromParent()
-        self.navigationItem.searchController?.isActive = false
     }
-    // Custom calls to change colors from RGB format
-    let colorChange = UIColorFromRGB()
-    
-    var delegate : EnvironmentsTableDelegate?
-    var selectedEnvir = LaunchDarklyData()
-    var launchDarklyData: LaunchDarklyData!
+
+//    func navigationSettings() {
+//        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+//
+//        navigationController?.navigationBar.titleTextAttributes = textAttributes
+//        navigationController?.navigationBar.backgroundColor = UIColorFromRGB(red: 0.121568, green: 0.164706, blue: 0.266667, alpha: 1)
+//        searchController.searchBar.delegate = self
+//        searchController.searchResultsUpdater = self
+//        searchController.obscuresBackgroundDuringPresentation = false
+//        searchController.searchBar.placeholder = "Search Environment"
+//
+//        navigationItem.searchController = searchController
+//        navigationController?.navigationBar.prefersLargeTitles = false
+//        //  search bar does not remain on the screen if the user navigates to another view controller while the UISearchController is active.
+//        self.definesPresentationContext = true
+//    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if isFiltering() {
+            return filteredProjects.count
+        }
+        
         return launchDarklyData.environmentsList.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "environmentCell", for: indexPath)
         let item = launchDarklyData.environmentsList[indexPath.item]
+        let ldData: LaunchDarklyData
+        
+        if isFiltering(){
+            ldData = filteredProjects[indexPath.row]
+        } else {
+            ldData = launchDarklyData.environmentsList[indexPath.row]
+        }
         
         if item.environmentIsChecked {
         // Track currently selected item
-            selectedEnvir = item
+            selectedEnvir = ldData
         }
         // This is to determine whether a cell should be chekced
-        configureCheckmark(for: cell, with: item)
-        cell.textLabel?.text = item.envirName
+        configureCheckmark(for: cell, with: ldData)
+        
+        cell.textLabel?.text = ldData.envirName
         cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
         cell.tintColor = UIColor.red
         
         return cell
     }
-
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let ldData: LaunchDarklyData
+        
         if let cell = tableView.cellForRow(at: indexPath) {
-            let item = launchDarklyData.environmentsList[indexPath.item]
+            if isFiltering() {
+                ldData = filteredProjects[indexPath.row]
+            } else {
+                ldData = launchDarklyData.environmentsList[indexPath.row]
+            }
+            
+            let item = ldData
             
             if item != selectedEnvir {
                 item.toggleEnvironmentChecked()
@@ -71,8 +109,6 @@ class EnvironmentsTableView: UITableViewController {
             
             // Calls the environmentsTable delegate when an envir is selected, this passes the envirName and key to viewcontroller to make the API call
             delegate?.environmentsTableDelegate(envirName: item.envirName!, envirKey: item.envirKey!)
-            
-            
         }
         
         // CATransaction to set completion action, which is to return back to previous VC
@@ -106,4 +142,28 @@ class EnvironmentsTableView: UITableViewController {
         }
     }
     
+    // MARK: -> Search bar helper functions
+    func searchBarIsEmpty() -> Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func isFiltering() -> Bool {
+        return searchController.isActive && !searchBarIsEmpty()
+    }
+    
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        print("asdfdsdsfs")
+        filteredProjects = launchDarklyData.environmentsList.filter({( ldData : LaunchDarklyData) -> Bool in
+            return ldData.envirName!.lowercased().contains(searchText.lowercased())
+        })
+
+        tableView.reloadData()
+    }
+}
+
+extension EnvironmentsTableView: UISearchResultsUpdating {
+    // MARK: - UISearchResultsUpdating Delegate
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
 }

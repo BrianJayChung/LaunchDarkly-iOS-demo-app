@@ -276,7 +276,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = (self as UISearchResultsUpdating)
 //        searchController.hidesNavigationBarDuringPresentation = true
-        searchController.obscuresBackgroundDuringPresentation = true
+        searchController.obscuresBackgroundDuringPresentation = false
     }
     
     func collectionViewSetup() {

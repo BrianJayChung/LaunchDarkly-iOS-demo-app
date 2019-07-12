@@ -35,7 +35,7 @@ extension UIViewController {
         
         ai.startAnimating()
         ai.center = spinnerView.center
-        
+    
         DispatchQueue.main.async {
             spinnerView.addSubview(ai)
             onView.addSubview(spinnerView)
