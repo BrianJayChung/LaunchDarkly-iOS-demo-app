@@ -17,7 +17,7 @@ class LaunchDarklyApiModel {
     let settingsController = SettingsController()
     
     init() {
-        self.apiKey = settingsController.loadApiKey()["sdk-key"]
+        self.apiKey = settingsController.loadApiKey()["api-key"]
         
         
 //        self.apiKey = api.ldApiKey() // previously exposed, new token generated

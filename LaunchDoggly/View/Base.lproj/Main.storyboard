@@ -75,7 +75,7 @@
                                                     <size key="shadowOffset" width="0.0" height="0.0"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="key" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dbC-zO-kJG">
-                                                    <rect key="frame" x="229" y="29" width="165" height="16"/>
+                                                    <rect key="frame" x="229" y="29.000000000000004" width="165" height="15.666666666666668"/>
                                                     <color key="backgroundColor" white="0.66666666666666663" alpha="0.35485338184931509" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="7uI-9d-drZ"/>
@@ -206,7 +206,7 @@
                         <outlet property="projectBtn" destination="GBt-tn-78f" id="vBu-0k-Tuk"/>
                         <outlet property="view" destination="kh9-bI-dsS" id="EZd-Nk-3mB"/>
                         <segue destination="SdP-Yo-SJw" kind="push" identifier="pushToProjects" id="qTt-Zg-wvx"/>
-                        <segue destination="KCy-fe-idJ" kind="modal" identifier="pushToEnvironments" id="0qg-0Q-FJ8"/>
+                        <segue destination="KCy-fe-idJ" kind="push" identifier="pushToEnvironments" id="0qg-0Q-FJ8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -276,7 +276,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="environement" id="KCy-fe-idJ" customClass="EnvironmentsTableView" customModule="LaunchDoggly" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="jrj-nw-Ug6">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
@@ -333,7 +333,7 @@
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="414" id="Pwh-zt-odV"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                    <textInputTraits key="textInputTraits" spellCheckingType="no" returnKeyType="done"/>
                                                     <connections>
                                                         <action selector="saveOnEnd:" destination="XJj-0O-ZKb" eventType="editingDidEndOnExit" id="DCb-aE-EAG"/>
                                                     </connections>

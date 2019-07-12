@@ -26,6 +26,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     @IBAction func environmentBtnPressed(_ sender: Any) {
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         performSegue(withIdentifier: "pushToEnvironments", sender: self)
     }
     
@@ -75,6 +76,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        environmentBtn.isHidden = true
         self.tabBarController?.tabBar.isHidden = true
         /// Adding search controller to navbar
         navigationItem.searchController = searchController
@@ -129,15 +131,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
             self.searchController.searchBar.placeholder? = "Search \(self.flagResponseData.flagsList.count) feature flags"
             
-            print(self.collectionView.indexPathsForVisibleItems.count)
-            
-            print(self.flagResponseData.flagsList.count)
             if self.collectionView.indexPathsForVisibleItems.count > 0 {
                 self.collectionView.isScrollEnabled = true
             } else {
                 self.collectionView.isScrollEnabled = false
             }
-            
         })
     }
     
@@ -200,7 +198,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             flagTags = item["tags"].arrayObject! as! [String]
             
             if let environmentKey = self.environmentKey {
-                print(environmentKey)
                 cell.buttnSwitchOutlet.isOn = item["environments"][environmentKey]["on"].bool!
             }
             // Set the button state based on flag is on or off from API response
@@ -241,7 +238,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     // MARK : Searchbar delegates
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         toggleBtns(true)
-        collectionHeightConstraint.constant = 50
+//        collectionHeightConstraint.constant = 50
         
         UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
             self.collectionHeightConstraint.constant = 0
@@ -278,8 +275,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func searchControllerSetup() {
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = (self as UISearchResultsUpdating)
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.obscuresBackgroundDuringPresentation = false
+//        searchController.hidesNavigationBarDuringPresentation = true
+        searchController.obscuresBackgroundDuringPresentation = true
     }
     
     func collectionViewSetup() {

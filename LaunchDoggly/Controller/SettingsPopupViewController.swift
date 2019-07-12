@@ -34,7 +34,7 @@ class SettingsPopupViewController: NSObject, UICollectionViewDataSource, UIColle
     let cellHeight = 40
     
     let settings: [Setting] = {
-        return [Setting(name: "Settings", imageName: "settings"), Setting(name: "Information", imageName: "information"), Setting(name: "History", imageName: "history"), Setting(name: "Flags", imageName: "settings-flag"), Setting(name: "Cancel", imageName: "error")]
+        return [Setting(name: "API Setting", imageName: "settings"), Setting(name: "Information", imageName: "information"), Setting(name: "History", imageName: "history"), Setting(name: "Flags", imageName: "settings-flag"), Setting(name: "Cancel", imageName: "error")]
     }()
     
     
@@ -72,7 +72,6 @@ class SettingsPopupViewController: NSObject, UICollectionViewDataSource, UIColle
         }
     
     @objc func handleDismiss(setting: Setting){
-        
         UIView.animate(withDuration: 0.5, animations: {
             self.blackView.alpha = 0
             
@@ -84,6 +83,7 @@ class SettingsPopupViewController: NSObject, UICollectionViewDataSource, UIColle
                 self.mainViewController?.showControllerForSetting(setting: setting)
             }
         }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

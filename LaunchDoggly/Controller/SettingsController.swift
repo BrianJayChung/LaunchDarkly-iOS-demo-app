@@ -12,12 +12,11 @@ class SettingsController: UITableViewController {
     
     let api = ApiKeys()
     let url = URL(string: "https://app.launchdarkly.com/settings/tokens")!
-//    var apiKeyString = [String: String]()
 
     @IBOutlet weak var apiKey: UITextField!
     @IBOutlet weak var getApiKeyLink: UITextView!
+    
     @IBAction func saveOnEnd(_ sender: Any) {
-        print("is it saving here")
         saveChecklistItems()
         tableView.reloadData()
     }
@@ -32,24 +31,20 @@ class SettingsController: UITableViewController {
         getApiKeyLink.isEditable = false
         getApiKeyLink.textAlignment = .center
         getApiKeyLink.font = UIFont(name: getApiKeyLink.font!.fontName, size: 17)
-        
         getApiKeyLink.linkTextAttributes = [
             .foregroundColor: UIColor.blue,
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
-        
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        
         let apiKeyString = loadApiKey()
         
-        if let apiKeyString = apiKeyString["sdk-key"] {
+        if let apiKeyString = apiKeyString["api-key"] {
             apiKey.text? = apiKeyString
         } else {
             apiKey.text? = "your api key here"
         }
-//        apiKey.text? = apiKeyString["sdk-key"]!
-        print("Documents folder is \(documentsDirectory())")
-        print("Data file path is \(dataFilePath())")
     }
     
     func documentsDirectory() -> URL {
@@ -65,13 +60,12 @@ class SettingsController: UITableViewController {
     func saveChecklistItems() {
         let fileManager = FileManager.default
         let path = dataFilePath()
-//        print(fileManager.fileExists(atPath: path.path))
-        let testData = ["sdk-key": apiKey.text]
+        let apiKeyToEncode = ["api-key": apiKey.text]
         let encoder = PropertyListEncoder()
-        
+        /// If file doesn't exist then create a new one with them testData dict, if it does then only change the api-key value
         if !fileManager.fileExists(atPath: path.path) {
             do {
-                let data = try encoder.encode(testData)
+                let data = try encoder.encode(apiKeyToEncode)
                 try data.write(to: dataFilePath(),
                                options: Data.WritingOptions.atomic)
             } catch {
@@ -83,7 +77,7 @@ class SettingsController: UITableViewController {
                     let decoder = PropertyListDecoder()
                     do {
                         var existData = try decoder.decode([String: String].self, from: data)
-                        existData["sdk-key"] = "the new key being set is here"
+                        existData["api-key"] = apiKey.text
                         let newData = try encoder.encode(existData)
                         try newData.write(to: dataFilePath(),
                                        options: Data.WritingOptions.atomic)

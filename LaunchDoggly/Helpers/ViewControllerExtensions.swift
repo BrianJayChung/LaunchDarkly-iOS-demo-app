@@ -31,6 +31,7 @@ extension ViewController: ProjectTableDelegate {
     func projectTableDelegate(launchDarklyDataItem: LaunchDarklyData, projectKey: String) {
         launchDarklyDataFromProjTV = launchDarklyDataItem
         projKey = projectKey
+        environmentBtn.isHidden = false
         resetEnvirTitle()
     }
 }
@@ -87,7 +88,6 @@ extension ViewController {
     func showControllerForSetting(setting: Setting) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let settingsPopupController = storyBoard.instantiateViewController(withIdentifier: "SettingsPage") as! SettingsController
-        
         settingsPopupController.navigationItem.title = setting.name
         navigationController?.pushViewController(settingsPopupController, animated: true)
     }

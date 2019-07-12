@@ -12,7 +12,7 @@ var nsDictionary: NSDictionary?
 
 struct ApiKeys {
     var name = "keys"
-    var plistKey = "sdk-key"
+    var plistKey = "api-key"
     
     func ldApiKey() -> String {
         let myDict =  plistContruct(name: name)
@@ -21,7 +21,6 @@ struct ApiKeys {
     
     func plistContruct(name: String) -> NSDictionary {
         if let path = Bundle.main.path(forResource: name, ofType: "plist") {
-            print(path)
             nsDictionary = NSDictionary(contentsOfFile: path)
         }
         return nsDictionary!

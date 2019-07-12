@@ -14,10 +14,23 @@ protocol EnvironmentsTableDelegate{
 
 class EnvironmentsTableView: UITableViewController {
     
+    let searchController = UISearchController(searchResultsController: nil)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.obscuresBackgroundDuringPresentation = true
+        navigationItem.searchController = searchController
+        
+//        self.definesPresentationContext = true
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationItem.searchController?.removeFromParent()
+        self.navigationItem.searchController?.isActive = false
+    }
     // Custom calls to change colors from RGB format
     let colorChange = UIColorFromRGB()
     
@@ -58,21 +71,19 @@ class EnvironmentsTableView: UITableViewController {
             
             // Calls the environmentsTable delegate when an envir is selected, this passes the envirName and key to viewcontroller to make the API call
             delegate?.environmentsTableDelegate(envirName: item.envirName!, envirKey: item.envirKey!)
+            
+            
         }
         
         // CATransaction to set completion action, which is to return back to previous VC
         CATransaction.begin()
         tableView.beginUpdates()
-        
         CATransaction.setCompletionBlock {
-            
-            // _ = self.navigationController?.popViewController(animated: true)
-            _ = self.dismiss(animated: true, completion: nil)
-            
+             _ = self.navigationController?.popViewController(animated: true)
+//            _ = self.dismiss(animated: true, completion: nil)
         }
 
         for cellPath in tableView.indexPathsForVisibleRows! { // Logic to not un-toggle a row that is already chcked, otherwise untoggle it
-            
             if cellPath == indexPath{
                 continue
             }
