@@ -9,11 +9,8 @@
 import UIKit
 
 class SettingCell: UICollectionViewCell {
-    
     override var isHighlighted: Bool {
-        
         didSet {
-            
             backgroundColor = isHighlighted ? UIColor.lightGray : UIColor.white
             
             nameLabel.textColor = isHighlighted ? UIColor.white : UIColor.black
@@ -23,9 +20,7 @@ class SettingCell: UICollectionViewCell {
     }
     
     var setting: Setting? {
-        
         didSet{
-            
             nameLabel.text = setting?.name
             
             if let imageName = setting?.imageName {
@@ -36,10 +31,8 @@ class SettingCell: UICollectionViewCell {
     }
     
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
         setupViews()
-        
     }
     
     let iconImageView: UIImageView = {

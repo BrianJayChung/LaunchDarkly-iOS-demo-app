@@ -12,7 +12,7 @@ var nsDictionary: NSDictionary?
 
 struct ApiKeys {
     var name = "keys"
-    var plistKey = "sdk-key"
+    var plistKey = "api-key"
     
     func ldApiKey() -> String {
         let myDict =  plistContruct(name: name)

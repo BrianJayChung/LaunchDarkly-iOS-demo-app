@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		7B0BB78C228BD4C00095E05A /* SettingPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0BB78B228BD4C00095E05A /* SettingPageCell.swift */; };
 		7B0BB78F228BE4710095E05A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0BB78E228BE4710095E05A /* Extensions.swift */; };
+		7B2550FF22D3C47500D0634C /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2550FE22D3C47500D0634C /* SettingsController.swift */; };
+		7B25510122D90BFB00D0634C /* ProjEnvNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B25510022D90BFA00D0634C /* ProjEnvNavBarView.swift */; };
 		7B318DAA229A35B9009F297D /* TextStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B318DA9229A35B9009F297D /* TextStyles.swift */; };
 		7B318DAF229B1E0A009F297D /* EnvironmentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B318DAE229B1E0A009F297D /* EnvironmentsTableViewController.swift */; };
 		7B32EB2D2293CC8300605948 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B32EB2C2293CC8300605948 /* Images.xcassets */; };
@@ -18,8 +20,7 @@
 		7B46C1B422BAB8CC00117DFD /* ApiKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B46C1B322BAB8CC00117DFD /* ApiKeys.swift */; };
 		7B46C1B622BC37FD00117DFD /* ProjectsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B46C1B522BC37FD00117DFD /* ProjectsTableViewController.swift */; };
 		7B46C1B822BC7C9900117DFD /* LaunchDarklyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B46C1B722BC7C9900117DFD /* LaunchDarklyData.swift */; };
-		7B49BC712287328E00183BEA /* SettingsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B49BC702287328E00183BEA /* SettingsPageViewController.swift */; };
-		7B4BE7C922B462400096D5F9 /* AuditLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4BE7C822B462400096D5F9 /* AuditLogViewController.swift */; };
+		7B4BE7C922B462400096D5F9 /* SettingsPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4BE7C822B462400096D5F9 /* SettingsPopupViewController.swift */; };
 		7B4BE7CB22B803AB0096D5F9 /* LaunchDarklyApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4BE7CA22B803AB0096D5F9 /* LaunchDarklyApiModel.swift */; };
 		7B4BE7CF22B8A88E0096D5F9 /* LaunchDarklyDataList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4BE7CE22B8A88E0096D5F9 /* LaunchDarklyDataList.swift */; };
 		7B4BE7D122B9683A0096D5F9 /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4BE7D022B9683A0096D5F9 /* ViewControllerExtensions.swift */; };
@@ -36,6 +37,8 @@
 		6A7E4A0D863CDA33556D9F55 /* Pods-LaunchDoggly.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LaunchDoggly.release.xcconfig"; path = "Target Support Files/Pods-LaunchDoggly/Pods-LaunchDoggly.release.xcconfig"; sourceTree = "<group>"; };
 		7B0BB78B228BD4C00095E05A /* SettingPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPageCell.swift; sourceTree = "<group>"; };
 		7B0BB78E228BE4710095E05A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		7B2550FE22D3C47500D0634C /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		7B25510022D90BFA00D0634C /* ProjEnvNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjEnvNavBarView.swift; sourceTree = "<group>"; };
 		7B318DA9229A35B9009F297D /* TextStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyles.swift; sourceTree = "<group>"; };
 		7B318DAE229B1E0A009F297D /* EnvironmentsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentsTableViewController.swift; sourceTree = "<group>"; };
 		7B32EB2C2293CC8300605948 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = LaunchDoggly/Images.xcassets; sourceTree = "<group>"; };
@@ -44,9 +47,8 @@
 		7B46C1B022BAB35500117DFD /* keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = keys.plist; sourceTree = "<group>"; };
 		7B46C1B322BAB8CC00117DFD /* ApiKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeys.swift; sourceTree = "<group>"; };
 		7B46C1B522BC37FD00117DFD /* ProjectsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsTableViewController.swift; sourceTree = "<group>"; };
-		7B46C1B722BC7C9900117DFD /* LaunchDarklyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LaunchDarklyData.swift; path = LaunchDoggly/Controller/LaunchDarklyData.swift; sourceTree = SOURCE_ROOT; };
-		7B49BC702287328E00183BEA /* SettingsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPageViewController.swift; sourceTree = "<group>"; };
-		7B4BE7C822B462400096D5F9 /* AuditLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditLogViewController.swift; sourceTree = "<group>"; };
+		7B46C1B722BC7C9900117DFD /* LaunchDarklyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LaunchDarklyData.swift; path = LaunchDoggly/Model/LaunchDarklyData.swift; sourceTree = SOURCE_ROOT; };
+		7B4BE7C822B462400096D5F9 /* SettingsPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPopupViewController.swift; sourceTree = "<group>"; };
 		7B4BE7CA22B803AB0096D5F9 /* LaunchDarklyApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LaunchDarklyApiModel.swift; path = LaunchDoggly/Controller/LaunchDarklyApiModel.swift; sourceTree = SOURCE_ROOT; };
 		7B4BE7CE22B8A88E0096D5F9 /* LaunchDarklyDataList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LaunchDarklyDataList.swift; path = LaunchDoggly/Controller/LaunchDarklyDataList.swift; sourceTree = SOURCE_ROOT; };
 		7B4BE7D022B9683A0096D5F9 /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				7B32EB302294DD3B00605948 /* SdkTableViewCell.swift */,
 				7B0BB78B228BD4C00095E05A /* SettingPageCell.swift */,
 				7B318DA9229A35B9009F297D /* TextStyles.swift */,
+				7B25510022D90BFA00D0634C /* ProjEnvNavBarView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -153,12 +156,12 @@
 		7B5FE65F2284D27C00C26878 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				7B4BE7C822B462400096D5F9 /* AuditLogViewController.swift */,
+				7B4BE7C822B462400096D5F9 /* SettingsPopupViewController.swift */,
+				7B2550FE22D3C47500D0634C /* SettingsController.swift */,
 				7B318DAE229B1E0A009F297D /* EnvironmentsTableViewController.swift */,
 				7BD98C73228A76C30056D748 /* LoginPageViewController.swift */,
 				7B46C1B522BC37FD00117DFD /* ProjectsTableViewController.swift */,
 				7B32EB2E2294D6C900605948 /* SdkTableView.swift */,
-				7B49BC702287328E00183BEA /* SettingsPageViewController.swift */,
 				7B5FE6482284CECF00C26878 /* ViewController.swift */,
 			);
 			path = Controller;
@@ -322,11 +325,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7B49BC712287328E00183BEA /* SettingsPageViewController.swift in Sources */,
-				7B4BE7C922B462400096D5F9 /* AuditLogViewController.swift in Sources */,
+				7B2550FF22D3C47500D0634C /* SettingsController.swift in Sources */,
+				7B4BE7C922B462400096D5F9 /* SettingsPopupViewController.swift in Sources */,
 				7B46C1B422BAB8CC00117DFD /* ApiKeys.swift in Sources */,
 				7B46C1B822BC7C9900117DFD /* LaunchDarklyData.swift in Sources */,
 				7B46C1B622BC37FD00117DFD /* ProjectsTableViewController.swift in Sources */,
+				7B25510122D90BFB00D0634C /* ProjEnvNavBarView.swift in Sources */,
 				7B32EB2F2294D6C900605948 /* SdkTableView.swift in Sources */,
 				7B4BE7CB22B803AB0096D5F9 /* LaunchDarklyApiModel.swift in Sources */,
 				7B5FE6492284CECF00C26878 /* ViewController.swift in Sources */,
@@ -485,7 +489,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F8990772677D4ABF5453A21F /* Pods-LaunchDoggly.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-blue";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V4VZMW4GBF;
@@ -507,7 +511,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6A7E4A0D863CDA33556D9F55 /* Pods-LaunchDoggly.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-blue";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V4VZMW4GBF;

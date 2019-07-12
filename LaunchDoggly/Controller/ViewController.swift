@@ -11,63 +11,60 @@ import SwiftyJSON
 import Alamofire
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
+    
     @IBOutlet weak var collectionView: UICollectionView!
-//    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mainView: UIView!
-//    @IBOutlet weak var searchBarView: UIView!
+    @IBOutlet weak var arrowBtn: UIButton!
     @IBOutlet weak var environmentBtn: UIButton!
-    @IBOutlet weak var projectButton: UIButton!
+    @IBOutlet weak var projectBtn: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var collectionHeightConstraint: NSLayoutConstraint!
     
     @IBAction func projectBtnPressed(_ sender: Any) {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         performSegue(withIdentifier: "pushToProjects", sender: self)
-        // Nav and Tab bar should reappear for the proj table
-//        unHideNavTab()
     }
     
     @IBAction func environmentBtnPressed(_ sender: Any) {
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         performSegue(withIdentifier: "pushToEnvironments", sender: self)
-        // Nav and Tab bar should reappear for the env table
-//        unHideNavTab()
     }
     
     @IBAction func menuBtnPressed(_ sender: Any) {
 //        view.endEditing(true)
-//        navBarLaunchSettings.showRightCorner()
+        navBarLaunchSettings.showRightCorner()
     }
     
     // Data object for the projectDelegate
     var launchDarklyDataFromProjTV = LaunchDarklyData()
-    
     // Data object for the flagResponse from fetchFlags
     var flagResponseData = LaunchDarklyData()
-    
     // let api = ApiKeys() initializes plist APIs
     var launchDarklyDataList = LaunchDarklyDataList()
     
-    var envirTitle: String!
-    var environmentKey: String!
-    var projKey: String!
-    
+    var filterFlagResponse = [JSON]()
     var flagJson: JSON?
     
-    // MARK: LaunchDarkly fron-end key
-    // This is safe to expose as it can only fetch the flag evaluation outcome
+    var envirTitle: String!
+    var environmentKey: String!
+    var projKey: String?
+    
+    /// LaunchDarkly fron-end key, safe to expose as it can only fetch the flag evaluation outcome
     let config = LDConfig.init(mobileKey: "mob-8e3e03d8-355e-432b-a000-e2a15a12d7e6")
     
-    // Feature flag key for LaunchDarkly use
+    /// Feature flag key for LaunchDarkly use
     let backgroundColorKey = "background-color"
-    let launchDarklyApi = LaunchDarklyApiModel()
+//    let launchDarklyApi = LaunchDarklyApiModel()
     
-    // Use for the collectionViewCell height
+    /// Use for the collectionViewCell height
     let cellHeight = 180
     let customizeNavBarTitle = NavBarTitleFontStyle()
     
+    /// Instantiating searchController
     let searchController = UISearchController(searchResultsController: nil)
     
-    lazy var navBarLaunchSettings: SettingsPageViewController = {
-        let navBarLaunchSettings = SettingsPageViewController()
+    lazy var navBarLaunchSettings: SettingsPopupViewController = {
+        let navBarLaunchSettings = SettingsPopupViewController()
         
         navBarLaunchSettings.mainViewController = self
         return navBarLaunchSettings
@@ -79,25 +76,22 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        environmentBtn.isHidden = true
+        self.tabBarController?.tabBar.isHidden = true
+        /// Adding search controller to navbar
         navigationItem.searchController = searchController
-//        searchController.searchBar.delegate = self
-//        searchController.searchResultsUpdater = (self as! UISearchResultsUpdating)
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.obscuresBackgroundDuringPresentation = true
+        /// Configure search controller
+        searchControllerSetup()
+        /// Configure collectionview
+        collectionViewSetup()
+        /// Disable shadows
+        navTabBarShadow()
+        /// required for LD to change background color
+        // checkBackgroundFeatureValue()
         
-        // required for LD to change background color
-//        checkBackgroundFeatureValue()
-        
-        resetEnvirTitle() // Reset the environment title to default
-        
-        // Set background to LD blue color to prevent flash
-//        navigationController?.view.backgroundColor = UIColorFromRGB(red: 0.121568, green: 0.164706, blue: 0.266667, alpha: 1)
-        
-        self.collectionView.alwaysBounceVertical = true
-        self.collectionView.keyboardDismissMode = .onDrag
-        self.collectionView.decelerationRate = UIScrollView.DecelerationRate(rawValue: 0)
-        self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow") // hides the navbar shadow
-        self.tabBarController?.tabBar.setValue(true, forKey: "hidesShadow")
+        /// Reset the environment title to default
+        resetEnvirTitle()
+        /// hides the navbar shadow
         self.hideKeyboardWhenTappedAround()
         
         LDClient.sharedInstance().delegate = self
@@ -105,51 +99,50 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: CGFloat(cellHeight - 40), right: 0) // This is needed to add paddings on top and bottom of the collectionView
+        /// This is needed to add paddings on top and bottom of the collectionView
+        collectionView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: CGFloat(cellHeight - 40), right: 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        self.collectionView.isScrollEnabled = false
+        /// Reset this to empty to avoid duplications
         self.launchDarklyDataList = LaunchDarklyDataList()
-        self.definesPresentationContext = true
-        
+        self.flagResponseData.flagsList = [JSON]()
         activityIndicator.isHidden = true
+        /// This is called when both proj/env are sellected
+//        flagResponseData.flagsList = [JSON]()
+        launchDarklyfetchFlags()
         
-        FetchFlags()
-        apiCall()
+        launchDarklyApiCall()
         
-        // MARK: Logic to handle proj and envir changes
-        projectButton.setTitle(launchDarklyDataFromProjTV.projectTitle + " \u{2304}", for: .normal)
-        
-        projectButton.titleLabel?.numberOfLines = 3
-        environmentBtn.titleLabel?.numberOfLines = 3
-        
-        projectButton.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
-        environmentBtn.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
-        
-        projectButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        environmentBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+        projEnvBtnSettings(button: projectBtn)
+        projEnvBtnSettings(button: environmentBtn)
+        /// Logic to handle proj and envir changes
+        projectBtn.setTitle(launchDarklyDataFromProjTV.projectTitle + " \u{2304}", for: .normal)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        if self.collectionView.indexPathsForVisibleItems.count > 0 {
-            collectionView.isScrollEnabled = true
-        } else {
-            collectionView.isScrollEnabled = false
-        }
+        /// placeholder value of flag count each time the page reloads
+//        searchController.searchBar.placeholder? = "Search \(self.flagResponseData.flagsList.count) feature flags"
+        self.collectionView.performBatchUpdates(nil, completion: {
+            (result) in
+
+            self.searchController.searchBar.placeholder? = "Search \(self.flagResponseData.flagsList.count) feature flags"
+            
+            if self.collectionView.indexPathsForVisibleItems.count > 0 {
+                self.collectionView.isScrollEnabled = true
+            } else {
+                self.collectionView.isScrollEnabled = false
+            }
+        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "pushToProjects" {
             let projVC = segue.destination as! ProjectTableView
-            let backItem = UIBarButtonItem()
             
-            backItem.title = "Home"
-            navigationItem.backBarButtonItem = backItem
             projVC.checkedProject = launchDarklyDataFromProjTV.projectTitle
             // Setting the LD data list object in the project tableview controller
             projVC.launchDarklyDataList = launchDarklyDataList
@@ -166,93 +159,72 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
-    // MARK: Function to set the background feature flag
-    func checkBackgroundFeatureValue() {
-        let featureFlagValue = LDClient.sharedInstance().boolVariation(backgroundColorKey, fallback: false)
-        
-        if featureFlagValue {
-            colorToggles(rgbColor: UIColorFromRGB(red: 0.121568, green: 0.164706, blue: 0.266667, alpha: 1)) // default LD dark blue
-        } else {
-            colorToggles(rgbColor: UIColorFromRGB(red: 0, green: 0, blue: 1, alpha: 1)) // blue
-        }
-    }
-    
-    // MARK: collectionView delegates for constructing the flag cell page
+    // MARK: collectionView delegates
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        if isFiltering() {
+            return filterFlagResponse.count
+        }
+        
         return flagResponseData.flagsList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
+        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         var flagTags = [String]()
-        var flagText = ""
-        var flagKey = ""
-        var descriptionText = ""
-        let environmentKey = self.environmentKey as String
+        var flagText: String?
+        var flagKey: String?
+        var flagDescription: String?
+        let item: JSON
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FlagCell", for: indexPath) as! FlagCell
+        cell.delegate = self
         
+        /// If the collection view is not empty, do the below
         if flagResponseData.flagsList.count > 0 {
-            let item = flagResponseData.flagsList[indexPath.row]
+            self.collectionView.isScrollEnabled = true
+            /// If search bar is open use the filteredProjects array
+            if isFiltering() {
+                item = filterFlagResponse[indexPath.row]
+            } else {
+                item = flagResponseData.flagsList[indexPath.row]
+            }
+            
             flagText = item["name"].string!
-            descriptionText = item["description"].string!
+            flagDescription = item["description"].string!
             flagKey = item["key"].string!
             flagTags = item["tags"].arrayObject! as! [String]
+            
+            if let environmentKey = self.environmentKey {
+                cell.buttnSwitchOutlet.isOn = item["environments"][environmentKey]["on"].bool!
+            }
             // Set the button state based on flag is on or off from API response
-            cell.buttnSwitchOutlet.isOn = item["environments"][environmentKey]["on"].bool!
+            
         }
         
-        let underlineAttribute = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue]
-        let underlineAttributedString = NSAttributedString(string: flagText, attributes: underlineAttribute)
-        let newValue = flagTags.joined(separator:"  ")
-//        let generateText = HighlightTags()
-//        let highlightedTextView = generateText.generateAttText(targetString: newValue)
+        let tagsSpaced = flagTags.joined(separator:"  ")
         
-        let textTest: NSAttributedString = {
+        let tagsHighlighted: NSAttributedString = {
             let generateText = HighlightTags()
-            return generateText.generateAttText(targetString: newValue)!
+            return generateText.generateAttText(targetString: tagsSpaced)!
         }()
         
-        cell.tagTextView.attributedText = textTest
+        cell.tagTextView.attributedText = tagsHighlighted
         cell.tagTextView.textAlignment = .right
-        cell.flagName.attributedText = underlineAttributedString
+        cell.flagName.text = flagText
         cell.flagKey.text = flagKey
-        cell.descriptionText.text = descriptionText
-        cell.delegate = self
-        // Cell.buttnSwitchOutlet.tag = indexPath.row // later use target by tag
+        cell.descriptionText.text = flagDescription
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: CGFloat(cellHeight))
+        return CGSize(width: collectionView.frame.width * 0.95, height: CGFloat(cellHeight))
     }
     
-    func generateAttText(targetString: String) -> NSAttributedString? {
-        let attributed = NSMutableAttributedString(string: targetString)
-        let regexMatch = "[^\\s]+"
-        
-        do {
-            let regex = try NSRegularExpression(pattern: regexMatch, options: [])
-            let range = NSRange(location: 0, length: targetString.utf16.count)
-            
-            for match in regex.matches(in: targetString.folding(options: .diacriticInsensitive, locale: .current), options: .withTransparentBounds, range: range) {
-//                attributed.addAttribute(NSAttributedString.Key.backgroundColor, value: UIColor.red, range: match.range)
-//                attributed.addAttribute(.foregroundColor, value: UIColor.white, range: match.range)
-                attributed.addAttributes([NSAttributedString.Key.backgroundColor : UIColor.lightGray, .foregroundColor : UIColor.black], range: match.range)
-            }
-            
-            return attributed
-        } catch {
-            NSLog("something happend catching express")
-            
-            return nil
-        }
-    }
-    
+    // MARK: - Environment settings
     func setEnvirTitle(){
         environmentBtn.setTitle(envirTitle + " \u{2304}", for: .normal)
     }
@@ -263,66 +235,78 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         self.collectionView.reloadData()
     }
-    
-    //MARK: -> Network calls
-    func apiCall() {
-        flagResponseData.flagsList = [JSON]()
-        launchDarklyApi.getData(path : "projects") { result in
-            switch result {
-            case .failure(let error):
-                print(error, "no internet")
-            case .success(let value):
-                let json = JSON(value)
-                
-                for (_, subJson) in json["items"] {
-                    let projectRow = LaunchDarklyData() // create the top-level LD object
-                    
-                    projectRow.projectTitle = subJson["name"].string! // set the proj title
-                    projectRow.projectKey = subJson["key"].string! // set the pro jkey
-                    
-                    for (_, env) in subJson["environments"] {
-                        // Each project has multiple environments
-                        let envirRow = LaunchDarklyData() // create 2nd level LD object for the environments
-                        
-                        envirRow.envirName = env["name"].string! // set the attribute name
-                        envirRow.envirKey = env["key"].string! // set the attribute key
-                        
-                        projectRow.environmentsList.append(envirRow) // store the object into the top-level LD object which has an array to hold these
-                    }
-                    self.launchDarklyDataList.listOfLaunchDarklyData.append(projectRow) // Append the projectRow object into the LD data list object
-                }
-            }
-        }
+    // MARK : Searchbar delegates
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        toggleBtns(true)
+//        collectionHeightConstraint.constant = 50
+        
+        UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
+            self.collectionHeightConstraint.constant = 0
+            self.view.layoutIfNeeded()
+        }, completion: nil)
     }
     
-    // This function gets triggered when both proj/envir are selected
-    func FetchFlags() {
-        if (projKey != nil) && (environmentKey != nil) {
-            self.activityIndicator.startAnimating()
-            self.activityIndicator.isHidden = false
-            self.activityIndicator.layer.zPosition += 1
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                self.activityIndicator.stopAnimating()
-                self.activityIndicator.isHidden = true
-            }
-            
-            launchDarklyApi.getData(path :
-            "flags/\(projKey!)?env=\(environmentKey!)") { result in
-                switch result {
-                case .failure(let error):
-                    print(error, "no internet connection")
-                case .success(let value):
-                    let json = JSON(value)
-                    
-                    print("success fetching flags")
-                    
-                    for (_, subJson) in json["items"] {
-                        self.flagResponseData.flagsList.append(subJson)
-                        self.collectionView.reloadData() // reload the collection view after api is fetched
-                    }
-                }
-            }
-        }
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
+            self.collectionHeightConstraint.constant = 50
+            self.view.layoutIfNeeded()
+        }, completion: {
+            finished in
+            self.toggleBtns(false)
+        })
     }
+    
+    func searchBarIsEmpty() -> Bool {
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    func isFiltering() -> Bool {
+        return searchController.isActive && !searchBarIsEmpty()
+    }
+    
+    func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+        filterFlagResponse = flagResponseData.flagsList.filter({( ldData : JSON) -> Bool in
+            return ldData["name"].string!.lowercased().contains(searchText.lowercased())
+        })
+        
+        collectionView.reloadData()
+    }
+    
+    func searchControllerSetup() {
+        searchController.searchBar.delegate = self
+        searchController.searchResultsUpdater = (self as UISearchResultsUpdating)
+//        searchController.hidesNavigationBarDuringPresentation = true
+        searchController.obscuresBackgroundDuringPresentation = false
+    }
+    
+    func collectionViewSetup() {
+        self.collectionView.alwaysBounceVertical = true
+        self.collectionView.keyboardDismissMode = .onDrag
+        self.collectionView.decelerationRate = UIScrollView.DecelerationRate(rawValue: 0)
+    }
+    
+    func navTabBarShadow() {
+        self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
+        self.tabBarController?.tabBar.setValue(true, forKey: "hidesShadow")
+    }
+    
+    // MARK: - Toggle the items below navbar
+    func toggleBtns(_ toogle: Bool){
+        projectBtn.isHidden = toogle
+        environmentBtn.isHidden = toogle
+        arrowBtn.isHidden = toogle
+    }
+    
+    // MARK: - Project/environment button settings
+    func projEnvBtnSettings(button: UIButton) {
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.titleLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
+        button.titleLabel?.numberOfLines = 2
+    }
+    
 }
+
+
+
+
+

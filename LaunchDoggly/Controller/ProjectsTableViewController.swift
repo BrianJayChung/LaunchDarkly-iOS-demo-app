@@ -135,7 +135,7 @@ class ProjectTableView: UITableViewController, UISearchBarDelegate {
         let ldData: LaunchDarklyData
         
         if let cell = tableView.cellForRow(at: indexPath) {
-            if isFiltering(){
+            if isFiltering() {
                 ldData = filteredProjects[indexPath.row]
             } else {
                 ldData = launchDarklyDataList.listOfLaunchDarklyData[indexPath.row]
@@ -153,7 +153,7 @@ class ProjectTableView: UITableViewController, UISearchBarDelegate {
                 // this changes the isChecked property for previously selected flag
                 selectedProject.toggleProjectChecked()
             }
-            
+    
             configureCheckmark(for: cell, with: item)
         }
         
