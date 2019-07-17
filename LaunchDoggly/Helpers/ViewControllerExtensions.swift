@@ -11,11 +11,17 @@ import UIKit
 import SwiftyJSON
 
 extension ViewController: FlagCellDelegate {
-    func switchOnFlag(_ controller: FlagCell){
+    
+    func switchOnFlag(_ controller: FlagCell) {
         colorToggles(rgbColor: UIColorFromRGB(red: 0.121568, green: 0.164706, blue: 0.266667, alpha: 1))
     }
-    func switchOffFlag(_ controller: FlagCell){
+    
+    func switchOffFlag(_ controller: FlagCell) {
         colorToggles(rgbColor: UIColorFromRGB(red: 0, green: 0, blue: 0, alpha: 1))
+    }
+    
+    func popUpAlert(alert: UIAlertController) {
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

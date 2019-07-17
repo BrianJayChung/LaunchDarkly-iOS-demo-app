@@ -125,13 +125,11 @@ class EnvironmentsTableView: UITableViewController, UISearchBarDelegate {
             }
             
             tableView.cellForRow(at: cellPath)?.accessoryType = .none
-            
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
         tableView.endUpdates()
         CATransaction.commit()
-        
     }
     
     func configureCheckmark(for cell: UITableViewCell, with item: LaunchDarklyData) {
