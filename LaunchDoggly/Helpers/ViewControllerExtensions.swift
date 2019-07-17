@@ -12,8 +12,11 @@ import SwiftyJSON
 
 extension ViewController: FlagCellDelegate {
     
-    func switchOnFlag(_ controller: FlagCell) {
-        colorToggles(rgbColor: UIColorFromRGB(red: 0.121568, green: 0.164706, blue: 0.266667, alpha: 1))
+    func switchOnFlag(indexNumber: Int) {
+        print(flagResponseData.flagsList[indexNumber]["environments"][environmentKey])
+        flagResponseData.flagsList[indexNumber]["environments"][environmentKey]["on"].bool! = !flagResponseData.flagsList[indexNumber]["environments"][environmentKey]["on"].bool!
+//        colorToggles(rgbColor: UIColorFromRGB(red: 0.121568, green: 0.164706, blue: 0.266667, alpha: 1))
+        
     }
     
     func switchOffFlag(_ controller: FlagCell) {

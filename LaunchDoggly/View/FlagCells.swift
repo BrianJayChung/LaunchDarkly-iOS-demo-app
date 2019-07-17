@@ -10,14 +10,16 @@
 import UIKit
 
 protocol FlagCellDelegate: class {
-    func switchOnFlag(_ controller: FlagCell)
+    func switchOnFlag(indexNumber: Int)
     func switchOffFlag(_ controller: FlagCell)
     func popUpAlert(alert: UIAlertController)
 }
 
 class FlagCell: UICollectionViewCell{
     weak var delegate: FlagCellDelegate?
-  
+    
+    var indexPathOfFlag: Int!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setup()
@@ -57,14 +59,24 @@ class FlagCell: UICollectionViewCell{
 //    }
     //let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
     @IBAction func invBtn(_ sender: UISwitch) {
-        let alert = UIAlertController(title: "title field", message: "message field", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (alert: UIAlertAction!) in
-            self.buttnSwitchOutlet.isOn = false
+        var message = ""
+        var turnState = ""
+        if self.buttnSwitchOutlet.isOn {
+            message = "Turn off \(self.flagName.text!)?"
+            turnState = "Turn off"
+        } else {
+            message = "Turn on \(self.flagName.text!)?"
+            turnState = "Turn on"
+        }
+        
+        let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (alert: UIAlertAction!) in
             return
         }))
         
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (alert: UIAlertAction!) in
-            self.buttnSwitchOutlet.isOn = true
+        alert.addAction(UIAlertAction(title: turnState, style: .default, handler: { (alert: UIAlertAction!) in
+            self.switchChanged(mySwitch: self.buttnSwitchOutlet)
+            self.buttnSwitchOutlet.isOn = !self.buttnSwitchOutlet.isOn
             return
         }))
         
@@ -89,7 +101,8 @@ class FlagCell: UICollectionViewCell{
     }
     
     func switchChanged(mySwitch: UISwitch) {
-        let value = mySwitch.isOn
-        value ? delegate?.switchOnFlag(self) : delegate?.switchOffFlag(self) // Delegate for the viewcontroll to change the UI color based on flag toggle
+        delegate?.switchOnFlag(indexNumber: indexPathOfFlag)
+//        let value = mySwitch.isOn
+//        value ? delegate?.switchOnFlag(self) : delegate?.switchOffFlag(self) // Delegate for the viewcontroll to change the UI color based on flag toggle
     }
 }

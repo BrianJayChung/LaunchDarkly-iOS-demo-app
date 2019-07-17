@@ -174,13 +174,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FlagCell", for: indexPath) as! FlagCell
+        
+        cell.delegate = self
+        
         var flagTags = [String]()
         var flagText: String?
         var flagKey: String?
         var flagDescription: String?
         let item: JSON
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FlagCell", for: indexPath) as! FlagCell
-        cell.delegate = self
+        
+        
         
         /// If the collection view is not empty, do the below
         if flagResponseData.flagsList.count > 0 {
@@ -196,6 +200,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             flagDescription = item["description"].string!
             flagKey = item["key"].string!
             flagTags = item["tags"].arrayObject! as! [String]
+            /// setting the index for flag cell for flagcell delegate to modify flag state
+            cell.indexPathOfFlag = indexPath.row
             
             if let environmentKey = self.environmentKey {
                 cell.buttnSwitchOutlet.isOn = item["environments"][environmentKey]["on"].bool!
