@@ -117,7 +117,8 @@ extension ViewController {
         let launchDarklyApi = LaunchDarklyApiModel()
        /// This needs to get called to clear out the collection view, to empty view on project reselect, as well as avoiding non-existent key to be called
 //        flagResponseData.flagsList = [JSON]()
-        launchDarklyApi.getData(path : "projects") { result in
+        launchDarklyApi.getData(path : "projects", requestMethod: .get) {
+            result in
             switch result {
             case .failure(let error):
                 print(error, "no internet")
@@ -145,11 +146,11 @@ extension ViewController {
         }
     }
 }
-
+/// This function gets triggered when both proj/envir are selected
 extension ViewController {
-    // This function gets triggered when both proj/envir are selected
     func launchDarklyfetchFlags() {
         let launchDarklyApi = LaunchDarklyApiModel()
+        
         if (projKey != nil) && (environmentKey != nil) {
             self.activityIndicator.startAnimating()
             self.activityIndicator.isHidden = false
@@ -159,8 +160,9 @@ extension ViewController {
                 self.activityIndicator.stopAnimating()
                 self.activityIndicator.isHidden = true
             }
+            
             launchDarklyApi.getData(path :
-            "flags/\(projKey!)?env=\(environmentKey!)") { result in
+            "flags/\(projKey!)?env=\(environmentKey!)", requestMethod: .get) { result in
                 switch result {
                 case .failure(let error):
                     print(error, "no internet connection")
@@ -174,6 +176,25 @@ extension ViewController {
                         self.collectionView.reloadData() // reload the collection view after api is fetched
                     }
                 }
+            }
+        }
+    }
+}
+
+/// This function turns flag on or off
+extension ViewController {
+    func launchDarklyPatchFlag(projectKey: String, flagKey: String, environmentKey: String) {
+        let launchdarklyApi = LaunchDarklyApiModel()
+        
+        launchdarklyApi.getData(path: "flags/\(projectKey)/\(flagKey)", requestMethod: .patch) {
+            result in
+            switch result {
+                case .failure(let error):
+                    print(error, "no internet connection")
+                case .success(let value):
+                    let json = JSON(value)
+                
+                    print("success patching flag", json)
             }
         }
     }

@@ -105,6 +105,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        launchDarklyPatchFlag(projectKey: "support-service", flagKey: "show-widgets", environmentKey: "brian")
+        
         self.collectionView.isScrollEnabled = false
         /// Reset this to empty to avoid duplications
         self.launchDarklyDataList = LaunchDarklyDataList()

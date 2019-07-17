@@ -62,10 +62,10 @@ class FlagCell: UICollectionViewCell{
         var message = ""
         var turnState = ""
         if self.buttnSwitchOutlet.isOn {
-            message = "Turn off \(self.flagName.text!)?"
+            message = "Are you sure you wanr to turn off \(self.flagName.text!)?"
             turnState = "Turn off"
         } else {
-            message = "Turn on \(self.flagName.text!)?"
+            message = "Are you sure you wanr to turn on \(self.flagName.text!)?"
             turnState = "Turn on"
         }
         
