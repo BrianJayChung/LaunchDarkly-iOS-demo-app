@@ -118,15 +118,15 @@ class ProjectTableView: UITableViewController, UISearchBarDelegate {
                 ldData = launchDarklyDataList.listOfLaunchDarklyData[indexPath.row]
             }
             
-            cell.textLabel?.text = ldData.projectTitle
-            cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
-            cell.tintColor = UIColor.red
-            
             if ldData.projectIsChecked {
                 selectedProject = ldData
             }
             
             configureCheckmark(for: cell, with: ldData)
+    
+            cell.textLabel?.text = ldData.projectTitle
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
+            cell.tintColor = UIColor.red
         }
             return cell
     }

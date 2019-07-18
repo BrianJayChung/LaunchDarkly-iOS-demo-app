@@ -150,7 +150,6 @@ class EnvironmentsTableView: UITableViewController, UISearchBarDelegate {
     }
     
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
-        print("asdfdsdsfs")
         filteredProjects = launchDarklyData.environmentsList.filter({( ldData : LaunchDarklyData) -> Bool in
             return ldData.envirName!.lowercased().contains(searchText.lowercased())
         })

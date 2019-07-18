@@ -54,7 +54,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     /// Feature flag key for LaunchDarkly use
     let backgroundColorKey = "background-color"
-//    let launchDarklyApi = LaunchDarklyApiModel()
+    let launchDarklyApi = LaunchDarklyApiModel()
     
     /// Use for the collectionViewCell height
     let cellHeight = 180
@@ -88,7 +88,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         navTabBarShadow()
         /// required for LD to change background color
         // checkBackgroundFeatureValue()
-        
         /// Reset the environment title to default
         resetEnvirTitle()
         /// hides the navbar shadow
@@ -106,19 +105,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        launchDarklyPatchFlag(projectKey: "support-service", flagKey: "show-widgets", environmentKey: "brian")
-        
         self.collectionView.isScrollEnabled = false
-        /// Reset this to empty to avoid duplications
-        self.launchDarklyDataList = LaunchDarklyDataList()
+        
+        /// Only make API call when list is empty
+        if self.launchDarklyDataList.listOfLaunchDarklyData.count == 0 {
+            launchDarklyApiCall()
+        }
+//        self.launchDarklyDataList = LaunchDarklyDataList()
         self.flagResponseData.flagsList = [JSON]()
         activityIndicator.isHidden = true
         /// This is called when both proj/env are sellected
 //        flagResponseData.flagsList = [JSON]()
         launchDarklyfetchFlags()
-        
-        launchDarklyApiCall()
-        
         projEnvBtnSettings(button: projectBtn)
         projEnvBtnSettings(button: environmentBtn)
         /// Logic to handle proj and envir changes
@@ -186,8 +184,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         var flagKey: String?
         var flagDescription: String?
         let item: JSON
-        
-        
         
         /// If the collection view is not empty, do the below
         if flagResponseData.flagsList.count > 0 {

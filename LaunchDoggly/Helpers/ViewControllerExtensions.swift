@@ -11,12 +11,13 @@ import UIKit
 import SwiftyJSON
 
 extension ViewController: FlagCellDelegate {
-    
-    func switchOnFlag(indexNumber: Int) {
-        print(flagResponseData.flagsList[indexNumber]["environments"][environmentKey])
+    func switchOnFlag(indexNumber: Int, flagKey: String) {
         flagResponseData.flagsList[indexNumber]["environments"][environmentKey]["on"].bool! = !flagResponseData.flagsList[indexNumber]["environments"][environmentKey]["on"].bool!
-//        colorToggles(rgbColor: UIColorFromRGB(red: 0.121568, green: 0.164706, blue: 0.266667, alpha: 1))
         
+        /// modifying the JSON data to persist in flag cell
+        let flagVariation = flagResponseData.flagsList[indexNumber]["environments"][environmentKey]["on"].bool!
+        /// api call to update the flag, flagKey only exist from the flag cell level
+        launchDarklyPatchFlag(projectKey: projKey!, flagKey: flagKey, environmentKey: environmentKey!, flagVariation: flagVariation)
     }
     
     func switchOffFlag(_ controller: FlagCell) {
@@ -117,7 +118,7 @@ extension ViewController {
         let launchDarklyApi = LaunchDarklyApiModel()
        /// This needs to get called to clear out the collection view, to empty view on project reselect, as well as avoiding non-existent key to be called
 //        flagResponseData.flagsList = [JSON]()
-        launchDarklyApi.getData(path : "projects", requestMethod: .get) {
+        launchDarklyApi.getData(path : "projects", requestMethod: .get, flagVariation: true, environmentKey: "") {
             result in
             switch result {
             case .failure(let error):
@@ -162,7 +163,8 @@ extension ViewController {
             }
             
             launchDarklyApi.getData(path :
-            "flags/\(projKey!)?env=\(environmentKey!)", requestMethod: .get) { result in
+            /// Flag variation is true for now, but need to figure out how to prvoide optional
+            "flags/\(projKey!)?env=\(environmentKey!)", requestMethod: .get, flagVariation: true, environmentKey: "") { result in
                 switch result {
                 case .failure(let error):
                     print(error, "no internet connection")
@@ -183,10 +185,10 @@ extension ViewController {
 
 /// This function turns flag on or off
 extension ViewController {
-    func launchDarklyPatchFlag(projectKey: String, flagKey: String, environmentKey: String) {
+    func launchDarklyPatchFlag(projectKey: String, flagKey: String, environmentKey: String, flagVariation: Bool) {
         let launchdarklyApi = LaunchDarklyApiModel()
         
-        launchdarklyApi.getData(path: "flags/\(projectKey)/\(flagKey)", requestMethod: .patch) {
+        launchdarklyApi.getData(path: "flags/\(projectKey)/\(flagKey)", requestMethod: .patch, flagVariation: flagVariation, environmentKey: environmentKey) {
             result in
             switch result {
                 case .failure(let error):

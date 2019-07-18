@@ -10,7 +10,7 @@
 import UIKit
 
 protocol FlagCellDelegate: class {
-    func switchOnFlag(indexNumber: Int)
+    func switchOnFlag(indexNumber: Int, flagKey: String)
     func switchOffFlag(_ controller: FlagCell)
     func popUpAlert(alert: UIAlertController)
 }
@@ -101,7 +101,7 @@ class FlagCell: UICollectionViewCell{
     }
     
     func switchChanged(mySwitch: UISwitch) {
-        delegate?.switchOnFlag(indexNumber: indexPathOfFlag)
+        delegate?.switchOnFlag(indexNumber: indexPathOfFlag, flagKey: self.flagKey.text!)
 //        let value = mySwitch.isOn
 //        value ? delegate?.switchOnFlag(self) : delegate?.switchOffFlag(self) // Delegate for the viewcontroll to change the UI color based on flag toggle
     }

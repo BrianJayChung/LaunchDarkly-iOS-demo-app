@@ -20,39 +20,45 @@ class LaunchDarklyApiModel {
         self.baseUrl = "https://app.launchdarkly.com/api/v2/"
     }
     
-    func getData(path: String, requestMethod: HTTPMethod, completionHandler: @escaping (Result<[String: Any]>) -> Void) {
+    func getData(path: String, requestMethod: HTTPMethod, flagVariation: Bool, environmentKey: String, completionHandler: @escaping (Result<[String: Any]>) -> Void) {
         let url = baseUrl.appending(path)
+        var parameters: Parameters
+        
         let requestMethod = requestMethod
-        var headers = ["Authorization": "123"] as [String: String]
+        var headers: [String: String]!
         
         if let apiKey = self.apiKey {
-            headers = ["Authorization": apiKey] as [String: String]
+            headers = ["Authorization": apiKey]
         }
         
-        performRequest(url: url, headers: headers, requestMethod: requestMethod, completion: completionHandler)
-    }
-    
-    func performRequest(url: String, headers: [String:String], requestMethod: HTTPMethod, completion: @escaping (Result<[String: Any]>) -> Void ) {
-        
-        let parameters = [
-            "environments": [
-                "brian": [
-                    "on": false
+        if requestMethod == .get {
+            parameters = ["": ""]
+        } else {
+            parameters = [
+                "environments" : [
+                    environmentKey : [
+                        "on" : flagVariation
+                    ]
                 ]
             ]
-        ]
-
+        }
+        
+        print(parameters, url)
+        performRequest(url: url, headers: headers, requestMethod: requestMethod, parameters: parameters, completion: completionHandler)
+    }
+    
+    func performRequest(url: String, headers: [String:String], requestMethod: HTTPMethod, parameters: Parameters?, completion: @escaping (Result<[String: Any]>) -> Void ) {
 
         Alamofire.request(url, method: requestMethod, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON {
             response in
             print("Response status code: \(String(describing: response.response?.statusCode))")
-            print(parameters)
             switch response.result {
             case .success(let value as [String: Any]):
                 completion(.success(value))
             case .failure(let error):
                 completion(.failure(error))
             default:
+                
                 fatalError("received non-dict JSON response")
             }
         }
