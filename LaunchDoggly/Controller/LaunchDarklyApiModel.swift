@@ -16,7 +16,8 @@ class LaunchDarklyApiModel {
     let settingsController = SettingsController()
     
     init() {
-        self.apiKey = settingsController.loadApiKey()["api-key"]
+//        self.apiKey = settingsController.loadApiKey()["api-key"]
+        self.apiKey = "api-0a540dcd-8312-4660-b7ce-5a99d2111e2b"
         self.baseUrl = "https://app.launchdarkly.com/api/v2/"
     }
     
@@ -26,6 +27,7 @@ class LaunchDarklyApiModel {
         
         let requestMethod = requestMethod
         var headers: [String: String]!
+        
         
         if let apiKey = self.apiKey {
             headers = ["Authorization": apiKey]
@@ -42,14 +44,13 @@ class LaunchDarklyApiModel {
                 ]
             ]
         }
-        
-        print(parameters, url)
+        print(url, headers!, requestMethod)
         performRequest(url: url, headers: headers, requestMethod: requestMethod, parameters: parameters, completion: completionHandler)
     }
     
     func performRequest(url: String, headers: [String:String], requestMethod: HTTPMethod, parameters: Parameters?, completion: @escaping (Result<[String: Any]>) -> Void ) {
 
-        Alamofire.request(url, method: requestMethod, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON {
+        Alamofire.request(url, method: requestMethod, parameters: parameters, encoding: URLEncoding.default, headers: headers).responseJSON {
             response in
             print("Response status code: \(String(describing: response.response?.statusCode))")
             switch response.result {
@@ -58,7 +59,6 @@ class LaunchDarklyApiModel {
             case .failure(let error):
                 completion(.failure(error))
             default:
-                
                 fatalError("received non-dict JSON response")
             }
         }

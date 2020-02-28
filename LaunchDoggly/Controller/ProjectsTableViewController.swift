@@ -57,47 +57,7 @@ class ProjectTableView: UITableViewController, UISearchBarDelegate {
         self.navigationItem.searchController?.removeFromParent()
         self.navigationItem.searchController?.isActive = false
     }
-    
-    func navigationSettings() {
-        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
-        
-        navigationController?.navigationBar.titleTextAttributes = textAttributes
-        navigationController?.navigationBar.backgroundColor = UIColorFromRGB(red: 0.121568, green: 0.164706, blue: 0.266667, alpha: 1)
-        searchController.searchBar.delegate = self
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Project"
-        
-        navigationItem.searchController = searchController
-        navigationController?.navigationBar.prefersLargeTitles = false
-        //  search bar does not remain on the screen if the user navigates to another view controller while the UISearchController is active.
-        self.definesPresentationContext = true
-    }
 
-    func loadingView() {
-        let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-        let strLabel = UILabel(frame: CGRect(x: 48, y: 0, width: 180, height: 46))
-        
-        strLabel.text = "No Internet Connection"
-        strLabel.font = .systemFont(ofSize: 14, weight: .medium)
-        strLabel.textColor = UIColor(white: 0.9, alpha: 0.9)
-        
-        effectView.frame = CGRect(x: 0, y: 0 , width: 220, height: 46)
-        effectView.center = view.center
-        effectView.layer.cornerRadius = 15
-        effectView.layer.masksToBounds = true
-        
-        activityIndicator.frame = CGRect(x: 0, y: 0, width: 46, height: 46)
-        activityIndicator.startAnimating()
-        activityIndicator.style = .white
-        
-        effectView.contentView.addSubview(activityIndicator)
-        effectView.contentView.addSubview(strLabel)
-        effectView.tag = 12345
-        
-        self.navigationController?.view.addSubview(effectView)
-    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering() {
             return filteredProjects.count
@@ -153,7 +113,7 @@ class ProjectTableView: UITableViewController, UISearchBarDelegate {
                 // this changes the isChecked property for previously selected flag
                 selectedProject.toggleProjectChecked()
             }
-    
+            
             configureCheckmark(for: cell, with: item)
         }
         
@@ -170,8 +130,8 @@ class ProjectTableView: UITableViewController, UISearchBarDelegate {
             if cellPath == indexPath {
                 continue
             }
-            
             tableView.cellForRow(at: cellPath)?.accessoryType = .none
+            tableView.cellForRow(at: cellPath)?.backgroundColor = .white
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -199,11 +159,12 @@ class ProjectTableView: UITableViewController, UISearchBarDelegate {
     func configureCheckmark(for cell: UITableViewCell, with item: LaunchDarklyData) {
         if item.projectIsChecked {
             cell.accessoryType = .checkmark
+            cell.backgroundColor = .lightGray
         } else {
             cell.accessoryType = .none
+            cell.backgroundColor = .white
         }
     }
-    
     func noConnectionView() {
         if !Connectivity.isConnectedToInternet() {
             loadingView()
@@ -214,6 +175,50 @@ class ProjectTableView: UITableViewController, UISearchBarDelegate {
                 }
             }
         }
+    }
+}
+
+extension ProjectTableView {
+    func navigationSettings() {
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
+        navigationController?.navigationBar.backgroundColor = UIColorFromRGB(red: 0.121568, green: 0.164706, blue: 0.266667, alpha: 1)
+        searchController.searchBar.delegate = self
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Project"
+        
+        navigationItem.searchController = searchController
+        navigationController?.navigationBar.prefersLargeTitles = false
+        //  search bar does not remain on the screen if the user navigates to another view controller while the UISearchController is active.
+        self.definesPresentationContext = true
+    }
+}
+
+extension ProjectTableView {
+    func loadingView() {
+        let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+        let strLabel = UILabel(frame: CGRect(x: 48, y: 0, width: 180, height: 46))
+        
+        strLabel.text = "No Internet Connection"
+        strLabel.font = .systemFont(ofSize: 14, weight: .medium)
+        strLabel.textColor = UIColor(white: 0.9, alpha: 0.9)
+        
+        effectView.frame = CGRect(x: 0, y: 0 , width: 220, height: 46)
+        effectView.center = view.center
+        effectView.layer.cornerRadius = 15
+        effectView.layer.masksToBounds = true
+        
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 46, height: 46)
+        activityIndicator.startAnimating()
+        activityIndicator.style = .white
+        
+        effectView.contentView.addSubview(activityIndicator)
+        effectView.contentView.addSubview(strLabel)
+        effectView.tag = 12345
+        
+        self.navigationController?.view.addSubview(effectView)
     }
 }
 

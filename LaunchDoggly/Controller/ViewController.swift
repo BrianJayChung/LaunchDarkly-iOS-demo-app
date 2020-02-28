@@ -50,7 +50,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var projKey: String?
     
     /// LaunchDarkly fron-end key, safe to expose as it can only fetch the flag evaluation outcome
-    let config = LDConfig.init(mobileKey: "mob-8e3e03d8-355e-432b-a000-e2a15a12d7e6")
+//    let config = LDConfig.init(mobileKey: "5de5a694c2a942083c639e2a")
+    
     
     /// Feature flag key for LaunchDarkly use
     let backgroundColorKey = "background-color"
@@ -80,6 +81,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.tabBarController?.tabBar.isHidden = true
         /// Adding search controller to navbar
         navigationItem.searchController = searchController
+        checkFlags()
         /// Configure search controller
         searchControllerSetup()
         /// Configure collectionview
@@ -157,6 +159,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             // After a project is selected, the data is passed into the launchDarklyDataFromProjTV object. This sets the environments LD data object to the selected prob object
             envVC.launchDarklyData = launchDarklyDataFromProjTV
             envVC.delegate = self
+        }
+    }
+    func checkFlags(){
+        let flagValue = LDClient.sharedInstance().boolVariation("show-widgets", fallback: false)
+        print(flagValue)
+        if flagValue {
+            self.view.backgroundColor = UIColor.green
+        } else {
+            self.view.backgroundColor = UIColor.red
         }
     }
     

@@ -66,7 +66,6 @@ class EnvironmentsTableView: UITableViewController, UISearchBarDelegate {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "environmentCell", for: indexPath)
-        let item = launchDarklyData.environmentsList[indexPath.item]
         let ldData: LaunchDarklyData
         
         if isFiltering(){
@@ -75,7 +74,10 @@ class EnvironmentsTableView: UITableViewController, UISearchBarDelegate {
             ldData = launchDarklyData.environmentsList[indexPath.row]
         }
         
+        let item = ldData
+        
         if item.environmentIsChecked {
+            
         // Track currently selected item
             selectedEnvir = ldData
         }
@@ -94,17 +96,21 @@ class EnvironmentsTableView: UITableViewController, UISearchBarDelegate {
         
         if let cell = tableView.cellForRow(at: indexPath) {
             if isFiltering() {
+                print(filteredProjects, "filtering", indexPath.row)
                 ldData = filteredProjects[indexPath.row]
             } else {
+                print(launchDarklyData.environmentsList, "not filtering")
                 ldData = launchDarklyData.environmentsList[indexPath.row]
             }
             
             let item = ldData
-            
+
             if item != selectedEnvir {
+                print("line 105")
                 item.toggleEnvironmentChecked()
                 selectedEnvir.toggleEnvironmentChecked()
             }
+            
             configureCheckmark(for: cell, with: item)
             
             // Calls the environmentsTable delegate when an envir is selected, this passes the envirName and key to viewcontroller to make the API call

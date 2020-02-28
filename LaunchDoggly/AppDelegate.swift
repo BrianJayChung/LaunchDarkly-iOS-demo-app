@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var delegate: ApiDelegate?
     
-    private let mobileKey = "mob-8e3e03d8-355e-432b-a000-e2a15a12d7e6"
+    private let mobileKey = "mob-fae24748-8bda-4273-8b13-99ffcf30bfb8"
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         setUpLDClient()
