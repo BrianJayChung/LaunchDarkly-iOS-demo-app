@@ -16,8 +16,7 @@ class LaunchDarklyApiModel {
     let settingsController = SettingsController()
     
     init() {
-//        self.apiKey = settingsController.loadApiKey()["api-key"]
-        self.apiKey = "api-0a540dcd-8312-4660-b7ce-5a99d2111e2b"
+        self.apiKey = settingsController.loadApiKey()
         self.baseUrl = "https://app.launchdarkly.com/api/v2/"
     }
     
@@ -27,7 +26,6 @@ class LaunchDarklyApiModel {
         
         let requestMethod = requestMethod
         var headers: [String: String]!
-        
         
         if let apiKey = self.apiKey {
             headers = ["Authorization": apiKey]
@@ -44,7 +42,6 @@ class LaunchDarklyApiModel {
                 ]
             ]
         }
-        print(url, headers!, requestMethod)
         performRequest(url: url, headers: headers, requestMethod: requestMethod, parameters: parameters, completion: completionHandler)
     }
     

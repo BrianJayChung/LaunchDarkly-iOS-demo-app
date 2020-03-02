@@ -39,12 +39,7 @@ class SettingsController: UITableViewController {
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         
         let apiKeyString = loadApiKey()
-        
-        if let apiKeyString = apiKeyString["api-key"] {
-            apiKey.text? = apiKeyString
-        } else {
-            apiKey.text? = "your api key here"
-        }
+        apiKey.text? = apiKeyString
     }
     
     func documentsDirectory() -> URL {
@@ -89,20 +84,12 @@ class SettingsController: UITableViewController {
         }
     }
     
-    func loadApiKey() -> [String: String] {
-        let path = dataFilePath()
+    func loadApiKey() -> String {
+        let filePath = Bundle.main.path(forResource: "keys", ofType: "plist")
+        let plist = NSDictionary(contentsOfFile:filePath!)
+        let apiKey = plist?.object(forKey: "sdk-key") as! String
         
-        var apiKeyString = [String: String]()
-        
-        if let data = try? Data(contentsOf: path) {
-            let decoder = PropertyListDecoder()
-            do {
-                apiKeyString = try decoder.decode([String: String].self, from: data)
-            } catch {
-                print("Error decoding list array: \(error.localizedDescription)")
-            }
-        }
-        return apiKeyString
+        return apiKey
     }
     
     
