@@ -607,10 +607,10 @@ class LaunchDarklyApiModel {
     let apiKey: String!
     let baseUrl: String!
     
-    let headers = ["Authorization": "api-f5cfb140-5537-4c6f-806c-02e4d34a1d20"]
+    let headers = ["Authorization": apiKey]
     
     init() {
-        self.apiKey = "api-f5cfb140-5537-4c6f-806c-02e4d34a1d20"
+        self.apiKey = apiKey
         self.baseUrl = "https://app.launchdarkly.com/api/v2/"
     }
     
